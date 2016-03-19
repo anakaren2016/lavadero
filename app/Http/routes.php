@@ -27,5 +27,9 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+    Route::get('/cliente', 'ClienteControlador@index');
+    Route::get('/cliente/agregar', 'ClienteControlador@agregar');
+    Route::get('/cliente/clientes', 'ClienteControlador@listar');
+    Route::post('/cliente/agregar', 'ClienteControlador@agregar');
+    Route::post('/cliente/visualizar', 'ClienteControlador@visualizar');
 });
