@@ -15,6 +15,7 @@
     <div>
         <ul class="nav navbar-nav">
             <li><a class="btn btn-default" href="{{url('/cliente')}}">Cliente</a></li>
+            <li><a class="btn btn-default" href="{{url('/tipo_vehiculo')}}">Tipo vehiculo</a></li>
         </ul>
     </div>
 </nav>

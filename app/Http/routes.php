@@ -27,6 +27,10 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
+    Route::get('/pruebas', 'TipoVehiculoControlador@prueba');
+    Route::get('/tipo_vehiculo', 'TipoVehiculoControlador@index');
+    Route::get('/tipo_vehiculo/agregar', 'TipoVehiculoControlador@agregar');
+    Route::post('/tipo_vehiculo/agregar', 'TipoVehiculoControlador@agregar');
     Route::get('/cliente', 'ClienteControlador@index');
     Route::get('/cliente/agregar', 'ClienteControlador@agregar');
     Route::get('/cliente/clientes', 'ClienteControlador@listar');

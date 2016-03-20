@@ -13,3 +13,7 @@
         </div>
     </div>
 @endsection
+
+{{--@foreach($accion as $k=>$v)--}}
+{{--{{ $k. '=>' . $v}}--}}
+{{--@endforeach--}}

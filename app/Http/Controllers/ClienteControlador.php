@@ -37,7 +37,7 @@ class ClienteControlador extends Controller
 
     public function listar()
     {
-        $registros = \App\Cliente::all();
+        $registros = \App\Cliente::where('eliminado', false)->get();
         return view('desarrollador.cliente.listar', ['lista' => $registros]);
     }
 
