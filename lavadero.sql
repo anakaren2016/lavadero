@@ -14,6 +14,19 @@ CREATE TABLE tipo_vehiculo (
   eliminado   BOOLEAN     NOT NULL DEFAULT FALSE
 );
 
+CREATE TABLE vehiculo (
+  id               INT PRIMARY KEY     AUTO_INCREMENT,
+  placa            VARCHAR(8) NOT NULL UNIQUE,
+  eliminado        BOOLEAN    NOT NULL DEFAULT FALSE,
+  id_cliente       INT        NOT NULL,
+  FOREIGN KEY (id_cliente) REFERENCES cliente (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  id_tipo_vehiculo INT        NOT NULL,
+  FOREIGN KEY (id_tipo_vehiculo) REFERENCES tipo_vehiculo (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
 
 CREATE TABLE IF NOT EXISTS `cliente` (
   `id`        INT(11)     NOT NULL,

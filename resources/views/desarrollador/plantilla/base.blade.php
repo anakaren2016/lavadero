@@ -4,7 +4,7 @@
     <title>@yield('titulo')</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <script src="../..js/jquery.min.js"></script>
+    <script src="../../js/jquery.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -14,8 +14,9 @@
     </div>
     <div>
         <ul class="nav navbar-nav">
-            <li><a class="btn btn-default" href="{{url('/cliente')}}">Cliente</a></li>
-            <li><a class="btn btn-default" href="{{url('/tipo_vehiculo')}}">Tipo vehiculo</a></li>
+            <li><a class="btn btn-default" href="{{url('/cliente/agregar')}}">Nuevo cliente</a></li>
+            <li><a class="btn btn-default" href="{{url('/tipo_vehiculo/agregar')}}">Nuevo tipo vehiculo</a></li>
+            <li><a class="btn btn-default" href="{{url('/vehiculo/formulario')}}">Nuevo vehiculo</a></li>
         </ul>
     </div>
 </nav>
