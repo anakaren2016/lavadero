@@ -15,8 +15,9 @@
     <div>
         <ul class="nav navbar-nav">
             <li><a class="btn btn-default" href="{{url('/cliente/agregar')}}">Nuevo cliente</a></li>
-            <li><a class="btn btn-default" href="{{url('/tipo_vehiculo/agregar')}}">Nuevo tipo vehiculo</a></li>
-            <li><a class="btn btn-default" href="{{url('/vehiculo/formulario')}}">Nuevo vehiculo</a></li>
+            <li><a class="btn btn-default" href="{{url('/tipo_vehiculo/agregar')}}">Nuevo tipo veh&iacute;culo</a></li>
+            <li><a class="btn btn-default" href="{{url('/vehiculo/formulario')}}">Nuevo veh&iacute;culo</a></li>
+            <li><a class="btn btn-default" href="{{url('/servicio/formulario')}}">Nuevo servicio</a></li>
         </ul>
     </div>
 </nav>
@@ -29,7 +30,7 @@
             @yield('contenido')
         </div>
         <div class="panel-footer">
-            <span>Calidad de software - 2016 - 2da. Edicion - 3ra. Version</span>
+            <span>Calidad de software - 2016 - 2da. Edici&oacute;n - 3ra. Versi&oacute;n</span>
         </div>
     </div>
 </div>

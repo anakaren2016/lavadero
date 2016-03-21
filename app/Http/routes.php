@@ -27,7 +27,8 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-
+    Route::get('/servicio/formulario', 'ServicioControlador@formulario');
+    Route::post('/servicio/registro', 'ServicioControlador@registro');
 
     Route::get('/vehiculo/formulario', 'VehiculoControlador@index');
     Route::post('/vehiculo/registro', 'VehiculoControlador@registrarNuevoVehiculo');

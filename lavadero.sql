@@ -28,6 +28,19 @@ CREATE TABLE vehiculo (
     ON UPDATE CASCADE
 );
 
+CREATE TABLE servicio (
+  id               INT PRIMARY KEY       AUTO_INCREMENT,
+  descripcion      VARCHAR(100) NOT NULL,
+  tiempo_estimado  INT          NOT NULL,
+  precio           INT          NOT NULL,
+  id_tipo_vehiculo INT          NOT NULL,
+  FOREIGN KEY (id_tipo_vehiculo) REFERENCES tipo_vehiculo (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  eliminado        BOOLEAN      NOT NULL DEFAULT FALSE
+);
+
+
 CREATE TABLE IF NOT EXISTS `cliente` (
   `id`        INT(11)     NOT NULL,
   `nombre`    VARCHAR(60) NOT NULL,
