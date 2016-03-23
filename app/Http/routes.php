@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/servicio/{codigo}/servicios.json', function ($codigo) {
+    $vehiculo = \App\Vehiculo::find($codigo);
+    $id_tipo_vehiculo = $vehiculo['id_tipo_vehiculo'];
+    return \App\Servicio::where('id_tipo_vehiculo', $id_tipo_vehiculo)->get();
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -27,6 +33,10 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
+
+    Route::get('/orden_trabajo/formulario', 'OrdenTrabajoControlador@formulario');
+    Route::post('/orden_trabajo/registro', 'OrdenTrabajoControlador@registro');
+
     Route::get('/servicio/formulario', 'ServicioControlador@formulario');
     Route::post('/servicio/registro', 'ServicioControlador@registro');
 
