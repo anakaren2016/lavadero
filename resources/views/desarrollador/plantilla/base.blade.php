@@ -18,6 +18,7 @@
             <li><a class="btn btn-default" href="{{url('/tipo_vehiculo/agregar')}}">Nuevo tipo veh&iacute;culo</a></li>
             <li><a class="btn btn-default" href="{{url('/vehiculo/formulario')}}">Nuevo veh&iacute;culo</a></li>
             <li><a class="btn btn-default" href="{{url('/servicio/formulario')}}">Nuevo servicio</a></li>
+            <li><a class="btn btn-default" href="{{url('/orden_trabajo/formulario')}}">Orden de trabajo</a></li>
         </ul>
     </div>
 </nav>

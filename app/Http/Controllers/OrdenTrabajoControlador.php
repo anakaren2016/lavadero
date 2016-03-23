@@ -15,9 +15,11 @@ class OrdenTrabajoControlador extends Controller
     public function formulario()
     {
         $vehiculos = Vehiculo::where('vehiculo.eliminado', false)->leftJoin('cliente', 'vehiculo.id_cliente', '=', 'cliente.id')->get(['vehiculo.id', 'placa', 'vehiculo.id_tipo_vehiculo', 'cliente.nombre']);
+        $id = OrdenTrabajo::all()->last()['id'] + 1;
         return view('desarrollador.orden_trabajo.formulario',
             [
-                'vehiculos' => $vehiculos
+                'vehiculos' => $vehiculos,
+                'id_orden' => $id
             ]);
     }
 
