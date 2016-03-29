@@ -33,8 +33,8 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
 
     /**
      * @param mixed $value
-     * @param bool  $checkForObjectIdentity
-     * @param bool  $checkForNonObjectIdentity
+     * @param bool $checkForObjectIdentity
+     * @param bool $checkForNonObjectIdentity
      *
      * @throws PHPUnit_Framework_Exception
      */
@@ -50,9 +50,9 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
             throw PHPUnit_Util_InvalidArgumentHelper::factory(3, 'boolean');
         }
 
-        $this->checkForObjectIdentity    = $checkForObjectIdentity;
+        $this->checkForObjectIdentity = $checkForObjectIdentity;
         $this->checkForNonObjectIdentity = $checkForNonObjectIdentity;
-        $this->value                     = $value;
+        $this->value = $value;
     }
 
     /**
@@ -91,20 +91,6 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
     }
 
     /**
-     * Returns a string representation of the constraint.
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        if (is_string($this->value) && strpos($this->value, "\n") !== false) {
-            return 'contains "' . $this->value . '"';
-        } else {
-            return 'contains ' . $this->exporter->export($this->value);
-        }
-    }
-
-    /**
      * Returns the description of the failure
      *
      * The beginning of failure messages is "Failed asserting that" in most
@@ -121,5 +107,19 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
             is_array($other) ? 'an array' : 'a traversable',
             $this->toString()
         );
+    }
+
+    /**
+     * Returns a string representation of the constraint.
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        if (is_string($this->value) && strpos($this->value, "\n") !== false) {
+            return 'contains "' . $this->value . '"';
+        } else {
+            return 'contains ' . $this->exporter->export($this->value);
+        }
     }
 }

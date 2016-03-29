@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Console\Tests\Output;
 
-use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Output\Output;
 
 class OutputTest extends \PHPUnit_Framework_TestCase
 {
@@ -170,6 +170,6 @@ class TestOutput extends Output
 
     protected function doWrite($message, $newline)
     {
-        $this->output .= $message.($newline ? "\n" : '');
+        $this->output .= $message . ($newline ? "\n" : '');
     }
 }

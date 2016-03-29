@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\HttpFoundation\Tests;
 
-use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
@@ -852,12 +852,12 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         //              $expected                                  $remoteAddr  $httpForwarded                                       $trustedProxies
         return array(
-            array(array('127.0.0.1'),                              '127.0.0.1', 'for="_gazonk"',                                      null),
-            array(array('127.0.0.1'),                              '127.0.0.1', 'for="_gazonk"',                                      array('127.0.0.1')),
-            array(array('88.88.88.88'),                            '127.0.0.1', 'for="88.88.88.88:80"',                               array('127.0.0.1')),
-            array(array('192.0.2.60'),                             '::1',       'for=192.0.2.60;proto=http;by=203.0.113.43',          array('::1')),
-            array(array('2620:0:1cfe:face:b00c::3', '192.0.2.43'), '::1',       'for=192.0.2.43, for=2620:0:1cfe:face:b00c::3',       array('::1')),
-            array(array('2001:db8:cafe::17'),                      '::1',       'for="[2001:db8:cafe::17]:4711',                      array('::1')),
+            array(array('127.0.0.1'), '127.0.0.1', 'for="_gazonk"', null),
+            array(array('127.0.0.1'), '127.0.0.1', 'for="_gazonk"', array('127.0.0.1')),
+            array(array('88.88.88.88'), '127.0.0.1', 'for="88.88.88.88:80"', array('127.0.0.1')),
+            array(array('192.0.2.60'), '::1', 'for=192.0.2.60;proto=http;by=203.0.113.43', array('::1')),
+            array(array('2620:0:1cfe:face:b00c::3', '192.0.2.43'), '::1', 'for=192.0.2.43, for=2620:0:1cfe:face:b00c::3', array('::1')),
+            array(array('2001:db8:cafe::17'), '::1', 'for="[2001:db8:cafe::17]:4711', array('::1')),
         );
     }
 
@@ -866,39 +866,39 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         //        $expected                   $remoteAddr                $httpForwardedFor            $trustedProxies
         return array(
             // simple IPv4
-            array(array('88.88.88.88'),              '88.88.88.88',              null,                        null),
+            array(array('88.88.88.88'), '88.88.88.88', null, null),
             // trust the IPv4 remote addr
-            array(array('88.88.88.88'),              '88.88.88.88',              null,                        array('88.88.88.88')),
+            array(array('88.88.88.88'), '88.88.88.88', null, array('88.88.88.88')),
 
             // simple IPv6
-            array(array('::1'),                      '::1',                      null,                        null),
+            array(array('::1'), '::1', null, null),
             // trust the IPv6 remote addr
-            array(array('::1'),                      '::1',                      null,                        array('::1')),
+            array(array('::1'), '::1', null, array('::1')),
 
             // forwarded for with remote IPv4 addr not trusted
-            array(array('127.0.0.1'),                '127.0.0.1',                '88.88.88.88',               null),
+            array(array('127.0.0.1'), '127.0.0.1', '88.88.88.88', null),
             // forwarded for with remote IPv4 addr trusted
-            array(array('88.88.88.88'),              '127.0.0.1',                '88.88.88.88',               array('127.0.0.1')),
+            array(array('88.88.88.88'), '127.0.0.1', '88.88.88.88', array('127.0.0.1')),
             // forwarded for with remote IPv4 and all FF addrs trusted
-            array(array('88.88.88.88'),              '127.0.0.1',                '88.88.88.88',               array('127.0.0.1', '88.88.88.88')),
+            array(array('88.88.88.88'), '127.0.0.1', '88.88.88.88', array('127.0.0.1', '88.88.88.88')),
             // forwarded for with remote IPv4 range trusted
-            array(array('88.88.88.88'),              '123.45.67.89',             '88.88.88.88',               array('123.45.67.0/24')),
+            array(array('88.88.88.88'), '123.45.67.89', '88.88.88.88', array('123.45.67.0/24')),
 
             // forwarded for with remote IPv6 addr not trusted
-            array(array('1620:0:1cfe:face:b00c::3'), '1620:0:1cfe:face:b00c::3', '2620:0:1cfe:face:b00c::3',  null),
+            array(array('1620:0:1cfe:face:b00c::3'), '1620:0:1cfe:face:b00c::3', '2620:0:1cfe:face:b00c::3', null),
             // forwarded for with remote IPv6 addr trusted
-            array(array('2620:0:1cfe:face:b00c::3'), '1620:0:1cfe:face:b00c::3', '2620:0:1cfe:face:b00c::3',  array('1620:0:1cfe:face:b00c::3')),
+            array(array('2620:0:1cfe:face:b00c::3'), '1620:0:1cfe:face:b00c::3', '2620:0:1cfe:face:b00c::3', array('1620:0:1cfe:face:b00c::3')),
             // forwarded for with remote IPv6 range trusted
-            array(array('88.88.88.88'),              '2a01:198:603:0:396e:4789:8e99:890f', '88.88.88.88',     array('2a01:198:603:0::/65')),
+            array(array('88.88.88.88'), '2a01:198:603:0:396e:4789:8e99:890f', '88.88.88.88', array('2a01:198:603:0::/65')),
 
             // multiple forwarded for with remote IPv4 addr trusted
             array(array('88.88.88.88', '87.65.43.21', '127.0.0.1'), '123.45.67.89', '127.0.0.1, 87.65.43.21, 88.88.88.88', array('123.45.67.89')),
             // multiple forwarded for with remote IPv4 addr and some reverse proxies trusted
-            array(array('87.65.43.21', '127.0.0.1'), '123.45.67.89',             '127.0.0.1, 87.65.43.21, 88.88.88.88', array('123.45.67.89', '88.88.88.88')),
+            array(array('87.65.43.21', '127.0.0.1'), '123.45.67.89', '127.0.0.1, 87.65.43.21, 88.88.88.88', array('123.45.67.89', '88.88.88.88')),
             // multiple forwarded for with remote IPv4 addr and some reverse proxies trusted but in the middle
-            array(array('88.88.88.88', '127.0.0.1'), '123.45.67.89',             '127.0.0.1, 87.65.43.21, 88.88.88.88', array('123.45.67.89', '87.65.43.21')),
+            array(array('88.88.88.88', '127.0.0.1'), '123.45.67.89', '127.0.0.1, 87.65.43.21, 88.88.88.88', array('123.45.67.89', '87.65.43.21')),
             // multiple forwarded for with remote IPv4 addr and all reverse proxies trusted
-            array(array('127.0.0.1'),                '123.45.67.89',             '127.0.0.1, 87.65.43.21, 88.88.88.88', array('123.45.67.89', '87.65.43.21', '88.88.88.88', '127.0.0.1')),
+            array(array('127.0.0.1'), '123.45.67.89', '127.0.0.1, 87.65.43.21, 88.88.88.88', array('123.45.67.89', '87.65.43.21', '88.88.88.88', '127.0.0.1')),
 
             // multiple forwarded for with remote IPv6 addr trusted
             array(array('2620:0:1cfe:face:b00c::3', '3620:0:1cfe:face:b00c::3'), '1620:0:1cfe:face:b00c::3', '3620:0:1cfe:face:b00c::3,2620:0:1cfe:face:b00c::3', array('1620:0:1cfe:face:b00c::3')),
@@ -1847,7 +1847,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function getLongHostNames()
     {
         return array(
-            array('a'.str_repeat('.a', 40000)),
+            array('a' . str_repeat('.a', 40000)),
             array(str_repeat(':', 101)),
         );
     }

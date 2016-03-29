@@ -2,17 +2,17 @@
 
 namespace Illuminate\Database;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Migrations\Migrator;
-use Illuminate\Database\Migrations\MigrationCreator;
-use Illuminate\Database\Console\Migrations\ResetCommand;
-use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Database\Console\Migrations\InstallCommand;
 use Illuminate\Database\Console\Migrations\MigrateCommand;
-use Illuminate\Database\Console\Migrations\RefreshCommand;
-use Illuminate\Database\Console\Migrations\RollbackCommand;
 use Illuminate\Database\Console\Migrations\MigrateMakeCommand;
+use Illuminate\Database\Console\Migrations\RefreshCommand;
+use Illuminate\Database\Console\Migrations\ResetCommand;
+use Illuminate\Database\Console\Migrations\RollbackCommand;
+use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use Illuminate\Database\Migrations\MigrationCreator;
+use Illuminate\Database\Migrations\Migrator;
+use Illuminate\Support\ServiceProvider;
 
 class MigrationServiceProvider extends ServiceProvider
 {
@@ -98,7 +98,7 @@ class MigrationServiceProvider extends ServiceProvider
         // and register each one of them with an application container. They will
         // be resolved in the Artisan start file and registered on the console.
         foreach ($commands as $command) {
-            $this->{'register'.$command.'Command'}();
+            $this->{'register' . $command . 'Command'}();
         }
 
         // Once the commands are registered in the application IoC container we will

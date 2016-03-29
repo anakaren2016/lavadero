@@ -23,7 +23,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class DemeterChainTest extends MockeryTestCase
 {
-    /** @var  Mockery\Mock $this->mock */
+    /** @var  Mockery\Mock $this ->mock */
     private $mock;
 
     public function setUp()

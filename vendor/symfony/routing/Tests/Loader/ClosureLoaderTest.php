@@ -21,7 +21,8 @@ class ClosureLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $loader = new ClosureLoader();
 
-        $closure = function () {};
+        $closure = function () {
+        };
 
         $this->assertTrue($loader->supports($closure), '->supports() returns true if the resource is loadable');
         $this->assertFalse($loader->supports('foo.foo'), '->supports() returns true if the resource is loadable');

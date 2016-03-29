@@ -35,22 +35,12 @@ class Description implements \Reflector
     /**
      * Populates the fields of a description.
      *
-     * @param string   $content  The description's conetnts.
+     * @param string $content The description's conetnts.
      * @param DocBlock $docblock The DocBlock which this description belongs to.
      */
     public function __construct($content, DocBlock $docblock = null)
     {
         $this->setContent($content)->setDocBlock($docblock);
-    }
-
-    /**
-     * Gets the text of this description.
-     *
-     * @return string
-     */
-    public function getContents()
-    {
-        return $this->contents;
     }
 
     /**
@@ -66,6 +56,20 @@ class Description implements \Reflector
 
         $this->parsedContents = null;
         return $this;
+    }
+
+    /**
+     * Builds a string representation of this object.
+     *
+     * @todo determine the exact format as used by PHP Reflection
+     *     and implement it.
+     *
+     * @return void
+     * @codeCoverageIgnore Not yet implemented
+     */
+    public static function export()
+    {
+        throw new \Exception('Not yet implemented');
     }
 
     /**
@@ -114,7 +118,7 @@ class Description implements \Reflector
             );
 
             $count = count($this->parsedContents);
-            for ($i=1; $i<$count; $i += 2) {
+            for ($i = 1; $i < $count; $i += 2) {
                 $this->parsedContents[$i] = Tag::createInstance(
                     $this->parsedContents[$i],
                     $this->docblock
@@ -124,7 +128,7 @@ class Description implements \Reflector
             //In order to allow "literal" inline tags, the otherwise invalid
             //sequence "{@}" is changed to "@", and "{}" is changed to "}".
             //See unit tests for examples.
-            for ($i=0; $i<$count; $i += 2) {
+            for ($i = 0; $i < $count; $i += 2) {
                 $this->parsedContents[$i] = str_replace(
                     array('{@}', '{}'),
                     array('@', '}'),
@@ -198,20 +202,6 @@ class Description implements \Reflector
     }
 
     /**
-     * Builds a string representation of this object.
-     *
-     * @todo determine the exact format as used by PHP Reflection
-     *     and implement it.
-     *
-     * @return void
-     * @codeCoverageIgnore Not yet implemented
-     */
-    public static function export()
-    {
-        throw new \Exception('Not yet implemented');
-    }
-
-    /**
      * Returns the long description as a string.
      *
      * @return string
@@ -219,5 +209,15 @@ class Description implements \Reflector
     public function __toString()
     {
         return $this->getContents();
+    }
+
+    /**
+     * Gets the text of this description.
+     *
+     * @return string
+     */
+    public function getContents()
+    {
+        return $this->contents;
     }
 }

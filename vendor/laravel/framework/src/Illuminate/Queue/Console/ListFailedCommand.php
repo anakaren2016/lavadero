@@ -2,8 +2,8 @@
 
 namespace Illuminate\Queue\Console;
 
-use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 
 class ListFailedCommand extends Command
 {
@@ -54,7 +54,7 @@ class ListFailedCommand extends Command
         $results = [];
 
         foreach ($this->laravel['queue.failer']->all() as $failed) {
-            $results[] = $this->parseFailedJob((array) $failed);
+            $results[] = $this->parseFailedJob((array)$failed);
         }
 
         return array_filter($results);
@@ -63,7 +63,7 @@ class ListFailedCommand extends Command
     /**
      * Parse the failed job row.
      *
-     * @param  array  $failed
+     * @param  array $failed
      * @return array
      */
     protected function parseFailedJob(array $failed)
@@ -78,14 +78,14 @@ class ListFailedCommand extends Command
     /**
      * Extract the failed job name from payload.
      *
-     * @param  string  $payload
+     * @param  string $payload
      * @return string|null
      */
     private function extractJobName($payload)
     {
         $payload = json_decode($payload, true);
 
-        if ($payload && (! isset($payload['data']['command']))) {
+        if ($payload && (!isset($payload['data']['command']))) {
             return Arr::get($payload, 'job');
         }
 
@@ -103,7 +103,7 @@ class ListFailedCommand extends Command
     /**
      * Display the failed jobs in the console.
      *
-     * @param  array  $jobs
+     * @param  array $jobs
      * @return void
      */
     protected function displayFailedJobs(array $jobs)

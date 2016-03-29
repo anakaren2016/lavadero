@@ -1,9 +1,9 @@
 <?php
 namespace Hamcrest;
 
-/*
- Copyright (c) 2009 hamcrest.org
- */
+    /*
+     Copyright (c) 2009 hamcrest.org
+     */
 
 /**
  * A {@link Hamcrest\Description} that is stored as a string.
@@ -15,12 +15,15 @@ class StringDescription extends BaseDescription
 
     public function __construct($out = '')
     {
-        $this->_out = (string) $out;
+        $this->_out = (string)$out;
     }
 
-    public function __toString()
+    /**
+     * Alias for {@link toString()}.
+     */
+    public static function asString(SelfDescribing $selfDescribing)
     {
-        return $this->_out;
+        return self::toString($selfDescribing);
     }
 
     /**
@@ -37,15 +40,12 @@ class StringDescription extends BaseDescription
     {
         $self = new self();
 
-        return (string) $self->appendDescriptionOf($selfDescribing);
+        return (string)$self->appendDescriptionOf($selfDescribing);
     }
 
-    /**
-     * Alias for {@link toString()}.
-     */
-    public static function asString(SelfDescribing $selfDescribing)
+    public function __toString()
     {
-        return self::toString($selfDescribing);
+        return $this->_out;
     }
 
     // -- Protected Methods

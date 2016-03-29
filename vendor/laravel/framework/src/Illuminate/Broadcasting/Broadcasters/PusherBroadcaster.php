@@ -2,8 +2,8 @@
 
 namespace Illuminate\Broadcasting\Broadcasters;
 
-use Pusher;
 use Illuminate\Contracts\Broadcasting\Broadcaster;
+use Pusher;
 
 class PusherBroadcaster implements Broadcaster
 {
@@ -17,7 +17,7 @@ class PusherBroadcaster implements Broadcaster
     /**
      * Create a new broadcaster instance.
      *
-     * @param  \Pusher  $pusher
+     * @param  \Pusher $pusher
      * @return void
      */
     public function __construct(Pusher $pusher)

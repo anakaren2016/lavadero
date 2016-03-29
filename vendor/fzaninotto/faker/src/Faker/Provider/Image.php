@@ -13,33 +13,6 @@ class Image extends Base
     );
 
     /**
-     * Generate the URL that will return a random image
-     *
-     * Set randomize to false to remove the random GET parameter at the end of the url.
-     *
-     * @example 'http://lorempixel.com/640/480/?12345'
-     */
-    public static function imageUrl($width = 640, $height = 480, $category = null, $randomize = true, $word = null)
-    {
-        $url = "http://lorempixel.com/{$width}/{$height}/";
-        if ($category) {
-            if (!in_array($category, static::$categories)) {
-                throw new \InvalidArgumentException(sprintf('Unkown image category "%s"', $category));
-            }
-            $url .= "{$category}/";
-            if ($word) {
-                $url .= "{$word}/";
-            }
-        }
-
-        if ($randomize) {
-            $url .= '?' . static::randomNumber(5, true);
-        }
-
-        return $url;
-    }
-
-    /**
      * Download a remote random image to disk and return its location
      *
      * Requires curl, or allow_url_fopen to be on in php.ini.
@@ -57,7 +30,7 @@ class Image extends Base
         // Generate a random filename. Use the server address so that a file
         // generated at the same time on a different server won't have a collision.
         $name = md5(uniqid(empty($_SERVER['SERVER_ADDR']) ? '' : $_SERVER['SERVER_ADDR'], true));
-        $filename = $name .'.jpg';
+        $filename = $name . '.jpg';
         $filepath = $dir . DIRECTORY_SEPARATOR . $filename;
 
         $url = static::imageUrl($width, $height, $category, $randomize, $word);
@@ -84,5 +57,32 @@ class Image extends Base
         }
 
         return $fullPath ? $filepath : $filename;
+    }
+
+    /**
+     * Generate the URL that will return a random image
+     *
+     * Set randomize to false to remove the random GET parameter at the end of the url.
+     *
+     * @example 'http://lorempixel.com/640/480/?12345'
+     */
+    public static function imageUrl($width = 640, $height = 480, $category = null, $randomize = true, $word = null)
+    {
+        $url = "http://lorempixel.com/{$width}/{$height}/";
+        if ($category) {
+            if (!in_array($category, static::$categories)) {
+                throw new \InvalidArgumentException(sprintf('Unkown image category "%s"', $category));
+            }
+            $url .= "{$category}/";
+            if ($word) {
+                $url .= "{$word}/";
+            }
+        }
+
+        if ($randomize) {
+            $url .= '?' . static::randomNumber(5, true);
+        }
+
+        return $url;
     }
 }

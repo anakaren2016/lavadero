@@ -55,7 +55,7 @@ class PHPUnit_Util_Fileloader
 
         include_once $filename;
 
-        $newVariables     = get_defined_vars();
+        $newVariables = get_defined_vars();
         $newVariableNames = array_diff(
             array_keys($newVariables),
             $oldVariableNames

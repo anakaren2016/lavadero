@@ -28,9 +28,9 @@ error_reporting(E_ALL);
  * Determine the root, library, and tests directories of the framework
  * distribution.
  */
-$root    = realpath(dirname(dirname(__FILE__)));
+$root = realpath(dirname(dirname(__FILE__)));
 $library = "$root/library";
-$tests   = "$root/tests";
+$tests = "$root/tests";
 
 /**
  * Check that --dev composer installation was done
@@ -57,7 +57,8 @@ set_include_path(implode(PATH_SEPARATOR, $path));
 require_once "$root/vendor/hamcrest/hamcrest-php/hamcrest/Hamcrest.php";
 
 if (defined('TESTS_GENERATE_REPORT') && TESTS_GENERATE_REPORT === true &&
-    version_compare(PHPUnit_Runner_Version::id(), '3.1.6', '>=')) {
+    version_compare(PHPUnit_Runner_Version::id(), '3.1.6', '>=')
+) {
 
     /*
      * Add Mutateme library/ directory to the PHPUnit code coverage
@@ -77,7 +78,7 @@ if (defined('TESTS_GENERATE_REPORT') && TESTS_GENERATE_REPORT === true &&
     PHPUnit_Util_Filter::addDirectoryToFilter(PHP_LIBDIR);
 }
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /*
  * Unset global variables that are no longer needed.

@@ -28,7 +28,7 @@ interface Job
     /**
      * Release the job back into the queue.
      *
-     * @param  int   $delay
+     * @param  int $delay
      * @return void
      */
     public function release($delay = 0);
@@ -68,10 +68,10 @@ interface Job
      */
     public function getQueue();
 
-     /**
-      * Get the raw body string for the job.
-      *
-      * @return string
-      */
-     public function getRawBody();
+    /**
+     * Get the raw body string for the job.
+     *
+     * @return string
+     */
+    public function getRawBody();
 }

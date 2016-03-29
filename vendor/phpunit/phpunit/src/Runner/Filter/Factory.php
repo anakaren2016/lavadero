@@ -20,7 +20,7 @@ class PHPUnit_Runner_Filter_Factory
 
     /**
      * @param ReflectionClass $filter
-     * @param mixed           $args
+     * @param mixed $args
      */
     public function addFilter(ReflectionClass $filter, $args)
     {
@@ -43,7 +43,7 @@ class PHPUnit_Runner_Filter_Factory
     {
         foreach ($this->filters as $filter) {
             list($class, $args) = $filter;
-            $iterator           = $class->newInstance($iterator, $args, $suite);
+            $iterator = $class->newInstance($iterator, $args, $suite);
         }
 
         return $iterator;

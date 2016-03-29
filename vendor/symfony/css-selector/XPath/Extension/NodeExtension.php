@@ -47,7 +47,7 @@ class NodeExtension extends AbstractExtension
     }
 
     /**
-     * @param int  $flag
+     * @param int $flag
      * @param bool $on
      *
      * @return NodeExtension
@@ -95,7 +95,7 @@ class NodeExtension extends AbstractExtension
 
     /**
      * @param Node\SelectorNode $node
-     * @param Translator        $translator
+     * @param Translator $translator
      *
      * @return XPathExpr
      */
@@ -106,7 +106,7 @@ class NodeExtension extends AbstractExtension
 
     /**
      * @param Node\CombinedSelectorNode $node
-     * @param Translator                $translator
+     * @param Translator $translator
      *
      * @return XPathExpr
      */
@@ -117,7 +117,7 @@ class NodeExtension extends AbstractExtension
 
     /**
      * @param Node\NegationNode $node
-     * @param Translator        $translator
+     * @param Translator $translator
      *
      * @return XPathExpr
      */
@@ -136,7 +136,7 @@ class NodeExtension extends AbstractExtension
 
     /**
      * @param Node\FunctionNode $node
-     * @param Translator        $translator
+     * @param Translator $translator
      *
      * @return XPathExpr
      */
@@ -149,7 +149,7 @@ class NodeExtension extends AbstractExtension
 
     /**
      * @param Node\PseudoNode $node
-     * @param Translator      $translator
+     * @param Translator $translator
      *
      * @return XPathExpr
      */
@@ -162,7 +162,7 @@ class NodeExtension extends AbstractExtension
 
     /**
      * @param Node\AttributeNode $node
-     * @param Translator         $translator
+     * @param Translator $translator
      *
      * @return XPathExpr
      */
@@ -180,7 +180,7 @@ class NodeExtension extends AbstractExtension
             $safe = $safe && $this->isSafeName($node->getNamespace());
         }
 
-        $attribute = $safe ? '@'.$name : sprintf('attribute::*[name() = %s]', Translator::getXpathLiteral($name));
+        $attribute = $safe ? '@' . $name : sprintf('attribute::*[name() = %s]', Translator::getXpathLiteral($name));
         $value = $node->getValue();
         $xpath = $translator->nodeToXPath($node->getSelector());
 
@@ -193,7 +193,7 @@ class NodeExtension extends AbstractExtension
 
     /**
      * @param Node\ClassNode $node
-     * @param Translator     $translator
+     * @param Translator $translator
      *
      * @return XPathExpr
      */
@@ -206,7 +206,7 @@ class NodeExtension extends AbstractExtension
 
     /**
      * @param Node\HashNode $node
-     * @param Translator    $translator
+     * @param Translator $translator
      *
      * @return XPathExpr
      */

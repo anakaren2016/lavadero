@@ -51,13 +51,13 @@ class PhoneNumber extends \Faker\Provider\PhoneNumber
         return str_replace('{{areaCode}}', static::areaCode(), $format);
     }
 
-    public static function mobileNumber()
-    {
-        return static::numerify(static::randomElement(static::$mobileFormats));
-    }
-
     public static function areaCode()
     {
         return static::numerify(static::randomElement(static::$areacodes));
+    }
+
+    public static function mobileNumber()
+    {
+        return static::numerify(static::randomElement(static::$mobileFormats));
     }
 }

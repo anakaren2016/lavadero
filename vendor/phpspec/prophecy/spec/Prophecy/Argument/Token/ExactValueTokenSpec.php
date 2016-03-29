@@ -120,7 +120,7 @@ class ExactValueTokenSpec extends ObjectBehavior
     {
         $resource = fopen(__FILE__, 'r');
         $this->beConstructedWith($resource);
-        $this->__toString()->shouldReturn('exact(stream:'.$resource.')');
+        $this->__toString()->shouldReturn('exact(stream:' . $resource . ')');
     }
 
     /**

@@ -50,7 +50,7 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedCount extends PHPUnit_Framewor
     }
 
     /**
-     * @param  PHPUnit_Framework_MockObject_Invocation      $invocation
+     * @param  PHPUnit_Framework_MockObject_Invocation $invocation
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
     public function invoked(PHPUnit_Framework_MockObject_Invocation $invocation)
@@ -66,19 +66,19 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedCount extends PHPUnit_Framewor
                 case 0: {
                     $message .= 'was not expected to be called.';
                 }
-                break;
+                    break;
 
                 case 1: {
                     $message .= 'was not expected to be called more than once.';
                 }
-                break;
+                    break;
 
                 default: {
                     $message .= sprintf(
                         'was not expected to be called more than %d times.',
                         $this->expectedCount
                     );
-                    }
+                }
             }
 
             throw new PHPUnit_Framework_ExpectationFailedException($message);

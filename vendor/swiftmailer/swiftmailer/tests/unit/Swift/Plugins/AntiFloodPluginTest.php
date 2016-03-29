@@ -22,9 +22,9 @@ class Swift_Plugins_AntiFloodPluginTest extends \PHPUnit_Framework_TestCase
     {
         $transport = $this->_createTransport();
         $transport->expects($this->once())
-                  ->method('start');
+            ->method('start');
         $transport->expects($this->once())
-                  ->method('stop');
+            ->method('stop');
 
         $evt = $this->_createSendEvent($transport);
 
@@ -34,13 +34,35 @@ class Swift_Plugins_AntiFloodPluginTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    private function _createTransport()
+    {
+        return $this->getMock('Swift_Transport');
+    }
+
+    private function _createSendEvent($transport)
+    {
+        $evt = $this->getMockBuilder('Swift_Events_SendEvent')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $evt->expects($this->any())
+            ->method('getSource')
+            ->will($this->returnValue($transport));
+        $evt->expects($this->any())
+            ->method('getTransport')
+            ->will($this->returnValue($transport));
+
+        return $evt;
+    }
+
+    // -- Creation Methods
+
     public function testPluginCanStopAndStartMultipleTimes()
     {
         $transport = $this->_createTransport();
         $transport->expects($this->exactly(5))
-                  ->method('start');
+            ->method('start');
         $transport->expects($this->exactly(5))
-                  ->method('stop');
+            ->method('stop');
 
         $evt = $this->_createSendEvent($transport);
 
@@ -54,14 +76,14 @@ class Swift_Plugins_AntiFloodPluginTest extends \PHPUnit_Framework_TestCase
     {
         $sleeper = $this->getMock('Swift_Plugins_Sleeper');
         $sleeper->expects($this->once())
-                ->method('sleep')
-                ->with(10);
+            ->method('sleep')
+            ->with(10);
 
         $transport = $this->_createTransport();
         $transport->expects($this->once())
-                  ->method('start');
+            ->method('start');
         $transport->expects($this->once())
-                  ->method('stop');
+            ->method('stop');
 
         $evt = $this->_createSendEvent($transport);
 
@@ -69,27 +91,5 @@ class Swift_Plugins_AntiFloodPluginTest extends \PHPUnit_Framework_TestCase
         for ($i = 0; $i < 101; $i++) {
             $plugin->sendPerformed($evt);
         }
-    }
-
-    // -- Creation Methods
-
-    private function _createTransport()
-    {
-        return $this->getMock('Swift_Transport');
-    }
-
-    private function _createSendEvent($transport)
-    {
-        $evt = $this->getMockBuilder('Swift_Events_SendEvent')
-                    ->disableOriginalConstructor()
-                    ->getMock();
-        $evt->expects($this->any())
-            ->method('getSource')
-            ->will($this->returnValue($transport));
-        $evt->expects($this->any())
-            ->method('getTransport')
-            ->will($this->returnValue($transport));
-
-        return $evt;
     }
 }

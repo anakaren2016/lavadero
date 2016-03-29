@@ -34,7 +34,8 @@ class MinutesField extends AbstractField
         if (count($minutes) > 1) {
             for ($i = 0; $i < count($minutes) - 1; $i++) {
                 if ((!$invert && $current_minute >= $minutes[$i] && $current_minute < $minutes[$i + 1]) ||
-                    ($invert && $current_minute > $minutes[$i] && $current_minute <= $minutes[$i + 1])) {
+                    ($invert && $current_minute > $minutes[$i] && $current_minute <= $minutes[$i + 1])
+                ) {
                     $position = $invert ? $i : $i + 1;
                     break;
                 }
@@ -44,8 +45,7 @@ class MinutesField extends AbstractField
         if ((!$invert && $current_minute >= $minutes[$position]) || ($invert && $current_minute <= $minutes[$position])) {
             $date->modify(($invert ? '-' : '+') . '1 hour');
             $date->setTime($date->format('H'), $invert ? 59 : 0);
-        }
-        else {
+        } else {
             $date->setTime($date->format('H'), $minutes[$position]);
         }
 
@@ -54,6 +54,6 @@ class MinutesField extends AbstractField
 
     public function validate($value)
     {
-        return (bool) preg_match('/^[\*,\/\-0-9]+$/', $value);
+        return (bool)preg_match('/^[\*,\/\-0-9]+$/', $value);
     }
 }

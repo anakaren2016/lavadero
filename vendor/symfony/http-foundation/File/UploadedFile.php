@@ -75,12 +75,12 @@ class UploadedFile extends File
      *
      * Calling any other method on an non-valid instance will cause an unpredictable result.
      *
-     * @param string $path         The full temporary path to the file
+     * @param string $path The full temporary path to the file
      * @param string $originalName The original file name
-     * @param string $mimeType     The type of the file as provided by PHP
-     * @param int    $size         The file size
-     * @param int    $error        The error constant of the upload (one of PHP's UPLOAD_ERR_XXX constants)
-     * @param bool   $test         Whether the test mode is active
+     * @param string $mimeType The type of the file as provided by PHP
+     * @param int $size The file size
+     * @param int $error The error constant of the upload (one of PHP's UPLOAD_ERR_XXX constants)
+     * @param bool $test Whether the test mode is active
      *
      * @throws FileException         If file_uploads is disabled
      * @throws FileNotFoundException If the file does not exist
@@ -91,7 +91,7 @@ class UploadedFile extends File
         $this->mimeType = $mimeType ?: 'application/octet-stream';
         $this->size = $size;
         $this->error = $error ?: UPLOAD_ERR_OK;
-        $this->test = (bool) $test;
+        $this->test = (bool)$test;
 
         parent::__construct($path, UPLOAD_ERR_OK === $this->error);
     }
@@ -207,7 +207,7 @@ class UploadedFile extends File
      * Moves the file to a new location.
      *
      * @param string $directory The destination folder
-     * @param string $name      The new file name
+     * @param string $name The new file name
      *
      * @return File A File object representing the new file
      *
@@ -254,14 +254,18 @@ class UploadedFile extends File
         } elseif (0 === strpos($max, '0')) {
             $max = intval($max, 8);
         } else {
-            $max = (int) $max;
+            $max = (int)$max;
         }
 
         switch (substr($iniMax, -1)) {
-            case 't': $max *= 1024;
-            case 'g': $max *= 1024;
-            case 'm': $max *= 1024;
-            case 'k': $max *= 1024;
+            case 't':
+                $max *= 1024;
+            case 'g':
+                $max *= 1024;
+            case 'm':
+                $max *= 1024;
+            case 'k':
+                $max *= 1024;
         }
 
         return $max;

@@ -25,9 +25,9 @@ class Swift_Mime_Headers_UnstructuredHeader extends Swift_Mime_Headers_AbstractH
     /**
      * Creates a new SimpleHeader with $name.
      *
-     * @param string                   $name
+     * @param string $name
      * @param Swift_Mime_HeaderEncoder $encoder
-     * @param Swift_Mime_Grammar       $grammar
+     * @param Swift_Mime_Grammar $grammar
      */
     public function __construct($name, Swift_Mime_HeaderEncoder $encoder, Swift_Mime_Grammar $grammar)
     {
@@ -104,7 +104,7 @@ class Swift_Mime_Headers_UnstructuredHeader extends Swift_Mime_Headers_AbstractH
         if (!$this->getCachedValue()) {
             $this->setCachedValue(
                 $this->encodeWords($this, $this->_value)
-                );
+            );
         }
 
         return $this->getCachedValue();

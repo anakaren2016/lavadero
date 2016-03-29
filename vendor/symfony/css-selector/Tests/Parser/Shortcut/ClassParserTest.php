@@ -28,7 +28,7 @@ class ClassParserTest extends \PHPUnit_Framework_TestCase
 
         /** @var SelectorNode $selector */
         $selector = $selectors[0];
-        $this->assertEquals($representation, (string) $selector->getTree());
+        $this->assertEquals($representation, (string)$selector->getTree());
     }
 
     public function getParseTestData()

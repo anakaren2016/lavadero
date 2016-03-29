@@ -2,9 +2,9 @@
 
 namespace Illuminate\Session;
 
-use SessionHandlerInterface;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
+use SessionHandlerInterface;
 
 class EncryptedStore extends Store
 {
@@ -34,7 +34,7 @@ class EncryptedStore extends Store
     /**
      * Prepare the raw string data from the session for unserialization.
      *
-     * @param  string  $data
+     * @param  string $data
      * @return string
      */
     protected function prepareForUnserialize($data)
@@ -49,7 +49,7 @@ class EncryptedStore extends Store
     /**
      * Prepare the serialized session data for storage.
      *
-     * @param  string  $data
+     * @param  string $data
      * @return string
      */
     protected function prepareForStorage($data)

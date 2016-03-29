@@ -1,9 +1,9 @@
 <?php
 namespace Hamcrest\Text;
 
-/*
- Copyright (c) 2009 hamcrest.org
- */
+    /*
+     Copyright (c) 2009 hamcrest.org
+     */
 
 /**
  * Tests if the argument is a string that ends with a substring.

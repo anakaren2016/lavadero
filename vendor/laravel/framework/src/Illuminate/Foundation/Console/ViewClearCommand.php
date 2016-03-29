@@ -31,7 +31,7 @@ class ViewClearCommand extends Command
     /**
      * Create a new config clear command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param  \Illuminate\Filesystem\Filesystem $files
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -48,7 +48,7 @@ class ViewClearCommand extends Command
      */
     public function fire()
     {
-        $views = $this->files->glob($this->laravel['config']['view.compiled'].'/*');
+        $views = $this->files->glob($this->laravel['config']['view.compiled'] . '/*');
 
         foreach ($views as $view) {
             $this->files->delete($view);

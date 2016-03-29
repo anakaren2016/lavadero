@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor See Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
@@ -31,7 +31,7 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SeeTag
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\SeeTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -42,7 +42,8 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
         $exContent,
         $exDescription,
         $exReference
-    ) {
+    )
+    {
         $tag = new SeeTag($type, $content);
 
         $this->assertEquals($type, $tag->getName());

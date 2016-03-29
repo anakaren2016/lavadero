@@ -2,9 +2,9 @@
 
 namespace Illuminate\Pagination;
 
-use Illuminate\Support\HtmlString;
 use Illuminate\Contracts\Pagination\Paginator as PaginatorContract;
 use Illuminate\Contracts\Pagination\Presenter as PresenterContract;
+use Illuminate\Support\HtmlString;
 
 class BootstrapFourPresenter implements PresenterContract
 {
@@ -27,8 +27,8 @@ class BootstrapFourPresenter implements PresenterContract
     /**
      * Create a new Bootstrap presenter instance.
      *
-     * @param  \Illuminate\Contracts\Pagination\Paginator  $paginator
-     * @param  \Illuminate\Pagination\UrlWindow|null  $window
+     * @param  \Illuminate\Contracts\Pagination\Paginator $paginator
+     * @param  \Illuminate\Pagination\UrlWindow|null $window
      * @return void
      */
     public function __construct(PaginatorContract $paginator, UrlWindow $window = null)
@@ -69,38 +69,38 @@ class BootstrapFourPresenter implements PresenterContract
     /**
      * Get HTML wrapper for an available page link.
      *
-     * @param  string  $url
-     * @param  int  $page
-     * @param  string|null  $rel
+     * @param  string $url
+     * @param  int $page
+     * @param  string|null $rel
      * @return string
      */
     protected function getAvailablePageWrapper($url, $page, $rel = null)
     {
-        $rel = is_null($rel) ? '' : ' rel="'.$rel.'"';
+        $rel = is_null($rel) ? '' : ' rel="' . $rel . '"';
 
-        return '<li class="page-item"><a class="page-link" href="'.htmlentities($url).'"'.$rel.'>'.$page.'</a></li>';
+        return '<li class="page-item"><a class="page-link" href="' . htmlentities($url) . '"' . $rel . '>' . $page . '</a></li>';
     }
 
     /**
      * Get HTML wrapper for disabled text.
      *
-     * @param  string  $text
+     * @param  string $text
      * @return string
      */
     protected function getDisabledTextWrapper($text)
     {
-        return '<li class="page-item disabled"><a class="page-link">'.$text.'</a></li>';
+        return '<li class="page-item disabled"><a class="page-link">' . $text . '</a></li>';
     }
 
     /**
      * Get HTML wrapper for active text.
      *
-     * @param  string  $text
+     * @param  string $text
      * @return string
      */
     protected function getActivePageWrapper($text)
     {
-        return '<li class="page-item active"><a class="page-link">'.$text.'</a></li>';
+        return '<li class="page-item active"><a class="page-link">' . $text . '</a></li>';
     }
 
     /**

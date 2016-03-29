@@ -107,8 +107,8 @@ class PHPUnit_Framework_MockObject_Matcher implements PHPUnit_Framework_MockObje
 
         if ($this->afterMatchBuilderId !== null) {
             $builder = $invocation->object
-                                  ->__phpunit_getInvocationMocker()
-                                  ->lookupId($this->afterMatchBuilderId);
+                ->__phpunit_getInvocationMocker()
+                ->lookupId($this->afterMatchBuilderId);
 
             if (!$builder) {
                 throw new PHPUnit_Framework_Exception(
@@ -130,7 +130,8 @@ class PHPUnit_Framework_MockObject_Matcher implements PHPUnit_Framework_MockObje
 
         try {
             if ($this->parametersMatcher !== null &&
-                !$this->parametersMatcher->matches($invocation)) {
+                !$this->parametersMatcher->matches($invocation)
+            ) {
                 $this->parametersMatcher->verify();
             }
         } catch (PHPUnit_Framework_ExpectationFailedException $e) {
@@ -160,8 +161,8 @@ class PHPUnit_Framework_MockObject_Matcher implements PHPUnit_Framework_MockObje
     {
         if ($this->afterMatchBuilderId !== null) {
             $builder = $invocation->object
-                                  ->__phpunit_getInvocationMocker()
-                                  ->lookupId($this->afterMatchBuilderId);
+                ->__phpunit_getInvocationMocker()
+                ->lookupId($this->afterMatchBuilderId);
 
             if (!$builder) {
                 throw new PHPUnit_Framework_Exception(
@@ -239,7 +240,7 @@ class PHPUnit_Framework_MockObject_Matcher implements PHPUnit_Framework_MockObje
                 $this->parametersMatcher = new PHPUnit_Framework_MockObject_Matcher_AnyParameters;
             }
 
-            $invocationIsAny   = get_class($this->invocationMatcher) === 'PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount';
+            $invocationIsAny = get_class($this->invocationMatcher) === 'PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount';
             $invocationIsNever = get_class($this->invocationMatcher) === 'PHPUnit_Framework_MockObject_Matcher_InvokedCount' && $this->invocationMatcher->isNever();
             if (!$invocationIsAny && !$invocationIsNever) {
                 $this->parametersMatcher->verify();
@@ -262,7 +263,8 @@ class PHPUnit_Framework_MockObject_Matcher implements PHPUnit_Framework_MockObje
     public function hasMatchers()
     {
         if ($this->invocationMatcher !== null &&
-            !$this->invocationMatcher instanceof PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount) {
+            !$this->invocationMatcher instanceof PHPUnit_Framework_MockObject_Matcher_AnyInvokedCount
+        ) {
             return true;
         }
 

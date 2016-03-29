@@ -27,9 +27,9 @@ trait ResponseTrait
     /**
      * Set a header on the Response.
      *
-     * @param  string  $key
-     * @param  string  $value
-     * @param  bool    $replace
+     * @param  string $key
+     * @param  string $value
+     * @param  bool $replace
      * @return $this
      */
     public function header($key, $value, $replace = true)
@@ -42,7 +42,7 @@ trait ResponseTrait
     /**
      * Add an array of headers to the response.
      *
-     * @param  array  $headers
+     * @param  array $headers
      * @return $this
      */
     public function withHeaders(array $headers)
@@ -57,7 +57,7 @@ trait ResponseTrait
     /**
      * Add a cookie to the response.
      *
-     * @param  \Symfony\Component\HttpFoundation\Cookie|mixed  $cookie
+     * @param  \Symfony\Component\HttpFoundation\Cookie|mixed $cookie
      * @return $this
      */
     public function cookie($cookie)
@@ -68,7 +68,7 @@ trait ResponseTrait
     /**
      * Add a cookie to the response.
      *
-     * @param  \Symfony\Component\HttpFoundation\Cookie|mixed  $cookie
+     * @param  \Symfony\Component\HttpFoundation\Cookie|mixed $cookie
      * @return $this
      */
     public function withCookie($cookie)

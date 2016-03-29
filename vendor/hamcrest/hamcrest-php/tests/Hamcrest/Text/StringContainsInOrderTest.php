@@ -11,11 +11,6 @@ class StringContainsInOrderTest extends \Hamcrest\AbstractMatcherTest
         $this->_m = \Hamcrest\Text\StringContainsInOrder::stringContainsInOrder(array('a', 'b', 'c'));
     }
 
-    protected function createMatcher()
-    {
-        return $this->_m;
-    }
-
     public function testMatchesOnlyIfStringContainsGivenSubstringsInTheSameOrder()
     {
         $this->assertMatches($this->_m, 'abc', 'substrings in order');
@@ -38,5 +33,10 @@ class StringContainsInOrderTest extends \Hamcrest\AbstractMatcherTest
             'a string containing "a", "b", "c" in order',
             $this->_m
         );
+    }
+
+    protected function createMatcher()
+    {
+        return $this->_m;
     }
 }

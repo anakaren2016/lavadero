@@ -112,7 +112,7 @@ class Person extends \Faker\Provider\Person
         'Ami', 'Ani', 'Azalea', 'Aurora', 'Alika', 'Anastasia', 'Amelia',
         'Almira', 'Bella', 'Betania', 'Belinda', 'Citra', 'Cindy', 'Chelsea',
         'Clara', 'Cornelia', 'Cinta', 'Cinthia', 'Ciaobella', 'Cici', 'Carla',
-        'Calista', 'Devi', 'Dewi','Dian', 'Diah', 'Diana', 'Dina', 'Dinda',
+        'Calista', 'Devi', 'Dewi', 'Dian', 'Diah', 'Diana', 'Dina', 'Dinda',
         'Dalima', 'Eka', 'Eva', 'Endah', 'Elisa', 'Eli', 'Ella', 'Ellis',
         'Elma', 'Elvina', 'Fitria', 'Fitriani', 'Febi', 'Faizah', 'Farah',
         'Farhunnisa', 'Fathonah', 'Gabriella', 'Gasti', 'Gawati', 'Genta',
@@ -199,7 +199,18 @@ class Person extends \Faker\Provider\Person
      */
     private static $suffix = array('S.Ked', 'S.Gz', 'S.Pt', 'S.IP', 'S.E.I',
         'S.E.', 'S.Kom', 'S.H.', 'S.T.', 'S.Pd', 'S.Psi', 'S.I.Kom',
-        'S.Sos', 'S.Farm', 'M.M.', 'M.Kom.', 'M.TI.', 'M.Pd', 'M.Farm', 'M.Ak', );
+        'S.Sos', 'S.Farm', 'M.M.', 'M.Kom.', 'M.TI.', 'M.Pd', 'M.Farm', 'M.Ak',);
+
+    /**
+     * For academic title
+     *
+     * @access public
+     * @return string suffix
+     */
+    public static function suffix()
+    {
+        return static::randomElement(static::$suffix);
+    }
 
     /**
      * Return last name
@@ -241,16 +252,5 @@ class Person extends \Faker\Provider\Person
     public static function lastNameFemale()
     {
         return static::randomElement(static::$lastNameFemale);
-    }
-
-    /**
-     * For academic title
-     *
-     * @access public
-     * @return string suffix
-     */
-    public static function suffix()
-    {
-        return static::randomElement(static::$suffix);
     }
 }

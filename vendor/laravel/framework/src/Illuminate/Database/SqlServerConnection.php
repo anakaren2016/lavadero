@@ -3,19 +3,19 @@
 namespace Illuminate\Database;
 
 use Closure;
-use Exception;
-use Throwable;
 use Doctrine\DBAL\Driver\PDOSqlsrv\Driver as DoctrineDriver;
-use Illuminate\Database\Query\Processors\SqlServerProcessor;
+use Exception;
 use Illuminate\Database\Query\Grammars\SqlServerGrammar as QueryGrammar;
+use Illuminate\Database\Query\Processors\SqlServerProcessor;
 use Illuminate\Database\Schema\Grammars\SqlServerGrammar as SchemaGrammar;
+use Throwable;
 
 class SqlServerConnection extends Connection
 {
     /**
      * Execute a Closure within a transaction.
      *
-     * @param  \Closure  $callback
+     * @param  \Closure $callback
      * @return mixed
      *
      * @throws \Exception|\Throwable
@@ -37,9 +37,9 @@ class SqlServerConnection extends Connection
             $this->getPdo()->exec('COMMIT TRAN');
         }
 
-        // If we catch an exception, we will roll back so nothing gets messed
-        // up in the database. Then we'll re-throw the exception so it can
-        // be handled how the developer sees fit for their applications.
+            // If we catch an exception, we will roll back so nothing gets messed
+            // up in the database. Then we'll re-throw the exception so it can
+            // be handled how the developer sees fit for their applications.
         catch (Exception $e) {
             $this->getPdo()->exec('ROLLBACK TRAN');
 

@@ -149,11 +149,11 @@ class Container
                 $builder->addTarget('stdClass');
                 $builder->setName($name);
                 continue;
-            } elseif (is_string($arg) && substr($arg, strlen($arg)-1, 1) == ']') {
+            } elseif (is_string($arg) && substr($arg, strlen($arg) - 1, 1) == ']') {
                 $parts = explode('[', $arg);
                 if (!class_exists($parts[0], true) && !interface_exists($parts[0], true)) {
                     throw new \Mockery\Exception('Can only create a partial mock from'
-                    . ' an existing class or interface');
+                        . ' an existing class or interface');
                 }
                 $class = $parts[0];
                 $parts[1] = str_replace(' ', '', $parts[1]);
@@ -467,7 +467,7 @@ class Container
             if (!class_exists($internalMockName)) {
                 eval("class $internalMockName extends $mockName {" .
                         'public function __construct() {}' .
-                    '}');
+                        '}');
             }
 
             $instance = new $internalMockName();

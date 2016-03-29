@@ -37,11 +37,11 @@ class VarCloner extends AbstractCloner
         $values = array();              // Map of stub objects' hashes to original values
         $maxItems = $this->maxItems;
         $maxString = $this->maxString;
-        $cookie = (object) array();     // Unique object used to detect hard references
+        $cookie = (object)array();     // Unique object used to detect hard references
         $gid = uniqid(mt_rand(), true); // Unique string used to detect the special $GLOBALS variable
         $a = null;                      // Array cast for nested structures
         $stub = null;                   // Stub capturing the main properties of an original item value
-                                        // or null if the original value is used directly
+        // or null if the original value is used directly
         $zval = array(                  // Main properties of the current value
             'type' => null,
             'zval_isref' => null,
@@ -178,7 +178,7 @@ class VarCloner extends AbstractCloner
 
                     case 'resource':
                     case 'unknown type':
-                        if (empty($resRefs[$h = (int) $v])) {
+                        if (empty($resRefs[$h = (int)$v])) {
                             $stub = new Stub();
                             $stub->type = Stub::TYPE_RESOURCE;
                             $stub->class = $zval['resource_type'] ?: get_resource_type($v);
@@ -273,7 +273,7 @@ class VarCloner extends AbstractCloner
 
     private static function initHashMask()
     {
-        $obj = (object) array();
+        $obj = (object)array();
         self::$hashOffset = 16 - PHP_INT_SIZE;
         self::$hashMask = -1;
 

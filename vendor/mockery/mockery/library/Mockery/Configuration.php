@@ -55,7 +55,7 @@ class Configuration
      */
     public function allowMockingNonExistentMethods($flag = true)
     {
-        $this->_allowMockingNonExistentMethod = (bool) $flag;
+        $this->_allowMockingNonExistentMethod = (bool)$flag;
     }
 
     /**
@@ -75,7 +75,7 @@ class Configuration
      */
     public function allowMockingMethodsUnnecessarily($flag = true)
     {
-        $this->_allowMockingMethodsUnnecessarily = (bool) $flag;
+        $this->_allowMockingMethodsUnnecessarily = (bool)$flag;
     }
 
     /**

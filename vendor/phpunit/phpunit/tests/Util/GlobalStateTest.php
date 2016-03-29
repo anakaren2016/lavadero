@@ -17,7 +17,7 @@ class Util_GlobalStateTest extends PHPUnit_Framework_TestCase
      */
     public function testIncludedFilesAsStringSkipsVfsProtocols()
     {
-        $dir   = __DIR__;
+        $dir = __DIR__;
         $files = array(
             'phpunit', // The 0 index is not used
             $dir . '/ConfigurationTest.php',

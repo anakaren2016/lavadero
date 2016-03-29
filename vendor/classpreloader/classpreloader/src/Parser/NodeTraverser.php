@@ -24,7 +24,7 @@ class NodeTraverser extends BaseTraverser
     /**
      * Transverse the file.
      *
-     * @param array  $nodes
+     * @param array $nodes
      * @param string $filename
      *
      * @return \PhpParser\Node[]

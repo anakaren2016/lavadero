@@ -2,8 +2,8 @@
 
 namespace Illuminate\Database\Query\Grammars;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Str;
 
 class PostgresGrammar extends Grammar
 {
@@ -19,91 +19,10 @@ class PostgresGrammar extends Grammar
     ];
 
     /**
-     * Compile the lock into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  bool|string  $value
-     * @return string
-     */
-    protected function compileLock(Builder $query, $value)
-    {
-        if (is_string($value)) {
-            return $value;
-        }
-
-        return $value ? 'for update' : 'for share';
-    }
-
-    /**
-     * Compile a "where date" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereDate(Builder $query, $where)
-    {
-        $value = $this->parameter($where['value']);
-
-        return $this->wrap($where['column']).'::date '.$where['operator'].' '.$value;
-    }
-
-    /**
-     * Compile a "where day" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereDay(Builder $query, $where)
-    {
-        return $this->dateBasedWhere('day', $query, $where);
-    }
-
-    /**
-     * Compile a "where month" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereMonth(Builder $query, $where)
-    {
-        return $this->dateBasedWhere('month', $query, $where);
-    }
-
-    /**
-     * Compile a "where year" clause.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function whereYear(Builder $query, $where)
-    {
-        return $this->dateBasedWhere('year', $query, $where);
-    }
-
-    /**
-     * Compile a date based where clause.
-     *
-     * @param  string  $type
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $where
-     * @return string
-     */
-    protected function dateBasedWhere($type, Builder $query, $where)
-    {
-        $value = $this->parameter($where['value']);
-
-        return 'extract('.$type.' from '.$this->wrap($where['column']).') '.$where['operator'].' '.$value;
-    }
-
-    /**
      * Compile an update statement into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $values
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  array $values
      * @return string
      */
     public function compileUpdate(Builder $query, $values)
@@ -125,7 +44,7 @@ class PostgresGrammar extends Grammar
     /**
      * Compile the columns for the update statement.
      *
-     * @param  array   $values
+     * @param  array $values
      * @return string
      */
     protected function compileUpdateColumns($values)
@@ -136,7 +55,7 @@ class PostgresGrammar extends Grammar
         // columns and convert it to a parameter value. Then we will concatenate a
         // list of the columns that can be added into this update query clauses.
         foreach ($values as $key => $value) {
-            $columns[] = $this->wrap($key).' = '.$this->parameter($value);
+            $columns[] = $this->wrap($key) . ' = ' . $this->parameter($value);
         }
 
         return implode(', ', $columns);
@@ -145,12 +64,12 @@ class PostgresGrammar extends Grammar
     /**
      * Compile the "from" clause for an update with a join.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Database\Query\Builder $query
      * @return string|null
      */
     protected function compileUpdateFrom(Builder $query)
     {
-        if (! isset($query->joins)) {
+        if (!isset($query->joins)) {
             return '';
         }
 
@@ -164,21 +83,21 @@ class PostgresGrammar extends Grammar
         }
 
         if (count($froms) > 0) {
-            return ' from '.implode(', ', $froms);
+            return ' from ' . implode(', ', $froms);
         }
     }
 
     /**
      * Compile the additional where clauses for updates with joins.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Database\Query\Builder $query
      * @return string
      */
     protected function compileUpdateWheres(Builder $query)
     {
         $baseWhere = $this->compileWheres($query);
 
-        if (! isset($query->joins)) {
+        if (!isset($query->joins)) {
             return $baseWhere;
         }
 
@@ -188,16 +107,16 @@ class PostgresGrammar extends Grammar
         $joinWhere = $this->compileUpdateJoinWheres($query);
 
         if (trim($baseWhere) == '') {
-            return 'where '.$this->removeLeadingBoolean($joinWhere);
+            return 'where ' . $this->removeLeadingBoolean($joinWhere);
         }
 
-        return $baseWhere.' '.$joinWhere;
+        return $baseWhere . ' ' . $joinWhere;
     }
 
     /**
      * Compile the "join" clauses for an update.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Database\Query\Builder $query
      * @return string
      */
     protected function compileUpdateJoinWheres(Builder $query)
@@ -219,9 +138,9 @@ class PostgresGrammar extends Grammar
     /**
      * Compile an insert and get ID statement into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array   $values
-     * @param  string  $sequence
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  array $values
+     * @param  string $sequence
      * @return string
      */
     public function compileInsertGetId(Builder $query, $values, $sequence)
@@ -230,24 +149,105 @@ class PostgresGrammar extends Grammar
             $sequence = 'id';
         }
 
-        return $this->compileInsert($query, $values).' returning '.$this->wrap($sequence);
+        return $this->compileInsert($query, $values) . ' returning ' . $this->wrap($sequence);
     }
 
     /**
      * Compile a truncate table statement into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Database\Query\Builder $query
      * @return array
      */
     public function compileTruncate(Builder $query)
     {
-        return ['truncate '.$this->wrapTable($query->from).' restart identity' => []];
+        return ['truncate ' . $this->wrapTable($query->from) . ' restart identity' => []];
+    }
+
+    /**
+     * Compile the lock into SQL.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  bool|string $value
+     * @return string
+     */
+    protected function compileLock(Builder $query, $value)
+    {
+        if (is_string($value)) {
+            return $value;
+        }
+
+        return $value ? 'for update' : 'for share';
+    }
+
+    /**
+     * Compile a "where date" clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  array $where
+     * @return string
+     */
+    protected function whereDate(Builder $query, $where)
+    {
+        $value = $this->parameter($where['value']);
+
+        return $this->wrap($where['column']) . '::date ' . $where['operator'] . ' ' . $value;
+    }
+
+    /**
+     * Compile a "where day" clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  array $where
+     * @return string
+     */
+    protected function whereDay(Builder $query, $where)
+    {
+        return $this->dateBasedWhere('day', $query, $where);
+    }
+
+    /**
+     * Compile a date based where clause.
+     *
+     * @param  string $type
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  array $where
+     * @return string
+     */
+    protected function dateBasedWhere($type, Builder $query, $where)
+    {
+        $value = $this->parameter($where['value']);
+
+        return 'extract(' . $type . ' from ' . $this->wrap($where['column']) . ') ' . $where['operator'] . ' ' . $value;
+    }
+
+    /**
+     * Compile a "where month" clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  array $where
+     * @return string
+     */
+    protected function whereMonth(Builder $query, $where)
+    {
+        return $this->dateBasedWhere('month', $query, $where);
+    }
+
+    /**
+     * Compile a "where year" clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  array $where
+     * @return string
+     */
+    protected function whereYear(Builder $query, $where)
+    {
+        return $this->dateBasedWhere('year', $query, $where);
     }
 
     /**
      * Wrap a single string in keyword identifiers.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     protected function wrapValue($value)
@@ -260,13 +260,13 @@ class PostgresGrammar extends Grammar
             return $this->wrapJsonSelector($value);
         }
 
-        return '"'.str_replace('"', '""', $value).'"';
+        return '"' . str_replace('"', '""', $value) . '"';
     }
 
     /**
      * Wrap the given JSON selector.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     protected function wrapJsonSelector($value)
@@ -279,17 +279,17 @@ class PostgresGrammar extends Grammar
 
         $attribute = array_pop($wrappedPath);
 
-        if (! empty($wrappedPath)) {
-            return $field.'->'.implode('->', $wrappedPath).'->>'.$attribute;
+        if (!empty($wrappedPath)) {
+            return $field . '->' . implode('->', $wrappedPath) . '->>' . $attribute;
         }
 
-        return $field.'->>'.$attribute;
+        return $field . '->>' . $attribute;
     }
 
     /**
      * Wrap the attributes of the give JSON path.
      *
-     * @param  array  $path
+     * @param  array $path
      * @return array
      */
     protected function wrapJsonPathAttributes($path)

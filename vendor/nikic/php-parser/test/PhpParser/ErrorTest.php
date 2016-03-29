@@ -4,7 +4,8 @@ namespace PhpParser;
 
 class ErrorTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConstruct() {
+    public function testConstruct()
+    {
         $attributes = array(
             'startLine' => 10,
             'endLine' => 11,
@@ -24,7 +25,8 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends testConstruct
      */
-    public function testSetMessageAndLine(Error $error) {
+    public function testSetMessageAndLine(Error $error)
+    {
         $error->setRawMessage('Some other error');
         $this->assertSame('Some other error', $error->getRawMessage());
 
@@ -37,7 +39,8 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('Some other error on line 17', $error->getMessage());
     }
 
-    public function testUnknownLine() {
+    public function testUnknownLine()
+    {
         $error = new Error('Some error');
 
         $this->assertSame(-1, $error->getStartLine());
@@ -47,7 +50,8 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @dataProvider provideTestColumnInfo */
-    public function testColumnInfo($code, $startPos, $endPos, $startColumn, $endColumn) {
+    public function testColumnInfo($code, $startPos, $endPos, $startColumn, $endColumn)
+    {
         $error = new Error('Some error', array(
             'startFilePos' => $startPos,
             'endFilePos' => $endPos,
@@ -59,7 +63,8 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function provideTestColumnInfo() {
+    public function provideTestColumnInfo()
+    {
         return array(
             // Error at "bar"
             array("<?php foo bar baz", 10, 12, 11, 13),
@@ -80,7 +85,8 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testNoColumnInfo() {
+    public function testNoColumnInfo()
+    {
         $error = new Error('Some error', 3);
 
         $this->assertSame(false, $error->hasColumnInfo());
@@ -102,7 +108,8 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Invalid position information
      */
-    public function testInvalidPosInfo() {
+    public function testInvalidPosInfo()
+    {
         $error = new Error('Some error', array(
             'startFilePos' => 10,
             'endFilePos' => 11,

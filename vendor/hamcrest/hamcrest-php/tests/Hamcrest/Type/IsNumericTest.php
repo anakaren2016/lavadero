@@ -4,11 +4,6 @@ namespace Hamcrest\Type;
 class IsNumericTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Type\IsNumeric::numericValue();
-    }
-
     public function testEvaluatesToTrueIfArgumentMatchesType()
     {
         assertThat(5, numericValue());
@@ -45,5 +40,10 @@ class IsNumericTest extends \Hamcrest\AbstractMatcherTest
     {
         $this->assertMismatchDescription('was null', numericValue(), null);
         $this->assertMismatchDescription('was a string "foo"', numericValue(), 'foo');
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Type\IsNumeric::numericValue();
     }
 }

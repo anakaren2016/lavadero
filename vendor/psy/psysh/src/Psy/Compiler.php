@@ -18,6 +18,11 @@ use Symfony\Component\Finder\Finder;
  */
 class Compiler
 {
+    const STUB_AUTOLOAD = <<<'EOS'
+    Phar::mapPhar('psysh.phar');
+    require 'phar://psysh.phar/build-vendor/autoload.php';
+EOS;
+
     /**
      * Compiles psysh into a single phar file.
      *
@@ -70,9 +75,9 @@ class Compiler
     /**
      * Add a file to the psysh Phar.
      *
-     * @param Phar        $phar
+     * @param Phar $phar
      * @param SplFileInfo $file
-     * @param bool        $strip (default: true)
+     * @param bool $strip (default: true)
      */
     private function addFile($phar, $file, $strip = true)
     {
@@ -123,20 +128,6 @@ class Compiler
         return $output;
     }
 
-    private static function getStubLicense()
-    {
-        $license = file_get_contents(__DIR__ . '/../../LICENSE');
-        $license = str_replace('The MIT License (MIT)', '', $license);
-        $license = str_replace("\n", "\n * ", trim($license));
-
-        return $license;
-    }
-
-    const STUB_AUTOLOAD = <<<'EOS'
-    Phar::mapPhar('psysh.phar');
-    require 'phar://psysh.phar/build-vendor/autoload.php';
-EOS;
-
     /**
      * Get a Phar stub for psysh.
      *
@@ -153,5 +144,14 @@ EOS;
         $content .= '__HALT_COMPILER();';
 
         return $content;
+    }
+
+    private static function getStubLicense()
+    {
+        $license = file_get_contents(__DIR__ . '/../../LICENSE');
+        $license = str_replace('The MIT License (MIT)', '', $license);
+        $license = str_replace("\n", "\n * ", trim($license));
+
+        return $license;
     }
 }

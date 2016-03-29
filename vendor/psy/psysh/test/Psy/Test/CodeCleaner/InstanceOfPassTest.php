@@ -15,11 +15,6 @@ use Psy\CodeCleaner\InstanceOfPass;
 
 class InstanceOfPassTest extends CodeCleanerTestCase
 {
-    protected function setUp()
-    {
-        $this->setPass(new InstanceOfPass());
-    }
-
     /**
      * @dataProvider invalidStatements
      * @expectedException \Psy\Exception\FatalErrorException
@@ -70,5 +65,10 @@ class InstanceOfPassTest extends CodeCleanerTestCase
         );
 
         return $data;
+    }
+
+    protected function setUp()
+    {
+        $this->setPass(new InstanceOfPass());
     }
 }

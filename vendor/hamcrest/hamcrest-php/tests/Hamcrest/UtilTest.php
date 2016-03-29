@@ -37,6 +37,14 @@ class UtilTest extends \PhpUnit_Framework_TestCase
         ));
     }
 
+    public function testCreateMatcherArrayLeavesMatchersUntouched()
+    {
+        $matcher = new \Hamcrest\Text\MatchesPattern('/fo+/');
+        $items = array($matcher);
+        $matchers = $this->callAndAssertCreateMatcherArray($items);
+        $this->assertSame($matcher, $matchers[0]);
+    }
+
     private function callAndAssertCreateMatcherArray($items)
     {
         $matchers = \Hamcrest\Util::createMatcherArray($items);
@@ -47,14 +55,6 @@ class UtilTest extends \PhpUnit_Framework_TestCase
         }
 
         return $matchers;
-    }
-
-    public function testCreateMatcherArrayLeavesMatchersUntouched()
-    {
-        $matcher = new \Hamcrest\Text\MatchesPattern('/fo+/');
-        $items = array($matcher);
-        $matchers = $this->callAndAssertCreateMatcherArray($items);
-        $this->assertSame($matcher, $matchers[0]);
     }
 
     public function testCreateMatcherArrayWrapsPrimitiveWithIsEqualMatcher()

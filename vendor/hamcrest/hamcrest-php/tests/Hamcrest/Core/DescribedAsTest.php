@@ -4,11 +4,6 @@ namespace Hamcrest\Core;
 class DescribedAsTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Core\DescribedAs::describedAs('irrelevant', anything());
-    }
-
     public function testOverridesDescriptionOfOtherMatcherWithThatPassedToConstructor()
     {
         $m1 = describedAs('m1 description', anything());
@@ -32,5 +27,10 @@ class DescribedAsTest extends \Hamcrest\AbstractMatcherTest
 
         $this->assertTrue($m1->matches(new \stdClass()));
         $this->assertFalse($m2->matches('hi'));
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Core\DescribedAs::describedAs('irrelevant', anything());
     }
 }

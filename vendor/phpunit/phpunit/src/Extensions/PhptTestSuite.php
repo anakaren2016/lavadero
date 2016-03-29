@@ -28,7 +28,7 @@ class PHPUnit_Extensions_PhptTestSuite extends PHPUnit_Framework_TestSuite
             $this->setName($directory);
 
             $facade = new File_Iterator_Facade;
-            $files  = $facade->getFilesAsArray($directory, '.phpt');
+            $files = $facade->getFilesAsArray($directory, '.phpt');
 
             foreach ($files as $file) {
                 $this->addTestFile($file);

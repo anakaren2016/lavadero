@@ -17,13 +17,13 @@ abstract class ClosureAnalyzer
     {
         $data = [
             'reflection' => new \ReflectionFunction($closure),
-            'code'       => null,
-            'hasThis'    => false,
-            'context'    => [],
-            'hasRefs'    => false,
-            'binding'    => null,
-            'scope'      => null,
-            'isStatic'   => $this->isClosureStatic($closure),
+            'code' => null,
+            'hasThis' => false,
+            'context' => [],
+            'hasRefs' => false,
+            'binding' => null,
+            'scope' => null,
+            'isStatic' => $this->isClosureStatic($closure),
         ];
 
         $this->determineCode($data);
@@ -31,6 +31,19 @@ abstract class ClosureAnalyzer
         $this->determineBinding($data);
 
         return $data;
+    }
+
+    private function isClosureStatic(\Closure $closure)
+    {
+        $closure = @$closure->bindTo(new \stdClass);
+
+        if ($closure === null) {
+            return true;
+        }
+
+        $rebound = new \ReflectionFunction($closure);
+
+        return $rebound->getClosureThis() === null;
     }
 
     abstract protected function determineCode(array &$data);
@@ -51,18 +64,5 @@ abstract class ClosureAnalyzer
         if ($scope = $data['reflection']->getClosureScopeClass()) {
             $data['scope'] = $scope->getName();
         }
-    }
-
-    private function isClosureStatic(\Closure $closure)
-    {
-        $closure = @$closure->bindTo(new \stdClass);
-
-        if ($closure === null) {
-            return true;
-        }
-
-        $rebound = new \ReflectionFunction($closure);
-
-        return $rebound->getClosureThis() === null;
     }
 }

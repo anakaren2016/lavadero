@@ -25,9 +25,9 @@ class FilterIteratorTest extends RealIteratorTestCase
         $i->expects($this->any())
             ->method('accept')
             ->will($this->returnCallback(function () use ($i) {
-                return (bool) preg_match('/\.php/', (string) $i->current());
+                return (bool)preg_match('/\.php/', (string)$i->current());
             })
-        );
+            );
 
         $c = 0;
         foreach ($i as $item) {

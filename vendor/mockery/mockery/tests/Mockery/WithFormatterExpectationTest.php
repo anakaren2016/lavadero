@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Mockery
  *
@@ -18,7 +19,6 @@
  * @copyright  Copyright (c) 2010-2014 Pádraic Brady (http://blog.astrumfutura.com)
  * @license    http://github.com/padraic/mockery/blob/master/LICENSE New BSD License
  */
-
 class WithFormatterExpectationTest extends PHPUnit_Framework_TestCase
 {
     /**

@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Routing\Loader;
 
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Config\FileLocatorInterface;
+use Symfony\Component\Config\Loader\FileLoader;
+use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * AnnotationFileLoader loads routing information from annotations set
@@ -29,8 +29,8 @@ class AnnotationFileLoader extends FileLoader
     /**
      * Constructor.
      *
-     * @param FileLocatorInterface  $locator A FileLocator instance
-     * @param AnnotationClassLoader $loader  An AnnotationClassLoader instance
+     * @param FileLocatorInterface $locator A FileLocator instance
+     * @param AnnotationClassLoader $loader An AnnotationClassLoader instance
      *
      * @throws \RuntimeException
      */
@@ -48,7 +48,7 @@ class AnnotationFileLoader extends FileLoader
     /**
      * Loads from annotations from a file.
      *
-     * @param string      $file A PHP file path
+     * @param string $file A PHP file path
      * @param string|null $type The resource type
      *
      * @return RouteCollection A RouteCollection instance
@@ -100,7 +100,7 @@ class AnnotationFileLoader extends FileLoader
             }
 
             if (true === $class && T_STRING === $token[0]) {
-                return $namespace.'\\'.$token[1];
+                return $namespace . '\\' . $token[1];
             }
 
             if (true === $namespace && T_STRING === $token[0]) {

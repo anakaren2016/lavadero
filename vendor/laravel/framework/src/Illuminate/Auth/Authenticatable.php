@@ -45,17 +45,6 @@ trait Authenticatable
     }
 
     /**
-     * Set the token value for the "remember me" session.
-     *
-     * @param  string  $value
-     * @return void
-     */
-    public function setRememberToken($value)
-    {
-        $this->{$this->getRememberTokenName()} = $value;
-    }
-
-    /**
      * Get the column name for the "remember me" token.
      *
      * @return string
@@ -63,5 +52,16 @@ trait Authenticatable
     public function getRememberTokenName()
     {
         return 'remember_token';
+    }
+
+    /**
+     * Set the token value for the "remember me" session.
+     *
+     * @param  string $value
+     * @return void
+     */
+    public function setRememberToken($value)
+    {
+        $this->{$this->getRememberTokenName()} = $value;
     }
 }

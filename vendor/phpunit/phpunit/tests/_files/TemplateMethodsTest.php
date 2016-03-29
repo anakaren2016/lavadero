@@ -1,4 +1,5 @@
 <?php
+
 class TemplateMethodsTest extends PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
@@ -6,12 +7,7 @@ class TemplateMethodsTest extends PHPUnit_Framework_TestCase
         print __METHOD__ . "\n";
     }
 
-    protected function setUp()
-    {
-        print __METHOD__ . "\n";
-    }
-
-    protected function assertPreConditions()
+    public static function tearDownAfterClass()
     {
         print __METHOD__ . "\n";
     }
@@ -28,17 +24,22 @@ class TemplateMethodsTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(false);
     }
 
+    protected function setUp()
+    {
+        print __METHOD__ . "\n";
+    }
+
+    protected function assertPreConditions()
+    {
+        print __METHOD__ . "\n";
+    }
+
     protected function assertPostConditions()
     {
         print __METHOD__ . "\n";
     }
 
     protected function tearDown()
-    {
-        print __METHOD__ . "\n";
-    }
-
-    public static function tearDownAfterClass()
     {
         print __METHOD__ . "\n";
     }

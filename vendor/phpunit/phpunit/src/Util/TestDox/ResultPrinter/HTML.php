@@ -45,15 +45,15 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      * Handler for 'on test' event.
      *
      * @param string $name
-     * @param bool   $success
+     * @param bool $success
      */
     protected function onTest($name, $success = true)
     {
         if (!$success) {
-            $strikeOpen  = '<span style="text-decoration:line-through;">';
+            $strikeOpen = '<span style="text-decoration:line-through;">';
             $strikeClose = '</span>';
         } else {
-            $strikeOpen  = '';
+            $strikeOpen = '';
             $strikeClose = '';
         }
 

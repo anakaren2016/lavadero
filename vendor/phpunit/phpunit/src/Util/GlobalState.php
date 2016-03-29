@@ -17,25 +17,25 @@ class PHPUnit_Util_GlobalState
      * @var array
      */
     protected static $superGlobalArrays = array(
-      '_ENV',
-      '_POST',
-      '_GET',
-      '_COOKIE',
-      '_SERVER',
-      '_FILES',
-      '_REQUEST'
+        '_ENV',
+        '_POST',
+        '_GET',
+        '_COOKIE',
+        '_SERVER',
+        '_FILES',
+        '_REQUEST'
     );
 
     /**
      * @var array
      */
     protected static $superGlobalArraysLong = array(
-      'HTTP_ENV_VARS',
-      'HTTP_POST_VARS',
-      'HTTP_GET_VARS',
-      'HTTP_COOKIE_VARS',
-      'HTTP_SERVER_VARS',
-      'HTTP_POST_FILES'
+        'HTTP_ENV_VARS',
+        'HTTP_POST_VARS',
+        'HTTP_GET_VARS',
+        'HTTP_COOKIE_VARS',
+        'HTTP_SERVER_VARS',
+        'HTTP_POST_FILES'
     );
 
     public static function getIncludedFilesAsString()
@@ -46,8 +46,8 @@ class PHPUnit_Util_GlobalState
     public static function processIncludedFilesAsString(array $files)
     {
         $blacklist = new PHPUnit_Util_Blacklist;
-        $prefix    = false;
-        $result    = '';
+        $prefix = false;
+        $result = '';
 
         if (defined('__PHPUNIT_PHAR__')) {
             $prefix = 'phar://' . __PHPUNIT_PHAR__ . '/';
@@ -75,7 +75,7 @@ class PHPUnit_Util_GlobalState
 
     public static function getIniSettingsAsString()
     {
-        $result      = '';
+        $result = '';
         $iniSettings = ini_get_all(null, false);
 
         foreach ($iniSettings as $key => $value) {
@@ -89,10 +89,42 @@ class PHPUnit_Util_GlobalState
         return $result;
     }
 
+    protected static function exportVariable($variable)
+    {
+        if (is_scalar($variable) || is_null($variable) ||
+            (is_array($variable) && self::arrayOnlyContainsScalars($variable))
+        ) {
+            return var_export($variable, true);
+        }
+
+        return 'unserialize(' .
+        var_export(serialize($variable), true) .
+        ')';
+    }
+
+    protected static function arrayOnlyContainsScalars(array $array)
+    {
+        $result = true;
+
+        foreach ($array as $element) {
+            if (is_array($element)) {
+                $result = self::arrayOnlyContainsScalars($element);
+            } elseif (!is_scalar($element) && !is_null($element)) {
+                $result = false;
+            }
+
+            if ($result === false) {
+                break;
+            }
+        }
+
+        return $result;
+    }
+
     public static function getConstantsAsString()
     {
         $constants = get_defined_constants(true);
-        $result    = '';
+        $result = '';
 
         if (isset($constants['user'])) {
             foreach ($constants['user'] as $name => $value) {
@@ -110,12 +142,13 @@ class PHPUnit_Util_GlobalState
 
     public static function getGlobalsAsString()
     {
-        $result            = '';
+        $result = '';
         $superGlobalArrays = self::getSuperGlobalArrays();
 
         foreach ($superGlobalArrays as $superGlobalArray) {
             if (isset($GLOBALS[$superGlobalArray]) &&
-                is_array($GLOBALS[$superGlobalArray])) {
+                is_array($GLOBALS[$superGlobalArray])
+            ) {
                 foreach (array_keys($GLOBALS[$superGlobalArray]) as $key) {
                     if ($GLOBALS[$superGlobalArray][$key] instanceof Closure) {
                         continue;
@@ -131,7 +164,7 @@ class PHPUnit_Util_GlobalState
             }
         }
 
-        $blacklist   = $superGlobalArrays;
+        $blacklist = $superGlobalArrays;
         $blacklist[] = 'GLOBALS';
 
         foreach (array_keys($GLOBALS) as $key) {
@@ -157,36 +190,5 @@ class PHPUnit_Util_GlobalState
         } else {
             return self::$superGlobalArrays;
         }
-    }
-
-    protected static function exportVariable($variable)
-    {
-        if (is_scalar($variable) || is_null($variable) ||
-           (is_array($variable) && self::arrayOnlyContainsScalars($variable))) {
-            return var_export($variable, true);
-        }
-
-        return 'unserialize(' .
-                var_export(serialize($variable), true) .
-                ')';
-    }
-
-    protected static function arrayOnlyContainsScalars(array $array)
-    {
-        $result = true;
-
-        foreach ($array as $element) {
-            if (is_array($element)) {
-                $result = self::arrayOnlyContainsScalars($element);
-            } elseif (!is_scalar($element) && !is_null($element)) {
-                $result = false;
-            }
-
-            if ($result === false) {
-                break;
-            }
-        }
-
-        return $result;
     }
 }

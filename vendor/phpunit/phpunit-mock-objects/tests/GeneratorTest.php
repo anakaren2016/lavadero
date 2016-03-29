@@ -1,4 +1,5 @@
 <?php
+
 class Framework_MockObject_GeneratorTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -6,9 +7,15 @@ class Framework_MockObject_GeneratorTest extends PHPUnit_Framework_TestCase
      */
     protected $generator;
 
-    protected function setUp()
+    /**
+     * Dataprovider for test "testGetMockForAbstractClassExpectingInvalidArgumentException"
+     */
+    public static function getMockForAbstractClassExpectsInvalidArgumentExceptionDataprovider()
     {
-        $this->generator = new PHPUnit_Framework_MockObject_Generator;
+        return array(
+            'className not a string' => array(array(), ''),
+            'mockClassName not a string' => array('Countable', new StdClass),
+        );
     }
 
     /**
@@ -84,8 +91,8 @@ class Framework_MockObject_GeneratorTest extends PHPUnit_Framework_TestCase
         $mock = $this->generator->getMockForAbstractClass('AbstractMockTestClass');
 
         $mock->expects($this->any())
-             ->method('doSomething')
-             ->willReturn('testing');
+            ->method('doSomething')
+            ->willReturn('testing');
 
         $this->assertEquals('testing', $mock->doSomething());
         $this->assertEquals(1, $mock->returnAnything());
@@ -93,7 +100,7 @@ class Framework_MockObject_GeneratorTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider getMockForAbstractClassExpectsInvalidArgumentExceptionDataprovider
-     * @covers PHPUnit_Framework_MockObject_Generator::getMockForAbstractClass
+     * @covers       PHPUnit_Framework_MockObject_Generator::getMockForAbstractClass
      * @expectedException PHPUnit_Framework_Exception
      */
     public function testGetMockForAbstractClassExpectingInvalidArgumentException($className, $mockClassName)
@@ -108,17 +115,6 @@ class Framework_MockObject_GeneratorTest extends PHPUnit_Framework_TestCase
     public function testGetMockForAbstractClassAbstractClassDoesNotExist()
     {
         $mock = $this->generator->getMockForAbstractClass('Tux');
-    }
-
-    /**
-     * Dataprovider for test "testGetMockForAbstractClassExpectingInvalidArgumentException"
-     */
-    public static function getMockForAbstractClassExpectsInvalidArgumentExceptionDataprovider()
-    {
-        return array(
-            'className not a string' => array(array(), ''),
-            'mockClassName not a string' => array('Countable', new StdClass),
-        );
     }
 
     /**
@@ -196,5 +192,10 @@ class Framework_MockObject_GeneratorTest extends PHPUnit_Framework_TestCase
 
         $mock = $this->generator->getMock('SoapClient', array(), array(), '', false);
         $this->assertInstanceOf('SoapClient', $mock);
+    }
+
+    protected function setUp()
+    {
+        $this->generator = new PHPUnit_Framework_MockObject_Generator;
     }
 }

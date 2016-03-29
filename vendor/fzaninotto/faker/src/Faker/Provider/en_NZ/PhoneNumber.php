@@ -69,24 +69,6 @@ class PhoneNumber extends \Faker\Provider\PhoneNumber
     }
 
     /**
-     * Return a en_NZ mobile phone number
-     * @return string
-     */
-    public static function mobileNumber()
-    {
-        return static::numerify(static::randomElement(static::$mobileFormats));
-    }
-
-    /**
-     * Return a en_NZ toll free phone number
-     * @return string
-     */
-    public static function tollFreeNumber()
-    {
-        return static::numerify(static::randomElement(static::$tollFreeFormats));
-    }
-
-    /**
      * Return a en_NZ landline area code
      * @return string
      */
@@ -102,5 +84,23 @@ class PhoneNumber extends \Faker\Provider\PhoneNumber
     public static function beginningNumber()
     {
         return static::numerify(static::randomElement(static::$beginningNumbers));
+    }
+
+    /**
+     * Return a en_NZ mobile phone number
+     * @return string
+     */
+    public static function mobileNumber()
+    {
+        return static::numerify(static::randomElement(static::$mobileFormats));
+    }
+
+    /**
+     * Return a en_NZ toll free phone number
+     * @return string
+     */
+    public static function tollFreeNumber()
+    {
+        return static::numerify(static::randomElement(static::$tollFreeFormats));
     }
 }

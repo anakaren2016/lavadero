@@ -1,11 +1,15 @@
+<?php
+$urlCss = 'http://localhost/lavadero/public/css/';
+$urlJs = 'http://localhost/lavadero/public/js/';
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>@yield('titulo')</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
+    <link href="{{ $urlCss }}bootstrap.min.css" rel="stylesheet">
+    <script src="{{ $urlJs }}jquery-2.2.2.js"></script>
+    <script src="{{ $urlJs }}bootstrap.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-static-top" role="navigation">

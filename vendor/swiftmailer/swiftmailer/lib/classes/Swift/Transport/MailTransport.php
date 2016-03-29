@@ -35,7 +35,7 @@ class Swift_Transport_MailTransport implements Swift_Transport
     /**
      * Create a new MailTransport with the $log.
      *
-     * @param Swift_Transport_MailInvoker  $invoker
+     * @param Swift_Transport_MailInvoker $invoker
      * @param Swift_Events_EventDispatcher $eventDispatcher
      */
     public function __construct(Swift_Transport_MailInvoker $invoker, Swift_Events_EventDispatcher $eventDispatcher)
@@ -67,6 +67,18 @@ class Swift_Transport_MailTransport implements Swift_Transport
     }
 
     /**
+     * Get the additional parameters used on the mail() function.
+     *
+     * This string is formatted for sprintf() where %s is the sender address.
+     *
+     * @return string
+     */
+    public function getExtraParams()
+    {
+        return $this->_extraParams;
+    }
+
+    /**
      * Set the additional parameters used on the mail() function.
      *
      * This string is formatted for sprintf() where %s is the sender address.
@@ -83,31 +95,19 @@ class Swift_Transport_MailTransport implements Swift_Transport
     }
 
     /**
-     * Get the additional parameters used on the mail() function.
-     *
-     * This string is formatted for sprintf() where %s is the sender address.
-     *
-     * @return string
-     */
-    public function getExtraParams()
-    {
-        return $this->_extraParams;
-    }
-
-    /**
      * Send the given Message.
      *
      * Recipient/sender data will be retrieved from the Message API.
      * The return value is the number of recipients who were accepted for delivery.
      *
      * @param Swift_Mime_Message $message
-     * @param string[]           $failedRecipients An array of failures by-reference
+     * @param string[] $failedRecipients An array of failures by-reference
      *
      * @return int
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
-        $failedRecipients = (array) $failedRecipients;
+        $failedRecipients = (array)$failedRecipients;
 
         if ($evt = $this->_eventDispatcher->createSendEvent($this, $message)) {
             $this->_eventDispatcher->dispatchEvent($evt, 'beforeSendPerformed');
@@ -117,10 +117,10 @@ class Swift_Transport_MailTransport implements Swift_Transport
         }
 
         $count = (
-            count((array) $message->getTo())
-            + count((array) $message->getCc())
-            + count((array) $message->getBcc())
-            );
+            count((array)$message->getTo())
+            + count((array)$message->getCc())
+            + count((array)$message->getBcc())
+        );
 
         $toHeader = $message->getHeaders()->get('To');
         $subjectHeader = $message->getHeaders()->get('Subject');
@@ -144,10 +144,10 @@ class Swift_Transport_MailTransport implements Swift_Transport
 
         // Separate headers from body
         if (false !== $endHeaders = strpos($messageStr, "\r\n\r\n")) {
-            $headers = substr($messageStr, 0, $endHeaders)."\r\n"; //Keep last EOL
+            $headers = substr($messageStr, 0, $endHeaders) . "\r\n"; //Keep last EOL
             $body = substr($messageStr, $endHeaders + 4);
         } else {
-            $headers = $messageStr."\r\n";
+            $headers = $messageStr . "\r\n";
             $body = '';
         }
 
@@ -164,7 +164,8 @@ class Swift_Transport_MailTransport implements Swift_Transport
         }
 
         if ($this->_invoker->mail($to, $subject, $body, $headers,
-            sprintf($this->_extraParams, $reversePath))) {
+            sprintf($this->_extraParams, $reversePath))
+        ) {
             if ($evt) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_SUCCESS);
                 $evt->setFailedRecipients($failedRecipients);
@@ -173,10 +174,10 @@ class Swift_Transport_MailTransport implements Swift_Transport
         } else {
             $failedRecipients = array_merge(
                 $failedRecipients,
-                array_keys((array) $message->getTo()),
-                array_keys((array) $message->getCc()),
-                array_keys((array) $message->getBcc())
-                );
+                array_keys((array)$message->getTo()),
+                array_keys((array)$message->getCc()),
+                array_keys((array)$message->getBcc())
+            );
 
             if ($evt) {
                 $evt->setResult(Swift_Events_SendEvent::RESULT_FAILED);
@@ -190,16 +191,6 @@ class Swift_Transport_MailTransport implements Swift_Transport
         }
 
         return $count;
-    }
-
-    /**
-     * Register a plugin.
-     *
-     * @param Swift_Events_EventListener $plugin
-     */
-    public function registerPlugin(Swift_Events_EventListener $plugin)
-    {
-        $this->_eventDispatcher->bindEventListener($plugin);
     }
 
     /** Throw a TransportException, first sending it to any listeners */
@@ -233,5 +224,15 @@ class Swift_Transport_MailTransport implements Swift_Transport
         }
 
         return $path;
+    }
+
+    /**
+     * Register a plugin.
+     *
+     * @param Swift_Events_EventListener $plugin
+     */
+    public function registerPlugin(Swift_Events_EventListener $plugin)
+    {
+        $this->_eventDispatcher->bindEventListener($plugin);
     }
 }

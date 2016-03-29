@@ -28,7 +28,7 @@ trait AuthenticatesUsers
     public function showLoginForm()
     {
         $view = property_exists($this, 'loginView')
-                    ? $this->loginView : 'auth.authenticate';
+            ? $this->loginView : 'auth.authenticate';
 
         if (view()->exists($view)) {
             return view($view);
@@ -40,7 +40,7 @@ trait AuthenticatesUsers
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function postLogin(Request $request)
@@ -51,7 +51,7 @@ trait AuthenticatesUsers
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function login(Request $request)
@@ -78,7 +78,7 @@ trait AuthenticatesUsers
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
-        if ($throttles && ! $lockedOut) {
+        if ($throttles && !$lockedOut) {
             $this->incrementLoginAttempts($request);
         }
 
@@ -88,7 +88,7 @@ trait AuthenticatesUsers
     /**
      * Validate the user login request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return void
      */
     protected function validateLogin(Request $request)
@@ -101,8 +101,8 @@ trait AuthenticatesUsers
     /**
      * Send the response after the user was authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  bool  $throttles
+     * @param  \Illuminate\Http\Request $request
+     * @param  bool $throttles
      * @return \Illuminate\Http\Response
      */
     protected function handleUserWasAuthenticated(Request $request, $throttles)
@@ -121,7 +121,7 @@ trait AuthenticatesUsers
     /**
      * Get the failed login response instance.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     protected function sendFailedLoginResponse(Request $request)
@@ -141,14 +141,14 @@ trait AuthenticatesUsers
     protected function getFailedLoginMessage()
     {
         return Lang::has('auth.failed')
-                ? Lang::get('auth.failed')
-                : 'These credentials do not match our records.';
+            ? Lang::get('auth.failed')
+            : 'These credentials do not match our records.';
     }
 
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     protected function getCredentials(Request $request)
@@ -185,7 +185,7 @@ trait AuthenticatesUsers
     {
         $guard = $this->getGuard();
 
-        return $guard ? 'guest:'.$guard : 'guest';
+        return $guard ? 'guest:' . $guard : 'guest';
     }
 
     /**

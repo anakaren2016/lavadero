@@ -29,7 +29,7 @@ class MethodTag extends ReturnTag
 
     /** @var string */
     protected $arguments = '';
-    
+
     /** @var bool */
     protected $isStatic = false;
 
@@ -101,7 +101,7 @@ class MethodTag extends ReturnTag
                 $this->method_name,
                 $this->arguments,
                 $this->description
-            ) = $matches;
+                ) = $matches;
             if ($static) {
                 if (!$this->type) {
                     $this->type = 'static';
@@ -120,21 +120,6 @@ class MethodTag extends ReturnTag
     }
 
     /**
-     * Sets the name of this method.
-     *
-     * @param string $method_name The name of the method.
-     *
-     * @return $this
-     */
-    public function setMethodName($method_name)
-    {
-        $this->method_name = $method_name;
-
-        $this->content = null;
-        return $this;
-    }
-
-    /**
      * Retrieves the method name.
      *
      * @return string
@@ -145,15 +130,15 @@ class MethodTag extends ReturnTag
     }
 
     /**
-     * Sets the arguments for this method.
+     * Sets the name of this method.
      *
-     * @param string $arguments A comma-separated arguments line.
+     * @param string $method_name The name of the method.
      *
-     * @return void
+     * @return $this
      */
-    public function setArguments($arguments)
+    public function setMethodName($method_name)
     {
-        $this->arguments = $arguments;
+        $this->method_name = $method_name;
 
         $this->content = null;
         return $this;
@@ -180,10 +165,25 @@ class MethodTag extends ReturnTag
 
         return $arguments;
     }
-    
+
+    /**
+     * Sets the arguments for this method.
+     *
+     * @param string $arguments A comma-separated arguments line.
+     *
+     * @return void
+     */
+    public function setArguments($arguments)
+    {
+        $this->arguments = $arguments;
+
+        $this->content = null;
+        return $this;
+    }
+
     /**
      * Checks whether the method tag describes a static method or not.
-     * 
+     *
      * @return bool TRUE if the method declaration is for a static method, FALSE
      *     otherwise.
      */
@@ -191,12 +191,12 @@ class MethodTag extends ReturnTag
     {
         return $this->isStatic;
     }
-    
+
     /**
      * Sets a new value for whether the method is static or not.
-     * 
+     *
      * @param bool $isStatic The new value to set.
-     * 
+     *
      * @return $this
      */
     public function setIsStatic($isStatic)

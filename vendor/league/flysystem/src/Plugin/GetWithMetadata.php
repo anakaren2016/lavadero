@@ -19,8 +19,8 @@ class GetWithMetadata extends AbstractPlugin
     /**
      * Get metadata for an object with required metadata.
      *
-     * @param string $path     path to file
-     * @param array  $metadata metadata keys
+     * @param string $path path to file
+     * @param array $metadata metadata keys
      *
      * @throws InvalidArgumentException
      *
@@ -30,14 +30,14 @@ class GetWithMetadata extends AbstractPlugin
     {
         $object = $this->filesystem->getMetadata($path);
 
-        if ( ! $object) {
+        if (!$object) {
             return false;
         }
 
         $keys = array_diff($metadata, array_keys($object));
 
         foreach ($keys as $key) {
-            if ( ! method_exists($this->filesystem, $method = 'get' . ucfirst($key))) {
+            if (!method_exists($this->filesystem, $method = 'get' . ucfirst($key))) {
                 throw new InvalidArgumentException('Could not fetch metadata: ' . $key);
             }
 

@@ -26,7 +26,7 @@ class LazyDoubleSpec extends ObjectBehavior
 
     /**
      * @param \Prophecy\Prophecy\ProphecySubjectInterface $double
-     * @param \ReflectionClass                            $class
+     * @param \ReflectionClass $class
      */
     function it_returns_class_double_instance_if_set($doubler, $double, $class)
     {

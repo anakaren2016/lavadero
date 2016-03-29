@@ -28,23 +28,6 @@ class MemcacheSessionHandlerTest extends \PHPUnit_Framework_TestCase
 
     protected $memcache;
 
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->memcache = $this->getMock('Memcache');
-        $this->storage = new MemcacheSessionHandler(
-            $this->memcache,
-            array('prefix' => self::PREFIX, 'expiretime' => self::TTL)
-        );
-    }
-
-    protected function tearDown()
-    {
-        $this->memcache = null;
-        $this->storage = null;
-        parent::tearDown();
-    }
-
     public function testOpenSession()
     {
         $this->assertTrue($this->storage->open('', ''));
@@ -55,8 +38,7 @@ class MemcacheSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->memcache
             ->expects($this->once())
             ->method('close')
-            ->will($this->returnValue(true))
-        ;
+            ->will($this->returnValue(true));
 
         $this->assertTrue($this->storage->close());
     }
@@ -66,8 +48,7 @@ class MemcacheSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->memcache
             ->expects($this->once())
             ->method('get')
-            ->with(self::PREFIX.'id')
-        ;
+            ->with(self::PREFIX . 'id');
 
         $this->assertEquals('', $this->storage->read('id'));
     }
@@ -77,9 +58,8 @@ class MemcacheSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->memcache
             ->expects($this->once())
             ->method('set')
-            ->with(self::PREFIX.'id', 'data', 0, $this->equalTo(time() + self::TTL, 2))
-            ->will($this->returnValue(true))
-        ;
+            ->with(self::PREFIX . 'id', 'data', 0, $this->equalTo(time() + self::TTL, 2))
+            ->will($this->returnValue(true));
 
         $this->assertTrue($this->storage->write('id', 'data'));
     }
@@ -89,9 +69,8 @@ class MemcacheSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->memcache
             ->expects($this->once())
             ->method('delete')
-            ->with(self::PREFIX.'id')
-            ->will($this->returnValue(true))
-        ;
+            ->with(self::PREFIX . 'id')
+            ->will($this->returnValue(true));
 
         $this->assertTrue($this->storage->destroy('id'));
     }
@@ -130,5 +109,22 @@ class MemcacheSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
 
         $this->assertInstanceOf('\Memcache', $method->invoke($this->storage));
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->memcache = $this->getMock('Memcache');
+        $this->storage = new MemcacheSessionHandler(
+            $this->memcache,
+            array('prefix' => self::PREFIX, 'expiretime' => self::TTL)
+        );
+    }
+
+    protected function tearDown()
+    {
+        $this->memcache = null;
+        $this->storage = null;
+        parent::tearDown();
     }
 }

@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Console\Tests\Command;
 
-use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Tester\CommandTester;
 
 class ListCommandTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,7 +49,7 @@ EOF;
 
     public function testExecuteListsCommandsWithNamespaceArgument()
     {
-        require_once realpath(__DIR__.'/../Fixtures/FooCommand.php');
+        require_once realpath(__DIR__ . '/../Fixtures/FooCommand.php');
         $application = new Application();
         $application->add(new \FooCommand());
         $commandTester = new CommandTester($command = $application->get('list'));
@@ -64,7 +64,7 @@ EOF;
 
     public function testExecuteListsCommandsOrder()
     {
-        require_once realpath(__DIR__.'/../Fixtures/Foo6Command.php');
+        require_once realpath(__DIR__ . '/../Fixtures/Foo6Command.php');
         $application = new Application();
         $application->add(new \Foo6Command());
         $commandTester = new CommandTester($command = $application->get('list'));
@@ -96,7 +96,7 @@ EOF;
 
     public function testExecuteListsCommandsOrderRaw()
     {
-        require_once realpath(__DIR__.'/../Fixtures/Foo6Command.php');
+        require_once realpath(__DIR__ . '/../Fixtures/Foo6Command.php');
         $application = new Application();
         $application->add(new \Foo6Command());
         $commandTester = new CommandTester($command = $application->get('list'));

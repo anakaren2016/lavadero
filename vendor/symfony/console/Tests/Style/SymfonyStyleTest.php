@@ -50,9 +50,9 @@ class SymfonyStyleTest extends PHPUnit_Framework_TestCase
 
     public function inputCommandToOutputFilesProvider()
     {
-        $baseDir = __DIR__.'/../Fixtures/Style/SymfonyStyle';
+        $baseDir = __DIR__ . '/../Fixtures/Style/SymfonyStyle';
 
-        return array_map(null, glob($baseDir.'/command/command_*.php'), glob($baseDir.'/output/output_*.txt'));
+        return array_map(null, glob($baseDir . '/command/command_*.php'), glob($baseDir . '/output/output_*.txt'));
     }
 
     public function testLongWordsBlockWrapping()
@@ -67,7 +67,7 @@ class SymfonyStyleTest extends PHPUnit_Framework_TestCase
         });
 
         $this->tester->execute(array(), array('interactive' => false, 'decorated' => false));
-        $expectedCount = (int) ceil($wordLength / ($maxLineLength)) + (int) ($wordLength > $maxLineLength - 5);
+        $expectedCount = (int)ceil($wordLength / ($maxLineLength)) + (int)($wordLength > $maxLineLength - 5);
         $this->assertSame($expectedCount, substr_count($this->tester->getDisplay(true), ' § '));
     }
 }

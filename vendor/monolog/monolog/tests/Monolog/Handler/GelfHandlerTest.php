@@ -12,9 +12,9 @@
 namespace Monolog\Handler;
 
 use Gelf\Message;
-use Monolog\TestCase;
-use Monolog\Logger;
 use Monolog\Formatter\GelfMessageFormatter;
+use Monolog\Logger;
+use Monolog\TestCase;
 
 class GelfHandlerTest extends TestCase
 {
@@ -54,8 +54,7 @@ class GelfHandlerTest extends TestCase
             ->setLevel(7)
             ->setFacility("test")
             ->setShortMessage($record['message'])
-            ->setTimestamp($record['datetime'])
-        ;
+            ->setTimestamp($record['datetime']);
 
         $messagePublisher = $this->getMessagePublisher();
         $messagePublisher->expects($this->once())
@@ -75,8 +74,7 @@ class GelfHandlerTest extends TestCase
             ->setLevel(4)
             ->setFacility("test")
             ->setShortMessage($record['message'])
-            ->setTimestamp($record['datetime'])
-        ;
+            ->setTimestamp($record['datetime']);
 
         $messagePublisher = $this->getMessagePublisher();
         $messagePublisher->expects($this->once())
@@ -102,8 +100,7 @@ class GelfHandlerTest extends TestCase
             ->setShortMessage($record['message'])
             ->setTimestamp($record['datetime'])
             ->setAdditional("EXTblarg", 'yep')
-            ->setAdditional("CTXfrom", 'logger')
-        ;
+            ->setAdditional("CTXfrom", 'logger');
 
         $messagePublisher = $this->getMessagePublisher();
         $messagePublisher->expects($this->once())

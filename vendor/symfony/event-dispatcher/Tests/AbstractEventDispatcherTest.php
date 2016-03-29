@@ -119,7 +119,8 @@ abstract class AbstractEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(-10, $this->dispatcher->getListenerPriority('pre.foo', $listener1));
         $this->assertSame(0, $this->dispatcher->getListenerPriority('pre.foo', $listener2));
         $this->assertNull($this->dispatcher->getListenerPriority('pre.bar', $listener2));
-        $this->assertNull($this->dispatcher->getListenerPriority('pre.foo', function () {}));
+        $this->assertNull($this->dispatcher->getListenerPriority('pre.foo', function () {
+        }));
     }
 
     public function testDispatch()
@@ -276,13 +277,15 @@ abstract class AbstractEventDispatcherTest extends \PHPUnit_Framework_TestCase
     {
         $dispatcher = $this->createEventDispatcher();
         $dispatcher->addListener('bug.62976', new CallableClass());
-        $dispatcher->removeListener('bug.62976', function () {});
+        $dispatcher->removeListener('bug.62976', function () {
+        });
         $this->assertTrue($dispatcher->hasListeners('bug.62976'));
     }
 
     public function testHasListenersWhenAddedCallbackListenerIsRemoved()
     {
-        $listener = function () {};
+        $listener = function () {
+        };
         $this->dispatcher->addListener('foo', $listener);
         $this->dispatcher->removeListener('foo', $listener);
         $this->assertFalse($this->dispatcher->hasListeners());
@@ -290,7 +293,8 @@ abstract class AbstractEventDispatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testGetListenersWhenAddedCallbackListenerIsRemoved()
     {
-        $listener = function () {};
+        $listener = function () {
+        };
         $this->dispatcher->addListener('foo', $listener);
         $this->dispatcher->removeListener('foo', $listener);
         $this->assertSame(array(), $this->dispatcher->getListeners());
@@ -357,7 +361,7 @@ class TestEventSubscriberWithPriorities implements EventSubscriberInterface
         return array(
             'pre.foo' => array('preFoo', 10),
             'post.foo' => array('postFoo'),
-            );
+        );
     }
 }
 

@@ -21,8 +21,8 @@ interface MigrationRepositoryInterface
     /**
      * Log that a migration was run.
      *
-     * @param  string  $file
-     * @param  int     $batch
+     * @param  string $file
+     * @param  int $batch
      * @return void
      */
     public function log($file, $batch);
@@ -30,7 +30,7 @@ interface MigrationRepositoryInterface
     /**
      * Remove a migration from the log.
      *
-     * @param  object  $migration
+     * @param  object $migration
      * @return void
      */
     public function delete($migration);
@@ -59,7 +59,7 @@ interface MigrationRepositoryInterface
     /**
      * Set the information source to gather data.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return void
      */
     public function setSource($name);

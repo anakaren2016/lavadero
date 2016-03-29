@@ -1,9 +1,9 @@
 <?php
 namespace Hamcrest\Text;
 
-/*
- Copyright (c) 2010 hamcrest.org
- */
+    /*
+     Copyright (c) 2010 hamcrest.org
+     */
 
 /**
  * Tests if the argument is a string that contains a substring ignoring case.
@@ -30,7 +30,7 @@ class StringContainsIgnoringCase extends SubstringMatcher
 
     protected function evalSubstringOf($item)
     {
-        return (false !== stripos((string) $item, $this->_substring));
+        return (false !== stripos((string)$item, $this->_substring));
     }
 
     protected function relationship()

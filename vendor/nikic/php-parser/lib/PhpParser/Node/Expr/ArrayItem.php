@@ -16,19 +16,21 @@ class ArrayItem extends Expr
     /**
      * Constructs an array item node.
      *
-     * @param Expr      $value      Value
-     * @param null|Expr $key        Key
-     * @param bool      $byRef      Whether to assign by reference
-     * @param array     $attributes Additional attributes
+     * @param Expr $value Value
+     * @param null|Expr $key Key
+     * @param bool $byRef Whether to assign by reference
+     * @param array $attributes Additional attributes
      */
-    public function __construct(Expr $value, Expr $key = null, $byRef = false, array $attributes = array()) {
+    public function __construct(Expr $value, Expr $key = null, $byRef = false, array $attributes = array())
+    {
         parent::__construct($attributes);
         $this->key = $key;
         $this->value = $value;
         $this->byRef = $byRef;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('key', 'value', 'byRef');
     }
 }

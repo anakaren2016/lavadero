@@ -52,9 +52,9 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param mixed  $other        Value or object to evaluate.
-     * @param string $description  Additional information about the test
-     * @param bool   $returnResult Whether to return a result or throw an exception
+     * @param mixed $other Value or object to evaluate.
+     * @param string $description Additional information about the test
+     * @param bool $returnResult Whether to return a result or throw an exception
      *
      * @return mixed
      *
@@ -64,7 +64,8 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
     {
         if (is_double($this->value) && is_double($other) &&
             !is_infinite($this->value) && !is_infinite($other) &&
-            !is_nan($this->value) && !is_nan($other)) {
+            !is_nan($this->value) && !is_nan($other)
+        ) {
             $success = abs($this->value - $other) < self::EPSILON;
         } else {
             $success = $this->value === $other;
@@ -92,6 +93,22 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
     }
 
     /**
+     * Returns a string representation of the constraint.
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        if (is_object($this->value)) {
+            return 'is identical to an object of class "' .
+            get_class($this->value) . '"';
+        } else {
+            return 'is identical to ' .
+            $this->exporter->export($this->value);
+        }
+    }
+
+    /**
      * Returns the description of the failure
      *
      * The beginning of failure messages is "Failed asserting that" in most
@@ -112,21 +129,5 @@ class PHPUnit_Framework_Constraint_IsIdentical extends PHPUnit_Framework_Constra
         }
 
         return parent::failureDescription($other);
-    }
-
-    /**
-     * Returns a string representation of the constraint.
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        if (is_object($this->value)) {
-            return 'is identical to an object of class "' .
-                   get_class($this->value) . '"';
-        } else {
-            return 'is identical to ' .
-                   $this->exporter->export($this->value);
-        }
     }
 }

@@ -84,6 +84,11 @@ class Text extends \Faker\Provider\Text
 三人飛馬引軍而出。張角正殺敗董卓，乘勢趕來，忽遇三人衝殺，角軍大亂，敗走五十餘里。三人救了董卓回寨。卓問三人現居何職。玄德曰：「白身。」卓甚輕之，不為禮。玄德出，張飛大怒曰：「我等親赴血戰，救了這廝，他卻如此無禮；若不殺之，難消我氣！」便要提刀入帳來殺董卓。正是：人情勢利古猶今，誰識英雄是白身？安得快人如翼德，盡誅世上負心人！畢竟董卓性命如何，且看下文分解。
 EOT;
 
+    protected static function strlen($text)
+    {
+        return function_exists('mb_strlen') ? mb_strlen($text, 'UTF-8') : count(static::explode($text));
+    }
+
     protected static function explode($text)
     {
         $chars = array();
@@ -95,11 +100,6 @@ EOT;
         return $chars;
     }
 
-    protected static function strlen($text)
-    {
-        return function_exists('mb_strlen') ? mb_strlen($text, 'UTF-8') : count(static::explode($text));
-    }
-
     protected static function validStart($word)
     {
         return !in_array($word, static::$notBeginPunct);
@@ -109,7 +109,7 @@ EOT;
     {
         // extract the last char of $text
         if (function_exists('mb_substr')) {
-            $last = mb_substr($text, mb_strlen($text)-1, 'UTF-8');
+            $last = mb_substr($text, mb_strlen($text) - 1, 'UTF-8');
         } else {
             $chars = static::split($text);
             $last = end($chars);
@@ -119,6 +119,6 @@ EOT;
             $text = preg_replace('/.$/u', '', $text);
         }
         // if the last char is not a valid punctuation, append a default one.
-        return in_array($last, static::$endPunct) ? $text : $text.'。';
+        return in_array($last, static::$endPunct) ? $text : $text . '。';
     }
 }

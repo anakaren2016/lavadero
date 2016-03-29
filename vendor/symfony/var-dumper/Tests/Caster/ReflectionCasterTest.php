@@ -62,7 +62,8 @@ EOTXT
     public function testClosureCaster()
     {
         $a = $b = 123;
-        $var = function ($x) use ($a, &$b) {};
+        $var = function ($x) use ($a, &$b) {
+        };
 
         $this->assertDumpMatchesFormat(
             <<<EOTXT
@@ -84,7 +85,7 @@ EOTXT
 
     public function testReflectionParameter()
     {
-        $var = new \ReflectionParameter(__NAMESPACE__.'\reflectionParameterFixture', 0);
+        $var = new \ReflectionParameter(__NAMESPACE__ . '\reflectionParameterFixture', 0);
 
         $this->assertDumpMatchesFormat(
             <<<'EOTXT'

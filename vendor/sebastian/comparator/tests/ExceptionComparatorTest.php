@@ -10,8 +10,8 @@
 
 namespace SebastianBergmann\Comparator;
 
-use \Exception;
-use \RuntimeException;
+use Exception;
+use RuntimeException;
 
 /**
  * @coversDefaultClass SebastianBergmann\Comparator\ExceptionComparator
@@ -21,27 +21,21 @@ class ExceptionComparatorTest extends \PHPUnit_Framework_TestCase
 {
     private $comparator;
 
-    protected function setUp()
-    {
-        $this->comparator = new ExceptionComparator;
-        $this->comparator->setFactory(new Factory);
-    }
-
     public function acceptsSucceedsProvider()
     {
         return array(
-          array(new Exception, new Exception),
-          array(new RuntimeException, new RuntimeException),
-          array(new Exception, new RuntimeException)
+            array(new Exception, new Exception),
+            array(new RuntimeException, new RuntimeException),
+            array(new Exception, new RuntimeException)
         );
     }
 
     public function acceptsFailsProvider()
     {
         return array(
-          array(new Exception, null),
-          array(null, new Exception),
-          array(null, null)
+            array(new Exception, null),
+            array(null, new Exception),
+            array(null, null)
         );
     }
 
@@ -54,10 +48,10 @@ class ExceptionComparatorTest extends \PHPUnit_Framework_TestCase
         $exception4 = new RunTimeException('Error', 100);
 
         return array(
-          array($exception1, $exception1),
-          array($exception1, $exception2),
-          array($exception3, $exception3),
-          array($exception3, $exception4)
+            array($exception1, $exception1),
+            array($exception1, $exception2),
+            array($exception3, $exception3),
+            array($exception3, $exception4)
         );
     }
 
@@ -74,11 +68,11 @@ class ExceptionComparatorTest extends \PHPUnit_Framework_TestCase
         $exception5 = new RunTimeException('Error', 101);
 
         return array(
-          array($exception1, $exception2, $equalMessage),
-          array($exception1, $exception3, $equalMessage),
-          array($exception1, $exception4, $typeMessage),
-          array($exception2, $exception3, $equalMessage),
-          array($exception4, $exception5, $equalMessage)
+            array($exception1, $exception2, $equalMessage),
+            array($exception1, $exception3, $equalMessage),
+            array($exception1, $exception4, $typeMessage),
+            array($exception2, $exception3, $equalMessage),
+            array($exception4, $exception5, $equalMessage)
         );
     }
 
@@ -89,7 +83,7 @@ class ExceptionComparatorTest extends \PHPUnit_Framework_TestCase
     public function testAcceptsSucceeds($expected, $actual)
     {
         $this->assertTrue(
-          $this->comparator->accepts($expected, $actual)
+            $this->comparator->accepts($expected, $actual)
         );
     }
 
@@ -100,7 +94,7 @@ class ExceptionComparatorTest extends \PHPUnit_Framework_TestCase
     public function testAcceptsFails($expected, $actual)
     {
         $this->assertFalse(
-          $this->comparator->accepts($expected, $actual)
+            $this->comparator->accepts($expected, $actual)
         );
     }
 
@@ -114,9 +108,7 @@ class ExceptionComparatorTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->comparator->assertEquals($expected, $actual);
-        }
-
-        catch (ComparisonFailure $exception) {
+        } catch (ComparisonFailure $exception) {
         }
 
         $this->assertNull($exception, 'Unexpected ComparisonFailure');
@@ -129,8 +121,14 @@ class ExceptionComparatorTest extends \PHPUnit_Framework_TestCase
     public function testAssertEqualsFails($expected, $actual, $message)
     {
         $this->setExpectedException(
-          'SebastianBergmann\\Comparator\\ComparisonFailure', $message
+            'SebastianBergmann\\Comparator\\ComparisonFailure', $message
         );
         $this->comparator->assertEquals($expected, $actual);
+    }
+
+    protected function setUp()
+    {
+        $this->comparator = new ExceptionComparator;
+        $this->comparator->setFactory(new Factory);
     }
 }

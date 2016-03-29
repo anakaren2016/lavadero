@@ -24,8 +24,8 @@ class RedisBroadcaster implements Broadcaster
     /**
      * Create a new broadcaster instance.
      *
-     * @param  \Illuminate\Contracts\Redis\Database  $redis
-     * @param  string  $connection
+     * @param  \Illuminate\Contracts\Redis\Database $redis
+     * @param  string $connection
      * @return void
      */
     public function __construct(RedisDatabase $redis, $connection = null)

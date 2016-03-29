@@ -24,8 +24,8 @@ interface DataCollectorInterface
     /**
      * Collects data for the given Request and Response.
      *
-     * @param Request    $request   A Request instance
-     * @param Response   $response  A Response instance
+     * @param Request $request A Request instance
+     * @param Response $response A Response instance
      * @param \Exception $exception An Exception instance
      */
     public function collect(Request $request, Response $response, \Exception $exception = null);

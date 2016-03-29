@@ -8,7 +8,7 @@ use Prophecy\Argument;
 class ProphetSpec extends ObjectBehavior
 {
     /**
-     * @param \Prophecy\Doubler\Doubler                   $doubler
+     * @param \Prophecy\Doubler\Doubler $doubler
      * @param \Prophecy\Prophecy\ProphecySubjectInterface $double
      */
     function let($doubler, $double)
@@ -58,8 +58,8 @@ class ProphetSpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Prophecy\MethodProphecy    $method1
-     * @param \Prophecy\Prophecy\MethodProphecy    $method2
+     * @param \Prophecy\Prophecy\MethodProphecy $method1
+     * @param \Prophecy\Prophecy\MethodProphecy $method2
      * @param \Prophecy\Argument\ArgumentsWildcard $arguments1
      * @param \Prophecy\Argument\ArgumentsWildcard $arguments2
      */

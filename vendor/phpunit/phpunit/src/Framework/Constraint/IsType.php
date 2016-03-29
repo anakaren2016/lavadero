@@ -18,36 +18,36 @@
  */
 class PHPUnit_Framework_Constraint_IsType extends PHPUnit_Framework_Constraint
 {
-    const TYPE_ARRAY    = 'array';
-    const TYPE_BOOL     = 'bool';
-    const TYPE_FLOAT    = 'float';
-    const TYPE_INT      = 'int';
-    const TYPE_NULL     = 'null';
-    const TYPE_NUMERIC  = 'numeric';
-    const TYPE_OBJECT   = 'object';
+    const TYPE_ARRAY = 'array';
+    const TYPE_BOOL = 'bool';
+    const TYPE_FLOAT = 'float';
+    const TYPE_INT = 'int';
+    const TYPE_NULL = 'null';
+    const TYPE_NUMERIC = 'numeric';
+    const TYPE_OBJECT = 'object';
     const TYPE_RESOURCE = 'resource';
-    const TYPE_STRING   = 'string';
-    const TYPE_SCALAR   = 'scalar';
+    const TYPE_STRING = 'string';
+    const TYPE_SCALAR = 'scalar';
     const TYPE_CALLABLE = 'callable';
 
     /**
      * @var array
      */
     protected $types = array(
-        'array'    => true,
-        'boolean'  => true,
-        'bool'     => true,
-        'double'   => true,
-        'float'    => true,
-        'integer'  => true,
-        'int'      => true,
-        'null'     => true,
-        'numeric'  => true,
-        'object'   => true,
-        'real'     => true,
+        'array' => true,
+        'boolean' => true,
+        'bool' => true,
+        'double' => true,
+        'float' => true,
+        'integer' => true,
+        'int' => true,
+        'null' => true,
+        'numeric' => true,
+        'object' => true,
+        'real' => true,
         'resource' => true,
-        'string'   => true,
-        'scalar'   => true,
+        'string' => true,
+        'scalar' => true,
         'callable' => true
     );
 
@@ -76,6 +76,19 @@ class PHPUnit_Framework_Constraint_IsType extends PHPUnit_Framework_Constraint
         }
 
         $this->type = $type;
+    }
+
+    /**
+     * Returns a string representation of the constraint.
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        return sprintf(
+            'is of type "%s"',
+            $this->type
+        );
     }
 
     /**
@@ -126,18 +139,5 @@ class PHPUnit_Framework_Constraint_IsType extends PHPUnit_Framework_Constraint
             case 'callable':
                 return is_callable($other);
         }
-    }
-
-    /**
-     * Returns a string representation of the constraint.
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return sprintf(
-            'is of type "%s"',
-            $this->type
-        );
     }
 }

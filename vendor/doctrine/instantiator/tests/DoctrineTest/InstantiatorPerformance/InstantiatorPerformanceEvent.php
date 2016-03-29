@@ -35,20 +35,6 @@ class InstantiatorPerformanceEvent extends AthleticEvent
     private $instantiator;
 
     /**
-     * {@inheritDoc}
-     */
-    protected function setUp()
-    {
-        $this->instantiator = new Instantiator();
-
-        $this->instantiator->instantiate(__CLASS__);
-        $this->instantiator->instantiate('ArrayObject');
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset');
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SerializableArrayObjectAsset');
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset');
-    }
-
-    /**
      * @iterations 20000
      * @baseline
      * @group instantiation
@@ -91,6 +77,20 @@ class InstantiatorPerformanceEvent extends AthleticEvent
      */
     public function testInstantiateUnCloneableAsset()
     {
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function setUp()
+    {
+        $this->instantiator = new Instantiator();
+
+        $this->instantiator->instantiate(__CLASS__);
+        $this->instantiator->instantiate('ArrayObject');
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset');
+        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SerializableArrayObjectAsset');
         $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset');
     }
 }

@@ -4,11 +4,6 @@ namespace Hamcrest\Core;
 class IsAnythingTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Core\IsAnything::anything();
-    }
-
     public function testAlwaysEvaluatesToTrue()
     {
         assertThat(null, anything());
@@ -25,5 +20,10 @@ class IsAnythingTest extends \Hamcrest\AbstractMatcherTest
     {
         $description = 'description';
         $this->assertDescription($description, anything($description));
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Core\IsAnything::anything();
     }
 }

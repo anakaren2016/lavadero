@@ -37,8 +37,8 @@ abstract class ObjectRouteLoader extends Loader
     /**
      * Calls the service that will load the routes.
      *
-     * @param mixed       $resource Some value that will resolve to a callable
-     * @param string|null $type     The resource type
+     * @param mixed $resource Some value that will resolve to a callable
+     * @param string|null $type The resource type
      *
      * @return RouteCollection
      */

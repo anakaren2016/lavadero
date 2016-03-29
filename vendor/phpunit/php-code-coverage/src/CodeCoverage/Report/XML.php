@@ -41,8 +41,8 @@ class PHP_CodeCoverage_Report_XML
         $this->processTests($coverage->getTests());
         $this->processDirectory($report, $this->project);
 
-        $index                     = $this->project->asDom();
-        $index->formatOutput       = true;
+        $index = $this->project->asDom();
+        $index->formatOutput = true;
         $index->preserveWhiteSpace = false;
         $index->save($target . '/index.xml');
     }
@@ -68,6 +68,19 @@ class PHP_CodeCoverage_Report_XML
         }
     }
 
+    private function processTests(array $tests)
+    {
+        $testsObject = $this->project->getTests();
+
+        foreach ($tests as $test => $result) {
+            if ($test == 'UNCOVERED_FILES_FROM_WHITELIST') {
+                continue;
+            }
+
+            $testsObject->addTest($test, $result);
+        }
+    }
+
     private function processDirectory(PHP_CodeCoverage_Report_Node_Directory $directory, PHP_CodeCoverage_Report_XML_Node $context)
     {
         $dirObject = $context->addDirectory($directory->getName());
@@ -89,6 +102,39 @@ class PHP_CodeCoverage_Report_XML
                 'Unknown node type for XML report'
             );
         }
+    }
+
+    private function setTotals(PHP_CodeCoverage_Report_Node $node, PHP_CodeCoverage_Report_XML_Totals $totals)
+    {
+        $loc = $node->getLinesOfCode();
+
+        $totals->setNumLines(
+            $loc['loc'],
+            $loc['cloc'],
+            $loc['ncloc'],
+            $node->getNumExecutableLines(),
+            $node->getNumExecutedLines()
+        );
+
+        $totals->setNumClasses(
+            $node->getNumClasses(),
+            $node->getNumTestedClasses()
+        );
+
+        $totals->setNumTraits(
+            $node->getNumTraits(),
+            $node->getNumTestedTraits()
+        );
+
+        $totals->setNumMethods(
+            $node->getNumMethods(),
+            $node->getNumTestedMethods()
+        );
+
+        $totals->setNumFunctions(
+            $node->getNumFunctions(),
+            $node->getNumTestedFunctions()
+        );
     }
 
     private function processFile(PHP_CodeCoverage_Report_Node_File $file, PHP_CodeCoverage_Report_XML_Directory $context)
@@ -132,8 +178,8 @@ class PHP_CodeCoverage_Report_XML
             $this->target . dirname($file->getId()) . '/'
         );
 
-        $fileDom                     = $fileReport->asDom();
-        $fileDom->formatOutput       = true;
+        $fileDom = $fileReport->asDom();
+        $fileDom->formatOutput = true;
         $fileDom->preserveWhiteSpace = false;
         $fileDom->save($this->target . $file->getId() . '.xml');
     }
@@ -184,51 +230,5 @@ class PHP_CodeCoverage_Report_XML
         $functionObject->setLines($function['startLine']);
         $functionObject->setCrap($function['crap']);
         $functionObject->setTotals($function['executableLines'], $function['executedLines'], $function['coverage']);
-    }
-
-    private function processTests(array $tests)
-    {
-        $testsObject = $this->project->getTests();
-
-        foreach ($tests as $test => $result) {
-            if ($test == 'UNCOVERED_FILES_FROM_WHITELIST') {
-                continue;
-            }
-
-            $testsObject->addTest($test, $result);
-        }
-    }
-
-    private function setTotals(PHP_CodeCoverage_Report_Node $node, PHP_CodeCoverage_Report_XML_Totals $totals)
-    {
-        $loc = $node->getLinesOfCode();
-
-        $totals->setNumLines(
-            $loc['loc'],
-            $loc['cloc'],
-            $loc['ncloc'],
-            $node->getNumExecutableLines(),
-            $node->getNumExecutedLines()
-        );
-
-        $totals->setNumClasses(
-            $node->getNumClasses(),
-            $node->getNumTestedClasses()
-        );
-
-        $totals->setNumTraits(
-            $node->getNumTraits(),
-            $node->getNumTestedTraits()
-        );
-
-        $totals->setNumMethods(
-            $node->getNumMethods(),
-            $node->getNumTestedMethods()
-        );
-
-        $totals->setNumFunctions(
-            $node->getNumFunctions(),
-            $node->getNumTestedFunctions()
-        );
     }
 }

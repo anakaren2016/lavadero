@@ -12,8 +12,8 @@
 namespace Monolog\Handler;
 
 use Monolog\Formatter\FlowdockFormatter;
-use Monolog\TestCase;
 use Monolog\Logger;
+use Monolog\TestCase;
 
 /**
  * @author Dominik Liebler <liebler.dominik@gmail.com>

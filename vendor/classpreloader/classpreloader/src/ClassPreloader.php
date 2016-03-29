@@ -49,8 +49,8 @@ class ClassPreloader
     /**
      * Create a new class preloader instance.
      *
-     * @param \PhpParser\PrettyPrinter\Standard    $printer
-     * @param \PhpParser\Parser                    $parser
+     * @param \PhpParser\PrettyPrinter\Standard $printer
+     * @param \PhpParser\Parser $parser
      * @param \ClassPreloader\Parser\NodeTraverser $traverser
      *
      * @return void
@@ -66,7 +66,7 @@ class ClassPreloader
      * Prepare the output file and directory.
      *
      * @param string $output
-     * @param bool   $strict
+     * @param bool $strict
      *
      * @throws \RuntimeException
      *
@@ -142,7 +142,7 @@ class ClassPreloader
     /**
      * Wrap the code into a namespace.
      *
-     * @param array  $parsed
+     * @param array $parsed
      * @param string $pretty
      *
      * @return string
@@ -150,7 +150,7 @@ class ClassPreloader
     protected function getCodeWrappedIntoNamespace(array $parsed, $pretty)
     {
         if ($this->parsedCodeHasNamespaces($parsed)) {
-            $pretty = preg_replace('/^\s*(namespace.*);/i', '${1} {', $pretty, 1)."\n}\n";
+            $pretty = preg_replace('/^\s*(namespace.*);/i', '${1} {', $pretty, 1) . "\n}\n";
         } else {
             $pretty = sprintf("namespace {\n%s\n}\n", $pretty);
         }

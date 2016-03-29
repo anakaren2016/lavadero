@@ -20,7 +20,7 @@ class PaginationServiceProvider extends ServiceProvider
         Paginator::currentPageResolver(function ($pageName = 'page') {
             $page = $this->app['request']->input($pageName);
 
-            if (filter_var($page, FILTER_VALIDATE_INT) !== false && (int) $page >= 1) {
+            if (filter_var($page, FILTER_VALIDATE_INT) !== false && (int)$page >= 1) {
                 return $page;
             }
 

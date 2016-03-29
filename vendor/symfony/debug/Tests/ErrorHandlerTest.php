@@ -12,8 +12,8 @@
 namespace Symfony\Component\Debug\Tests;
 
 use Psr\Log\LogLevel;
-use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\BufferingLogger;
+use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\Exception\ContextErrorException;
 
 /**
@@ -104,7 +104,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
     {
         // dummy variable to check for in error handler.
         $foobar = 123;
-        $that->assertSame('', $foo.$foo.$bar);
+        $that->assertSame('', $foo . $foo . $bar);
     }
 
     public function testConstruct()
@@ -212,8 +212,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             $logger
                 ->expects($this->once())
                 ->method('log')
-                ->will($this->returnCallback($warnArgCheck))
-            ;
+                ->will($this->returnCallback($warnArgCheck));
 
             $handler = ErrorHandler::register();
             $handler->setDefaultLogger($logger, E_USER_DEPRECATED);
@@ -233,8 +232,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             $logger
                 ->expects($this->once())
                 ->method('log')
-                ->will($this->returnCallback($logArgCheck))
-            ;
+                ->will($this->returnCallback($logArgCheck));
 
             $handler = ErrorHandler::register();
             $handler->setDefaultLogger($logger, E_NOTICE);
@@ -287,8 +285,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
         $logger
             ->expects($this->once())
             ->method('log')
-            ->will($this->returnCallback($logArgCheck))
-        ;
+            ->will($this->returnCallback($logArgCheck));
 
         $handler = new ErrorHandler();
         $handler->setDefaultLogger($logger);
@@ -313,8 +310,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             $logger
                 ->expects($this->exactly(2))
                 ->method('log')
-                ->will($this->returnCallback($logArgCheck))
-            ;
+                ->will($this->returnCallback($logArgCheck));
 
             $handler->setDefaultLogger($logger, E_ERROR);
 
@@ -350,8 +346,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
                 ->withConsecutive(
                     array($this->equalTo(LogLevel::WARNING), $this->equalTo('Dummy log')),
                     array($this->equalTo(LogLevel::DEBUG), $this->equalTo('Silenced warning'))
-                )
-            ;
+                );
 
             $handler->setDefaultLogger($logger, array(E_USER_WARNING => LogLevel::WARNING));
 
@@ -431,8 +426,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
             $logger
                 ->expects($this->once())
                 ->method('log')
-                ->will($this->returnCallback($logArgCheck))
-            ;
+                ->will($this->returnCallback($logArgCheck));
 
             $handler->setDefaultLogger($logger, E_PARSE);
 
@@ -467,8 +461,7 @@ class ErrorHandlerTest extends \PHPUnit_Framework_TestCase
                         'level' => -1,
                         'stack' => array(456),
                     ))
-                )
-            ;
+                );
 
             $handler->setDefaultLogger($logger, E_ERROR);
 

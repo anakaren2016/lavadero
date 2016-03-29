@@ -20,7 +20,7 @@ use Psy\TabCompletion\Matcher\AbstractMatcher;
  */
 class AutoCompleter
 {
-    /** @var Matcher\AbstractMatcher[]  */
+    /** @var Matcher\AbstractMatcher[] */
     protected $matchers;
 
     /**
@@ -42,11 +42,26 @@ class AutoCompleter
     }
 
     /**
+     * The readline_completion_function callback handler.
+     *
+     * @see processCallback
+     *
+     * @param $input
+     * @param $index
+     *
+     * @return array
+     */
+    public function callback($input, $index)
+    {
+        return $this->processCallback($input, $index, readline_info());
+    }
+
+    /**
      * Handle readline completion.
      *
      * @param string $input Readline current word
-     * @param int    $index Current word index
-     * @param array  $info  readline_info() data
+     * @param int $index Current word index
+     * @param array $info readline_info() data
      *
      * @return array
      */
@@ -69,21 +84,6 @@ class AutoCompleter
         $matches = array_unique($matches);
 
         return !empty($matches) ? $matches : array('');
-    }
-
-    /**
-     * The readline_completion_function callback handler.
-     *
-     * @see processCallback
-     *
-     * @param $input
-     * @param $index
-     *
-     * @return array
-     */
-    public function callback($input, $index)
-    {
-        return $this->processCallback($input, $index, readline_info());
     }
 
     /**

@@ -10,7 +10,7 @@ class Person extends \Faker\Provider\Person
      * {@link} http://ru.wikipedia.org/wiki/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B5_%D0%BB%D0%B8%D1%87%D0%BD%D0%BE%D0%B5_%D0%B8%D0%BC%D1%8F
      **/
     protected static $firstNameMale = array(
-        'Enno', 'Eriks', 'Ernests', 'Ero', 'Ervis', 'Mārtiņš', 'Ādams', 'Āris', 'Āvo', 'Ēriks', 'Enriko', 'Enriks',  'Ēro', 'Ģirts', 'Īra',
+        'Enno', 'Eriks', 'Ernests', 'Ero', 'Ervis', 'Mārtiņš', 'Ādams', 'Āris', 'Āvo', 'Ēriks', 'Enriko', 'Enriks', 'Ēro', 'Ģirts', 'Īra',
         // below are unknown gender firstnames
         'Agris', 'Dainis', 'Dzintars', 'Emīls', 'Enijs', 'Enoks', 'Enrijs', 'Eralds', 'Erasts', 'Erberts', 'Erhards',
         'Eriands', 'Eriens', 'Erihs', 'Erims', 'Erlends', 'Ermanis', 'Ermans', 'Ermīns', 'Ernando', 'Ernis', 'Ernsts', 'Ervids',
@@ -74,7 +74,7 @@ class Person extends \Faker\Provider\Person
         }
 
         $datePart = $birthdate->format('dmy');
-        $randomDigits = (string) static::numerify('####');
+        $randomDigits = (string)static::numerify('####');
 
         $checksum = Luhn::computeCheckDigit($datePart . $randomDigits);
 

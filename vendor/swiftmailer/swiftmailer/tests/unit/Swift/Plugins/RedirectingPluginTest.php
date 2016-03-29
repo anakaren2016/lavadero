@@ -27,8 +27,7 @@ class Swift_Plugins_RedirectingPluginTest extends \PHPUnit_Framework_TestCase
                 'fabien-bcc@example.com' => 'Fabien (Bcc)',
                 'chris-bcc@example.com' => 'Chris (Bcc)',
             ))
-            ->setBody('...')
-        ;
+            ->setBody('...');
 
         $plugin = new Swift_Plugins_RedirectingPlugin('god@example.com');
 
@@ -47,6 +46,18 @@ class Swift_Plugins_RedirectingPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($message->getBcc(), $bcc);
     }
 
+    private function _createSendEvent(Swift_Mime_Message $message)
+    {
+        $evt = $this->getMockBuilder('Swift_Events_SendEvent')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $evt->expects($this->any())
+            ->method('getMessage')
+            ->will($this->returnValue($message));
+
+        return $evt;
+    }
+
     public function testPluginRespectsUnsetToList()
     {
         $message = Swift_Message::newInstance()
@@ -60,8 +71,7 @@ class Swift_Plugins_RedirectingPluginTest extends \PHPUnit_Framework_TestCase
                 'fabien-bcc@example.com' => 'Fabien (Bcc)',
                 'chris-bcc@example.com' => 'Chris (Bcc)',
             ))
-            ->setBody('...')
-        ;
+            ->setBody('...');
 
         $plugin = new Swift_Plugins_RedirectingPlugin('god@example.com');
 
@@ -100,8 +110,7 @@ class Swift_Plugins_RedirectingPluginTest extends \PHPUnit_Framework_TestCase
                 'chris-bcc@example.com' => 'Chris (Bcc)',
                 'john-bcc@example.org' => 'John (Bcc)',
             ))
-            ->setBody('...')
-        ;
+            ->setBody('...');
 
         $recipient = 'god@example.com';
         $patterns = array('/^.*@internal.[a-z]+$/', '/^john-.*$/');
@@ -126,28 +135,29 @@ class Swift_Plugins_RedirectingPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($message->getBcc(), $bcc);
     }
 
+    // -- Creation Methods
+
     public function testArrayOfRecipientsCanBeExplicitlyDefined()
     {
         $message = Swift_Message::newInstance()
             ->setSubject('...')
             ->setFrom(array('john@example.com' => 'John Doe'))
             ->setTo(array(
-            'fabien@example.com' => 'Fabien',
-            'chris@example.com' => 'Chris (To)',
-            'lars-to@internal.com' => 'Lars (To)',
-        ))
+                'fabien@example.com' => 'Fabien',
+                'chris@example.com' => 'Chris (To)',
+                'lars-to@internal.com' => 'Lars (To)',
+            ))
             ->setCc(array(
-            'fabien@example.com' => 'Fabien',
-            'chris-cc@example.com' => 'Chris (Cc)',
-            'lars-cc@internal.org' => 'Lars (Cc)',
-        ))
+                'fabien@example.com' => 'Fabien',
+                'chris-cc@example.com' => 'Chris (Cc)',
+                'lars-cc@internal.org' => 'Lars (Cc)',
+            ))
             ->setBcc(array(
-            'fabien@example.com' => 'Fabien',
-            'chris-bcc@example.com' => 'Chris (Bcc)',
-            'john-bcc@example.org' => 'John (Bcc)',
-        ))
-            ->setBody('...')
-        ;
+                'fabien@example.com' => 'Fabien',
+                'chris-bcc@example.com' => 'Chris (Bcc)',
+                'john-bcc@example.org' => 'John (Bcc)',
+            ))
+            ->setBody('...');
 
         $recipients = array('god@example.com', 'fabien@example.com');
         $patterns = array('/^.*@internal.[a-z]+$/');
@@ -167,19 +177,5 @@ class Swift_Plugins_RedirectingPluginTest extends \PHPUnit_Framework_TestCase
             array('fabien@example.com' => 'Fabien', 'lars-cc@internal.org' => 'Lars (Cc)')
         );
         $this->assertEquals($message->getBcc(), array('fabien@example.com' => 'Fabien'));
-    }
-
-    // -- Creation Methods
-
-    private function _createSendEvent(Swift_Mime_Message $message)
-    {
-        $evt = $this->getMockBuilder('Swift_Events_SendEvent')
-                    ->disableOriginalConstructor()
-                    ->getMock();
-        $evt->expects($this->any())
-            ->method('getMessage')
-            ->will($this->returnValue($message));
-
-        return $evt;
     }
 }

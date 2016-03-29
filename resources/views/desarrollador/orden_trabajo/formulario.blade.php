@@ -19,7 +19,7 @@
                    class="form-control"
                    name="id"
                    value={{$id_orden}}
-                           readonly>
+                   readonly>
         </div>
         <div class="form-group">
             <label for="campo_vehiculo">
@@ -35,6 +35,10 @@
                     </option>
                 @endforeach
             </select>
+
+            <p class="help-block">Si no se encuentra el vehiculo <a class="btn-link"
+                                                                    href="{{url('/vehiculo/formulario')}}">pulsa
+                    aqui</a> para registrarlo</p>
         </div>
         <div class="form-group">
             <label for="campo_servicio">
@@ -50,19 +54,64 @@
                 <tbody id="tabla_contenido"></tbody>
             </table>
         </div>
+        <div id="mensajes">
+        </div>
         <input class="btn btn-success" type="submit" value="Registrar orden">
     </form>
+
+
     <script>
-        $(document).ready(function ($) {
-            $('#campo_vehiculo').change(function () {
-                $.get('/servicio/' + this.value + '/servicios.json', function (cities) {
-                    var $state = $('#tabla_contenido');
-                    $state.find('tr').remove().end();
-                    $(cities).each(function (city) {
-                        $state.append('<tr><td class="table_text"><input type="checkbox" name="id_servicios[]" value="' + this.id + '"></td><td>' + this.descripcion + '</td><td>' + this.tiempo_estimado + '</td><td>' + this.precio + '</td></tr>');
-                    });
-                });
+        var paginaActual = $(document);
+        paginaActual.ready(cargarEvento);
+
+        function cargarEvento() {
+            $('#campo_vehiculo').change(onSelectItem_CampoVehiculo);
+        }
+        function onSelectItem_CampoVehiculo() {
+            var url = 'http://localhost/lavadero/public/index.php/servicio/' + this.value + '/servicios.json';
+            $.ajax({
+                async: true,
+                beforeSend: preparar,
+                error: errores,
+                success: completado,
+                timeout: 5000,
+                type: 'GET',
+                url: url
             });
-        });
+        }
+        function preparar(p1, p2, p3, p4, p5) {
+            var elementoMensajes = $('#mensajes');
+            elementoMensajes.attr('class', 'alert alert-info');
+            elementoMensajes.html('<p>Esperando servicios...</p>')
+        }
+        function errores(p1, p2, p3, p4, p5) {
+            var elementoMensajes = $('#mensajes');
+            elementoMensajes.attr('class', 'alert alert-danger');
+            elementoMensajes.html('<p>Ocurrio un error en la peticion.</p>')
+        }
+        function completado(p1, p2, p3, p4, p5) {
+            var elementoMensajes = $('#mensajes');
+            elementoMensajes.attr('class', 'alert alert-success');
+            elementoMensajes.html('<p>Servicios cargados</p>');
+
+            var tabla = $('#tabla_contenido');
+            tabla.find('tr').remove().end();
+            var contenido = '';
+            for (var i = 0; i < p1.length; i++) {
+                contenido += '<tr>';
+                contenido += '<td><input type="checkbox" name="id_servicios[]" value="' + p1[i].id + '" </td>';
+                contenido += '<td>';
+                contenido += p1[i].descripcion;
+                contenido += '</td>';
+                contenido += '<td>';
+                contenido += p1[i].tiempo_estimado;
+                contenido += '</td>';
+                contenido += '<td>';
+                contenido += p1[i].precio;
+                contenido += '</td>';
+                contenido += '</tr>';
+            }
+            tabla.html(contenido);
+        }
     </script>
 @endsection

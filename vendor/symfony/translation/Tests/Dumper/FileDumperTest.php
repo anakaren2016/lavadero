@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Translation\Tests\Dumper;
 
-use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Dumper\FileDumper;
+use Symfony\Component\Translation\MessageCatalogue;
 
 class FileDumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,14 +26,14 @@ class FileDumperTest extends \PHPUnit_Framework_TestCase
         $dumper = new ConcreteFileDumper();
         $dumper->dump($catalogue, array('path' => $tempDir));
 
-        $this->assertTrue(file_exists($tempDir.'/messages.en.concrete'));
+        $this->assertTrue(file_exists($tempDir . '/messages.en.concrete'));
     }
 
     public function testDumpBackupsFileIfExisting()
     {
         $tempDir = sys_get_temp_dir();
-        $file = $tempDir.'/messages.en.concrete';
-        $backupFile = $file.'~';
+        $file = $tempDir . '/messages.en.concrete';
+        $backupFile = $file . '~';
 
         @touch($file);
 
@@ -52,8 +52,8 @@ class FileDumperTest extends \PHPUnit_Framework_TestCase
     public function testDumpCreatesNestedDirectoriesAndFile()
     {
         $tempDir = sys_get_temp_dir();
-        $translationsDir = $tempDir.'/test/translations';
-        $file = $translationsDir.'/messages.en.concrete';
+        $translationsDir = $tempDir . '/test/translations';
+        $file = $translationsDir . '/messages.en.concrete';
 
         $catalogue = new MessageCatalogue('en');
         $catalogue->add(array('foo' => 'bar'));

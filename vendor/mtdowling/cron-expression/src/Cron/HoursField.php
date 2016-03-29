@@ -42,7 +42,8 @@ class HoursField extends AbstractField
         if (count($hours) > 1) {
             for ($i = 0; $i < count($hours) - 1; $i++) {
                 if ((!$invert && $current_hour >= $hours[$i] && $current_hour < $hours[$i + 1]) ||
-                    ($invert && $current_hour > $hours[$i] && $current_hour <= $hours[$i + 1])) {
+                    ($invert && $current_hour > $hours[$i] && $current_hour <= $hours[$i + 1])
+                ) {
                     $position = $invert ? $i : $i + 1;
                     break;
                 }
@@ -53,8 +54,7 @@ class HoursField extends AbstractField
         if ((!$invert && $date->format('H') >= $hour) || ($invert && $date->format('H') <= $hour)) {
             $date->modify(($invert ? '-' : '+') . '1 day');
             $date->setTime($invert ? 23 : 0, $invert ? 59 : 0);
-        }
-        else {
+        } else {
             $date->setTime($hour, $invert ? 59 : 0);
         }
 
@@ -63,6 +63,6 @@ class HoursField extends AbstractField
 
     public function validate($value)
     {
-        return (bool) preg_match('/^[\*,\/\-0-9]+$/', $value);
+        return (bool)preg_match('/^[\*,\/\-0-9]+$/', $value);
     }
 }

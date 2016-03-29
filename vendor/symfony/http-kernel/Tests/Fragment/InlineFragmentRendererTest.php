@@ -11,13 +11,13 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Fragment;
 
-use Symfony\Component\HttpKernel\Controller\ControllerReference;
-use Symfony\Component\HttpKernel\HttpKernel;
-use Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer;
-use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\Controller\ControllerReference;
+use Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer;
+use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class InlineFragmentRendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -57,8 +57,7 @@ class InlineFragmentRendererTest extends \PHPUnit_Framework_TestCase
             ->method('getController')
             ->will($this->returnValue(function (\stdClass $object, Bar $object1) {
                 return new Response($object1->getBar());
-            }))
-        ;
+            }));
 
         $kernel = new HttpKernel(new EventDispatcher(), $resolver);
         $renderer = new InlineFragmentRenderer($kernel);
@@ -118,8 +117,7 @@ class InlineFragmentRendererTest extends \PHPUnit_Framework_TestCase
         $kernel
             ->expects($this->any())
             ->method('handle')
-            ->will($returnValue)
-        ;
+            ->will($returnValue);
 
         return $kernel;
     }
@@ -134,8 +132,7 @@ class InlineFragmentRendererTest extends \PHPUnit_Framework_TestCase
         $kernel
             ->expects($this->any())
             ->method('handle')
-            ->with($this->equalTo($request, 1))
-        ;
+            ->with($this->equalTo($request, 1));
 
         return $kernel;
     }
@@ -150,13 +147,11 @@ class InlineFragmentRendererTest extends \PHPUnit_Framework_TestCase
                 ob_start();
                 echo 'bar';
                 throw new \RuntimeException();
-            }))
-        ;
+            }));
         $resolver
             ->expects($this->once())
             ->method('getArguments')
-            ->will($this->returnValue(array()))
-        ;
+            ->will($this->returnValue(array()));
 
         $kernel = new HttpKernel(new EventDispatcher(), $resolver);
         $renderer = new InlineFragmentRenderer($kernel);

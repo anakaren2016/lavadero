@@ -95,24 +95,10 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
     }
 
     /**
-     * Returns true if based on the buffer passed more bytes should be buffered.
-     *
-     * @param array $buffer
-     *
-     * @return bool
-     */
-    public function shouldBuffer($buffer)
-    {
-        $endOfBuffer = end($buffer);
-
-        return isset($this->_index[$endOfBuffer]);
-    }
-
-    /**
      * Perform the actual replacements on $buffer and return the result.
      *
      * @param array $buffer
-     * @param int   $_minReplaces
+     * @param int $_minReplaces
      *
      * @return array
      */
@@ -134,12 +120,12 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
                     $search_pos = $search_pos[$buffer[$p]];
                     // We have a complete pattern, save, in case we don't find a better match later
                     if (isset($search_pos[-1]) && $search_pos[-1] < $last_found
-                        && $search_pos[-1] > $_minReplaces) {
+                        && $search_pos[-1] > $_minReplaces
+                    ) {
                         $last_found = $search_pos[-1];
                         $last_size = $search_pos[-2];
                     }
-                }
-                // We got a complete pattern
+                } // We got a complete pattern
                 elseif ($last_found !== PHP_INT_MAX) {
                     // Adding replacement datas to output buffer
                     $rep_size = $this->_repSize[$last_found];
@@ -165,5 +151,19 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
         }
 
         return $newBuffer;
+    }
+
+    /**
+     * Returns true if based on the buffer passed more bytes should be buffered.
+     *
+     * @param array $buffer
+     *
+     * @return bool
+     */
+    public function shouldBuffer($buffer)
+    {
+        $endOfBuffer = end($buffer);
+
+        return isset($this->_index[$endOfBuffer]);
     }
 }

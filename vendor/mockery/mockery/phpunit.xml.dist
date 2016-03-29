@@ -11,7 +11,7 @@
          stopOnFailure="false"
          syntaxCheck="true"
          verbose="true">
->
+    >
     <testsuites>
         <testsuite name="Mockery Test Suite">
             <directory suffix="Test.php">./tests</directory>
@@ -29,7 +29,7 @@
     </filter>
     <listeners>
         <listener
-            class='Mockery\Adapter\Phpunit\TestListener'
-            file='./library/Mockery/Adapter/Phpunit/TestListener.php'/>
+                class='Mockery\Adapter\Phpunit\TestListener'
+                file='./library/Mockery/Adapter/Phpunit/TestListener.php'/>
     </listeners>
 </phpunit>

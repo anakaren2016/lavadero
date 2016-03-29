@@ -2,10 +2,10 @@
 
 namespace Illuminate\Queue;
 
+use Illuminate\Contracts\Database\ModelIdentifier;
+use Illuminate\Contracts\Queue\QueueableEntity;
 use ReflectionClass;
 use ReflectionProperty;
-use Illuminate\Contracts\Queue\QueueableEntity;
-use Illuminate\Contracts\Database\ModelIdentifier;
 
 trait SerializesModels
 {
@@ -46,31 +46,31 @@ trait SerializesModels
     /**
      * Get the property value prepared for serialization.
      *
-     * @param  mixed  $value
+     * @param  mixed $value
      * @return mixed
      */
     protected function getSerializedPropertyValue($value)
     {
         return $value instanceof QueueableEntity
-                        ? new ModelIdentifier(get_class($value), $value->getQueueableId()) : $value;
+            ? new ModelIdentifier(get_class($value), $value->getQueueableId()) : $value;
     }
 
     /**
      * Get the restored property value after deserialization.
      *
-     * @param  mixed  $value
+     * @param  mixed $value
      * @return mixed
      */
     protected function getRestoredPropertyValue($value)
     {
         return $value instanceof ModelIdentifier
-                        ? (new $value->class)->findOrFail($value->id) : $value;
+            ? (new $value->class)->findOrFail($value->id) : $value;
     }
 
     /**
      * Get the property value for the given property.
      *
-     * @param  \ReflectionProperty  $property
+     * @param  \ReflectionProperty $property
      * @return mixed
      */
     protected function getPropertyValue(ReflectionProperty $property)

@@ -59,9 +59,9 @@ class FileFormField extends FormField
             $name = $info['basename'];
 
             // copy to a tmp location
-            $tmp = sys_get_temp_dir().'/'.sha1(uniqid(mt_rand(), true));
+            $tmp = sys_get_temp_dir() . '/' . sha1(uniqid(mt_rand(), true));
             if (array_key_exists('extension', $info)) {
-                $tmp .= '.'.$info['extension'];
+                $tmp .= '.' . $info['extension'];
             }
             if (is_file($tmp)) {
                 unlink($tmp);

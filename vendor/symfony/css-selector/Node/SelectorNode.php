@@ -35,7 +35,7 @@ class SelectorNode extends AbstractNode
 
     /**
      * @param NodeInterface $tree
-     * @param null|string   $pseudoElement
+     * @param null|string $pseudoElement
      */
     public function __construct(NodeInterface $tree, $pseudoElement = null)
     {
@@ -72,6 +72,6 @@ class SelectorNode extends AbstractNode
      */
     public function __toString()
     {
-        return sprintf('%s[%s%s]', $this->getNodeName(), $this->tree, $this->pseudoElement ? '::'.$this->pseudoElement : '');
+        return sprintf('%s[%s%s]', $this->getNodeName(), $this->tree, $this->pseudoElement ? '::' . $this->pseudoElement : '');
     }
 }

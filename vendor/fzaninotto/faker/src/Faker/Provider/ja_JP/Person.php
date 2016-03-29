@@ -9,7 +9,7 @@ class Person extends \Faker\Provider\Person
     );
 
     protected static $femaleNameFormats = array(
-         '{{lastName}} {{firstNameFemale}}',
+        '{{lastName}} {{firstNameFemale}}',
     );
 
     /**
@@ -73,16 +73,6 @@ class Person extends \Faker\Provider\Person
     );
 
     /**
-     * @example 'アオタ アキラ'
-     */
-    public function kanaName()
-    {
-        $format = static::randomElement(static::$kanaFormats);
-
-        return $this->generator->parse($format);
-    }
-
-    /**
      * @example 'アオタ'
      */
     public static function firstKanaName()
@@ -96,5 +86,15 @@ class Person extends \Faker\Provider\Person
     public static function lastKanaName()
     {
         return static::randomElement(static::$lastKanaName);
+    }
+
+    /**
+     * @example 'アオタ アキラ'
+     */
+    public function kanaName()
+    {
+        $format = static::randomElement(static::$kanaFormats);
+
+        return $this->generator->parse($format);
     }
 }

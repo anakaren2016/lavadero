@@ -71,14 +71,14 @@ class Route implements \Serializable
      *
      *  * compiler_class: A class name able to compile this route instance (RouteCompiler by default)
      *
-     * @param string       $path         The path pattern to match
-     * @param array        $defaults     An array of default parameter values
-     * @param array        $requirements An array of requirements for parameters (regexes)
-     * @param array        $options      An array of options
-     * @param string       $host         The host pattern to match
-     * @param string|array $schemes      A required URI scheme or an array of restricted schemes
-     * @param string|array $methods      A required HTTP method or an array of restricted methods
-     * @param string       $condition    A condition that should evaluate to true for the route to match
+     * @param string $path The path pattern to match
+     * @param array $defaults An array of default parameter values
+     * @param array $requirements An array of requirements for parameters (regexes)
+     * @param array $options An array of options
+     * @param string $host The host pattern to match
+     * @param string|array $schemes A required URI scheme or an array of restricted schemes
+     * @param string|array $methods A required HTTP method or an array of restricted methods
+     * @param string $condition A condition that should evaluate to true for the route to match
      */
     public function __construct($path, array $defaults = array(), array $requirements = array(), array $options = array(), $host = '', $schemes = array(), $methods = array(), $condition = '')
     {
@@ -155,7 +155,7 @@ class Route implements \Serializable
     {
         // A pattern must start with a slash and must not have multiple slashes at the beginning because the
         // generated path for this route would be confused with a network path, e.g. '//domain.com/path'.
-        $this->path = '/'.ltrim(trim($pattern), '/');
+        $this->path = '/' . ltrim(trim($pattern), '/');
         $this->compiled = null;
 
         return $this;
@@ -182,7 +182,7 @@ class Route implements \Serializable
      */
     public function setHost($pattern)
     {
-        $this->host = (string) $pattern;
+        $this->host = (string)$pattern;
         $this->compiled = null;
 
         return $this;
@@ -211,7 +211,7 @@ class Route implements \Serializable
      */
     public function setSchemes($schemes)
     {
-        $this->schemes = array_map('strtolower', (array) $schemes);
+        $this->schemes = array_map('strtolower', (array)$schemes);
         $this->compiled = null;
 
         return $this;
@@ -252,7 +252,7 @@ class Route implements \Serializable
      */
     public function setMethods($methods)
     {
-        $this->methods = array_map('strtoupper', (array) $methods);
+        $this->methods = array_map('strtoupper', (array)$methods);
         $this->compiled = null;
 
         return $this;
@@ -310,8 +310,8 @@ class Route implements \Serializable
      *
      * This method implements a fluent interface.
      *
-     * @param string $name  An option name
-     * @param mixed  $value The option value
+     * @param string $name An option name
+     * @param mixed $value The option value
      *
      * @return Route The current Route instance
      */
@@ -321,18 +321,6 @@ class Route implements \Serializable
         $this->compiled = null;
 
         return $this;
-    }
-
-    /**
-     * Get an option value.
-     *
-     * @param string $name An option name
-     *
-     * @return mixed The option value or null when not given
-     */
-    public function getOption($name)
-    {
-        return isset($this->options[$name]) ? $this->options[$name] : null;
     }
 
     /**
@@ -419,8 +407,8 @@ class Route implements \Serializable
     /**
      * Sets a default value.
      *
-     * @param string $name    A variable name
-     * @param mixed  $default The default value
+     * @param string $name A variable name
+     * @param mixed $default The default value
      *
      * @return Route The current Route instance
      */
@@ -504,7 +492,7 @@ class Route implements \Serializable
     /**
      * Sets a requirement for the given key.
      *
-     * @param string $key   The key
+     * @param string $key The key
      * @param string $regex The regex
      *
      * @return Route The current Route instance
@@ -515,6 +503,27 @@ class Route implements \Serializable
         $this->compiled = null;
 
         return $this;
+    }
+
+    private function sanitizeRequirement($key, $regex)
+    {
+        if (!is_string($regex)) {
+            throw new \InvalidArgumentException(sprintf('Routing requirement for "%s" must be a string.', $key));
+        }
+
+        if ('' !== $regex && '^' === $regex[0]) {
+            $regex = (string)substr($regex, 1); // returns false for a single character
+        }
+
+        if ('$' === substr($regex, -1)) {
+            $regex = substr($regex, 0, -1);
+        }
+
+        if ('' === $regex) {
+            throw new \InvalidArgumentException(sprintf('Routing requirement for "%s" cannot be empty.', $key));
+        }
+
+        return $regex;
     }
 
     /**
@@ -538,7 +547,7 @@ class Route implements \Serializable
      */
     public function setCondition($condition)
     {
-        $this->condition = (string) $condition;
+        $this->condition = (string)$condition;
         $this->compiled = null;
 
         return $this;
@@ -565,24 +574,15 @@ class Route implements \Serializable
         return $this->compiled = $class::compile($this);
     }
 
-    private function sanitizeRequirement($key, $regex)
+    /**
+     * Get an option value.
+     *
+     * @param string $name An option name
+     *
+     * @return mixed The option value or null when not given
+     */
+    public function getOption($name)
     {
-        if (!is_string($regex)) {
-            throw new \InvalidArgumentException(sprintf('Routing requirement for "%s" must be a string.', $key));
-        }
-
-        if ('' !== $regex && '^' === $regex[0]) {
-            $regex = (string) substr($regex, 1); // returns false for a single character
-        }
-
-        if ('$' === substr($regex, -1)) {
-            $regex = substr($regex, 0, -1);
-        }
-
-        if ('' === $regex) {
-            throw new \InvalidArgumentException(sprintf('Routing requirement for "%s" cannot be empty.', $key));
-        }
-
-        return $regex;
+        return isset($this->options[$name]) ? $this->options[$name] : null;
     }
 }

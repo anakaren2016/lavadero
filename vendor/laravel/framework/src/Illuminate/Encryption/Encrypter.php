@@ -2,10 +2,10 @@
 
 namespace Illuminate\Encryption;
 
-use RuntimeException;
 use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Contracts\Encryption\EncryptException;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
+use Illuminate\Contracts\Encryption\EncryptException;
+use RuntimeException;
 
 class Encrypter extends BaseEncrypter implements EncrypterContract
 {
@@ -19,15 +19,15 @@ class Encrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Create a new encrypter instance.
      *
-     * @param  string  $key
-     * @param  string  $cipher
+     * @param  string $key
+     * @param  string $cipher
      * @return void
      *
      * @throws \RuntimeException
      */
     public function __construct($key, $cipher = 'AES-128-CBC')
     {
-        $key = (string) $key;
+        $key = (string)$key;
 
         if (static::supported($key, $cipher)) {
             $this->key = $key;
@@ -40,8 +40,8 @@ class Encrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Determine if the given key and cipher combination is valid.
      *
-     * @param  string  $key
-     * @param  string  $cipher
+     * @param  string $key
+     * @param  string $cipher
      * @return bool
      */
     public static function supported($key, $cipher)
@@ -54,7 +54,7 @@ class Encrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Encrypt the given value.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      *
      * @throws \Illuminate\Contracts\Encryption\EncryptException
@@ -76,7 +76,7 @@ class Encrypter extends BaseEncrypter implements EncrypterContract
 
         $json = json_encode(compact('iv', 'value', 'mac'));
 
-        if (! is_string($json)) {
+        if (!is_string($json)) {
             throw new EncryptException('Could not encrypt the data.');
         }
 
@@ -86,7 +86,7 @@ class Encrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Decrypt the given value.
      *
-     * @param  string  $payload
+     * @param  string $payload
      * @return string
      *
      * @throws \Illuminate\Contracts\Encryption\DecryptException

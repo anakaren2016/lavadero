@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\Debug\Tests\FatalErrorHandler;
 
-use Symfony\Component\Debug\Exception\FatalErrorException;
-use Symfony\Component\ClassLoader\ClassLoader as SymfonyClassLoader;
-use Symfony\Component\Debug\FatalErrorHandler\ClassNotFoundFatalErrorHandler;
-use Symfony\Component\Debug\DebugClassLoader;
 use Composer\Autoload\ClassLoader as ComposerClassLoader;
+use Symfony\Component\ClassLoader\ClassLoader as SymfonyClassLoader;
+use Symfony\Component\Debug\DebugClassLoader;
+use Symfony\Component\Debug\Exception\FatalErrorException;
+use Symfony\Component\Debug\FatalErrorHandler\ClassNotFoundFatalErrorHandler;
 
 class ClassNotFoundFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
 {
@@ -69,7 +69,7 @@ class ClassNotFoundFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function provideClassNotFoundData()
     {
-        $prefixes = array('Symfony\Component\Debug\Exception\\' => realpath(__DIR__.'/../../Exception'));
+        $prefixes = array('Symfony\Component\Debug\Exception\\' => realpath(__DIR__ . '/../../Exception'));
 
         $symfonyAutoloader = new SymfonyClassLoader();
         $symfonyAutoloader->addPrefixes($prefixes);
@@ -150,18 +150,19 @@ class ClassNotFoundFatalErrorHandlerTest extends \PHPUnit_Framework_TestCase
                     'message' => 'Class \'Foo\\Bar\\UndefinedFunctionException\' not found',
                 ),
                 "Attempted to load class \"UndefinedFunctionException\" from namespace \"Foo\\Bar\".\nDid you forget a \"use\" statement for another namespace?",
-                function ($className) { /* do nothing here */ },
+                function ($className) { /* do nothing here */
+                },
             ),
         );
     }
 
     public function testCannotRedeclareClass()
     {
-        if (!file_exists(__DIR__.'/../FIXTURES2/REQUIREDTWICE.PHP')) {
+        if (!file_exists(__DIR__ . '/../FIXTURES2/REQUIREDTWICE.PHP')) {
             $this->markTestSkipped('Can only be run on case insensitive filesystems');
         }
 
-        require_once __DIR__.'/../FIXTURES2/REQUIREDTWICE.PHP';
+        require_once __DIR__ . '/../FIXTURES2/REQUIREDTWICE.PHP';
 
         $error = array(
             'type' => 1,

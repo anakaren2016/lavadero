@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Routing\Matcher\Dumper;
 
+use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 
 /**
  * PhpMatcherDumper creates a PHP class able to match URLs for a given set of routes.
@@ -118,8 +118,8 @@ EOF;
     /**
      * Generates PHP code to match a RouteCollection with all its routes.
      *
-     * @param RouteCollection $routes               A RouteCollection instance
-     * @param bool            $supportsRedirections Whether redirections are supported by the base class
+     * @param RouteCollection $routes A RouteCollection instance
+     * @param bool $supportsRedirections Whether redirections are supported by the base class
      *
      * @return string PHP code
      */
@@ -159,9 +159,9 @@ EOF;
     /**
      * Generates PHP code recursively to match a tree of routes.
      *
-     * @param DumperPrefixCollection $collection           A DumperPrefixCollection instance
-     * @param bool                   $supportsRedirections Whether redirections are supported by the base class
-     * @param string                 $parentPrefix         Prefix of the parent collection
+     * @param DumperPrefixCollection $collection A DumperPrefixCollection instance
+     * @param bool $supportsRedirections Whether redirections are supported by the base class
+     * @param string $parentPrefix Prefix of the parent collection
      *
      * @return string PHP code
      */
@@ -182,7 +182,7 @@ EOF;
             if ($route instanceof DumperCollection) {
                 $code .= $this->compilePrefixRoutes($route, $supportsRedirections, $optimizedPrefix);
             } else {
-                $code .= $this->compileRoute($route->getRoute(), $route->getName(), $supportsRedirections, $optimizedPrefix)."\n";
+                $code .= $this->compileRoute($route->getRoute(), $route->getName(), $supportsRedirections, $optimizedPrefix) . "\n";
             }
         }
 
@@ -198,10 +198,10 @@ EOF;
     /**
      * Compiles a single Route to PHP code used to match it against the path info.
      *
-     * @param Route       $route                A Route instance
-     * @param string      $name                 The name of the Route
-     * @param bool        $supportsRedirections Whether redirections are supported by the base class
-     * @param string|null $parentPrefix         The prefix of the parent collection used to optimize the code
+     * @param Route $route A Route instance
+     * @param string $name The name of the Route
+     * @param bool $supportsRedirections Whether redirections are supported by the base class
+     * @param string|null $parentPrefix The prefix of the parent collection used to optimize the code
      *
      * @return string PHP code
      *
@@ -238,7 +238,7 @@ EOF;
 
             $regex = $compiledRoute->getRegex();
             if ($supportsTrailingSlash && $pos = strpos($regex, '/$')) {
-                $regex = substr($regex, 0, $pos).'/?$'.substr($regex, $pos + 2);
+                $regex = substr($regex, 0, $pos) . '/?$' . substr($regex, $pos + 2);
                 $hasTrailingSlash = true;
             }
             $conditions[] = sprintf('preg_match(%s, $pathinfo, $matches)', var_export($regex, true));
@@ -262,7 +262,7 @@ EOF;
 
 EOF;
 
-        $gotoname = 'not_'.preg_replace('/[^A-Za-z0-9_]/', '', $name);
+        $gotoname = 'not_' . preg_replace('/[^A-Za-z0-9_]/', '', $name);
         if ($methods) {
             if (1 === count($methods)) {
                 $code .= <<<EOF

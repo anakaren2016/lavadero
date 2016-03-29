@@ -16,23 +16,21 @@
 class PHP_Timer
 {
     /**
+     * @var float
+     */
+    public static $requestTime;
+    /**
      * @var array
      */
     private static $times = array(
-      'hour'   => 3600000,
-      'minute' => 60000,
-      'second' => 1000
+        'hour' => 3600000,
+        'minute' => 60000,
+        'second' => 1000
     );
-
     /**
      * @var array
      */
     private static $startTimes = array();
-
-    /**
-     * @var float
-     */
-    public static $requestTime;
 
     /**
      * Starts the timer.
@@ -53,9 +51,33 @@ class PHP_Timer
     }
 
     /**
+     * Returns the resources (time, memory) of the request as a string.
+     *
+     * @return string
+     */
+    public static function resourceUsage()
+    {
+        return sprintf(
+            'Time: %s, Memory: %4.2fMb',
+            self::timeSinceStartOfRequest(),
+            memory_get_peak_usage(true) / 1048576
+        );
+    }
+
+    /**
+     * Formats the elapsed time since the start of the request as a string.
+     *
+     * @return string
+     */
+    public static function timeSinceStartOfRequest()
+    {
+        return self::secondsToTimeString(microtime(true) - self::$requestTime);
+    }
+
+    /**
      * Formats the elapsed time as a string.
      *
-     * @param  float  $time
+     * @param  float $time
      * @return string
      */
     public static function secondsToTimeString($time)
@@ -71,30 +93,6 @@ class PHP_Timer
         }
 
         return $ms . ' ms';
-    }
-
-    /**
-     * Formats the elapsed time since the start of the request as a string.
-     *
-     * @return string
-     */
-    public static function timeSinceStartOfRequest()
-    {
-        return self::secondsToTimeString(microtime(true) - self::$requestTime);
-    }
-
-    /**
-     * Returns the resources (time, memory) of the request as a string.
-     *
-     * @return string
-     */
-    public static function resourceUsage()
-    {
-        return sprintf(
-            'Time: %s, Memory: %4.2fMb',
-            self::timeSinceStartOfRequest(),
-            memory_get_peak_usage(true) / 1048576
-        );
     }
 }
 

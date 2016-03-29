@@ -3,8 +3,8 @@
 namespace Illuminate\Routing;
 
 use Illuminate\Support\ServiceProvider;
-use Zend\Diactoros\Response as PsrResponse;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+use Zend\Diactoros\Response as PsrResponse;
 
 class RoutingServiceProvider extends ServiceProvider
 {
@@ -57,8 +57,8 @@ class RoutingServiceProvider extends ServiceProvider
 
             $url = new UrlGenerator(
                 $routes, $app->rebinding(
-                    'request', $this->requestRebinder()
-                )
+                'request', $this->requestRebinder()
+            )
             );
 
             $url->setSessionResolver(function () {

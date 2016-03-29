@@ -31,6 +31,25 @@ class Dotenv
     }
 
     /**
+     * Returns the full path to the file.
+     *
+     * @param string $path
+     * @param string $file
+     *
+     * @return string
+     */
+    protected function getFilePath($path, $file)
+    {
+        if (!is_string($file)) {
+            $file = '.env';
+        }
+
+        $filePath = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
+
+        return $filePath;
+    }
+
+    /**
      * Load `.env` file in given directory.
      *
      * @return array
@@ -55,25 +74,6 @@ class Dotenv
     }
 
     /**
-     * Returns the full path to the file.
-     *
-     * @param string $path
-     * @param string $file
-     *
-     * @return string
-     */
-    protected function getFilePath($path, $file)
-    {
-        if (!is_string($file)) {
-            $file = '.env';
-        }
-
-        $filePath = rtrim($path, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$file;
-
-        return $filePath;
-    }
-
-    /**
      * Required ensures that the specified variables exist, and returns a new Validator object.
      *
      * @param string|string[] $variable
@@ -82,6 +82,6 @@ class Dotenv
      */
     public function required($variable)
     {
-        return new Validator((array) $variable, $this->loader);
+        return new Validator((array)$variable, $this->loader);
     }
 }

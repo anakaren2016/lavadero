@@ -22,38 +22,6 @@ namespace Cron;
  */
 class DayOfMonthField extends AbstractField
 {
-    /**
-     * Get the nearest day of the week for a given day in a month
-     *
-     * @param int $currentYear  Current year
-     * @param int $currentMonth Current month
-     * @param int $targetDay    Target day of the month
-     *
-     * @return \DateTime Returns the nearest date
-     */
-    private static function getNearestWeekday($currentYear, $currentMonth, $targetDay)
-    {
-        $tday = str_pad($targetDay, 2, '0', STR_PAD_LEFT);
-        $target = \DateTime::createFromFormat('Y-m-d', "$currentYear-$currentMonth-$tday");
-        $currentWeekday = (int) $target->format('N');
-
-        if ($currentWeekday < 6) {
-            return $target;
-        }
-
-        $lastDayOfMonth = $target->format('t');
-
-        foreach (array(-1, 1, -2, 2) as $i) {
-            $adjusted = $targetDay + $i;
-            if ($adjusted > 0 && $adjusted <= $lastDayOfMonth) {
-                $target->setDate($currentYear, $currentMonth, $adjusted);
-                if ($target->format('N') < 6 && $target->format('m') == $currentMonth) {
-                    return $target;
-                }
-            }
-        }
-    }
-
     public function isSatisfiedBy(\DateTime $date, $value)
     {
         // ? states that the field value is to be skipped
@@ -83,6 +51,38 @@ class DayOfMonthField extends AbstractField
         return $this->isSatisfied($date->format('d'), $value);
     }
 
+    /**
+     * Get the nearest day of the week for a given day in a month
+     *
+     * @param int $currentYear Current year
+     * @param int $currentMonth Current month
+     * @param int $targetDay Target day of the month
+     *
+     * @return \DateTime Returns the nearest date
+     */
+    private static function getNearestWeekday($currentYear, $currentMonth, $targetDay)
+    {
+        $tday = str_pad($targetDay, 2, '0', STR_PAD_LEFT);
+        $target = \DateTime::createFromFormat('Y-m-d', "$currentYear-$currentMonth-$tday");
+        $currentWeekday = (int)$target->format('N');
+
+        if ($currentWeekday < 6) {
+            return $target;
+        }
+
+        $lastDayOfMonth = $target->format('t');
+
+        foreach (array(-1, 1, -2, 2) as $i) {
+            $adjusted = $targetDay + $i;
+            if ($adjusted > 0 && $adjusted <= $lastDayOfMonth) {
+                $target->setDate($currentYear, $currentMonth, $adjusted);
+                if ($target->format('N') < 6 && $target->format('m') == $currentMonth) {
+                    return $target;
+                }
+            }
+        }
+    }
+
     public function increment(\DateTime $date, $invert = false)
     {
         if ($invert) {
@@ -98,6 +98,6 @@ class DayOfMonthField extends AbstractField
 
     public function validate($value)
     {
-        return (bool) preg_match('/^[\*,\/\-\?LW0-9A-Za-z]+$/', $value);
+        return (bool)preg_match('/^[\*,\/\-\?LW0-9A-Za-z]+$/', $value);
     }
 }

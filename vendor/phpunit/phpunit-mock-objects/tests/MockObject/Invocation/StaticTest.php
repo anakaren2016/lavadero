@@ -24,7 +24,7 @@ class Framework_MockObject_Invocation_StaticTest extends PHPUnit_Framework_TestC
     public function testAllowToGetMethodParametersSetInConstructor()
     {
         $expectedParameters = array(
-          'foo', 5, array('a', 'b'), new StdClass, null, false
+            'foo', 5, array('a', 'b'), new StdClass, null, false
         );
 
         $invocation = new PHPUnit_Framework_MockObject_Invocation_Static(

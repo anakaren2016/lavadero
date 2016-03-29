@@ -14,8 +14,8 @@ namespace Symfony\Component\Console\Logger;
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LogLevel;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * PSR-3 compliant console logger.
@@ -62,8 +62,8 @@ class ConsoleLogger extends AbstractLogger
 
     /**
      * @param OutputInterface $output
-     * @param array           $verbosityLevelMap
-     * @param array           $formatLevelMap
+     * @param array $verbosityLevelMap
+     * @param array $formatLevelMap
      */
     public function __construct(OutputInterface $output, array $verbosityLevelMap = array(), array $formatLevelMap = array())
     {
@@ -99,7 +99,7 @@ class ConsoleLogger extends AbstractLogger
      * @author PHP Framework Interoperability Group
      *
      * @param string $message
-     * @param array  $context
+     * @param array $context
      *
      * @return string
      */

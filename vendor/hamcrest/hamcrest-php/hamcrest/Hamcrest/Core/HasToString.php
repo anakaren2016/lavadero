@@ -41,7 +41,7 @@ class HasToString extends FeatureMatcher
             return $actual->toString();
         }
 
-        return (string) $actual;
+        return (string)$actual;
     }
 
     /**

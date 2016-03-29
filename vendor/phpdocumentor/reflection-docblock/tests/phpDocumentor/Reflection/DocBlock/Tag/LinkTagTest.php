@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Link Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Ben Selby <benmatselby@gmail.com>
@@ -32,7 +32,7 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exDescription
      * @param string $exLink
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\LinkTag
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\LinkTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -43,7 +43,8 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
         $exContent,
         $exDescription,
         $exLink
-    ) {
+    )
+    {
         $tag = new LinkTag($type, $content);
 
         $this->assertEquals($type, $tag->getName());

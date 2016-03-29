@@ -560,7 +560,7 @@ if (typeof jQuery === 'undefined') {
         this.$element = $(element)
         this.options = $.extend({}, Collapse.DEFAULTS, options)
         this.$trigger = $('[data-toggle="collapse"][href="#' + element.id + '"],' +
-            '[data-toggle="collapse"][data-target="#' + element.id + '"]')
+        '[data-toggle="collapse"][data-target="#' + element.id + '"]')
         this.transitioning = null
 
         if (this.options.parent) {
@@ -1675,7 +1675,7 @@ if (typeof jQuery === 'undefined') {
         var o = this.options
 
         title = $e.attr('data-original-title')
-            || (typeof o.title == 'function' ? o.title.call($e[0]) : o.title)
+        || (typeof o.title == 'function' ? o.title.call($e[0]) : o.title)
 
         return title
     }

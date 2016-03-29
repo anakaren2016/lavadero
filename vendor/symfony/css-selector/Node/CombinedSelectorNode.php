@@ -40,7 +40,7 @@ class CombinedSelectorNode extends AbstractNode
 
     /**
      * @param NodeInterface $selector
-     * @param string        $combinator
+     * @param string $combinator
      * @param NodeInterface $subSelector
      */
     public function __construct(NodeInterface $selector, $combinator, NodeInterface $subSelector)

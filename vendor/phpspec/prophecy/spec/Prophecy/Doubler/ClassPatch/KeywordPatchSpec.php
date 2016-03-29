@@ -4,7 +4,6 @@ namespace spec\Prophecy\Doubler\ClassPatch;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Prophecy\Doubler\Generator\Node\MethodNode;
 
 class KeywordPatchSpec extends ObjectBehavior
 {

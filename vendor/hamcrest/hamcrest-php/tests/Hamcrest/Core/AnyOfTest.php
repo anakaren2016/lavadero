@@ -4,11 +4,6 @@ namespace Hamcrest\Core;
 class AnyOfTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Core\AnyOf::anyOf('irrelevant');
-    }
-
     public function testAnyOfEvaluatesToTheLogicalDisjunctionOfTwoOtherMatchers()
     {
         assertThat('good', anyOf('bad', 'good'));
@@ -75,5 +70,10 @@ class AnyOfTest extends \Hamcrest\AbstractMatcherTest
             'not ("good" or "bad" or "ugly")',
             noneOf('good', 'bad', 'ugly')
         );
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Core\AnyOf::anyOf('irrelevant');
     }
 }

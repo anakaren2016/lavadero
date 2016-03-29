@@ -17,7 +17,7 @@ namespace Symfony\Component\Translation\Catalogue;
  * all = intersection ∪ (target ∖ intersection) = target
  * new = all ∖ source = {x: x ∈ target ∧ x ∉ source}
  * obsolete = source ∖ all = source ∖ target = {x: x ∈ source ∧ x ∉ target}
- * Basically, the result contains messages from the target catalogue. 
+ * Basically, the result contains messages from the target catalogue.
  *
  * @author Michael Lee <michael.lee@zerustech.com>
  */

@@ -29,7 +29,7 @@ class PHPUnit_Runner_Filter_Test extends RecursiveFilterIterator
 
     /**
      * @param RecursiveIterator $iterator
-     * @param string            $filter
+     * @param string $filter
      */
     public function __construct(RecursiveIterator $iterator, $filter)
     {
@@ -107,7 +107,7 @@ class PHPUnit_Runner_Filter_Test extends RecursiveFilterIterator
         $accepted = preg_match($this->filter, $name, $matches);
 
         if ($accepted && isset($this->filterMax)) {
-            $set      = end($matches);
+            $set = end($matches);
             $accepted = $set >= $this->filterMin && $set <= $this->filterMax;
         }
 

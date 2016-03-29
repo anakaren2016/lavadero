@@ -89,7 +89,7 @@ class Person extends \Faker\Provider\Person
     protected static $titleFemale = array('d-na.', 'd-șoara', 'ing.', 'dr.');
 
     protected static $cnpCountyCodes = array(
-        'AB' => '01', 'AR' => '02', 'AG' => '03', 'B'  => '40', 'BC' => '04', 'BH' => '05',
+        'AB' => '01', 'AR' => '02', 'AG' => '03', 'B' => '40', 'BC' => '04', 'BH' => '05',
         'BN' => '06', 'BT' => '07', 'BV' => '08', 'BR' => '09', 'BZ' => '10', 'CS' => '11',
         'CL' => '51', 'CJ' => '12', 'CT' => '13', 'CV' => '14', 'DB' => '15', 'DJ' => '16',
         'GL' => '17', 'GR' => '52', 'GJ' => '18', 'HR' => '19', 'HD' => '20', 'IL' => '21',
@@ -106,9 +106,9 @@ class Person extends \Faker\Provider\Person
      * @link http://ro.wikipedia.org/wiki/Cod_numeric_personal
      * @example 1111111111118
      *
-     * @param  string  $gender  Valid values: m, f, 1, 2
+     * @param  string $gender Valid values: m, f, 1, 2
      * @param  integer $century Valid values: 1800, 1900, 2000, 1, 2, 3, 4, 5, 6
-     * @param  string  $county  Valid values: 2 letter ISO 3166-2:RO county codes and B1-B6 for Bucharest's 6 sectors
+     * @param  string $county Valid values: 2 letter ISO 3166-2:RO county codes and B1-B6 for Bucharest's 6 sectors
      * @return string
      *
      */
@@ -120,13 +120,12 @@ class Person extends \Faker\Provider\Person
             $countyCode = static::$cnpCountyCodes[$county];
         }
 
-        $cnp = (string) static::cnpFirstDigit($gender, $century)
-             . static::numerify('##')
-             . sprintf('%02d', $this->generator->month())
-             . sprintf('%02d', $this->generator->dayOfMonth())
-             . $countyCode
-             . static::numerify('##%')
-        ;
+        $cnp = (string)static::cnpFirstDigit($gender, $century)
+            . static::numerify('##')
+            . sprintf('%02d', $this->generator->month())
+            . sprintf('%02d', $this->generator->dayOfMonth())
+            . $countyCode
+            . static::numerify('##%');
 
         $cnp = static::cnpAddChecksum($cnp);
 
@@ -137,7 +136,7 @@ class Person extends \Faker\Provider\Person
      * Calculates the first digit for the Personal Numerical Code (CNP) based on
      * the gender and century
      *
-     * @param  string  $gender  Valid values: m, f, 1, 2
+     * @param  string $gender Valid values: m, f, 1, 2
      * @param  integer $century Valid values: 1800, 1900, 2000, 1, 2, 3, 4, 5, 6
      * @return integer
      */

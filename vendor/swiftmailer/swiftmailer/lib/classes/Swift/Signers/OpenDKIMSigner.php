@@ -16,16 +16,13 @@
  */
 class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
 {
-    private $_peclLoaded = false;
-
-    private $_dkimHandler = null;
-
-    private $dropFirstLF = true;
-
     const CANON_RELAXED = 1;
     const CANON_SIMPLE = 2;
     const SIG_RSA_SHA1 = 3;
     const SIG_RSA_SHA256 = 4;
+    private $_peclLoaded = false;
+    private $_dkimHandler = null;
+    private $dropFirstLF = true;
 
     public function __construct($privateKey, $domainName, $selector)
     {
@@ -47,7 +44,7 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
         $header = new Swift_Mime_Headers_OpenDKIMHeader('DKIM-Signature');
         $headerVal = $this->_dkimHandler->getSignatureHeader();
         if (!$headerVal) {
-            throw new Swift_SwiftException('OpenDKIM Error: '.$this->_dkimHandler->getError());
+            throw new Swift_SwiftException('OpenDKIM Error: ' . $this->_dkimHandler->getError());
         }
         $header->setValue($headerVal);
         $headers->set($header);
@@ -72,7 +69,7 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
             OpenDKIM::setOption(OpenDKIM::OPTS_FIXEDTIME, time());
         } else {
             if (!OpenDKIM::setOption(OpenDKIM::OPTS_FIXEDTIME, $this->_signatureTimestamp)) {
-                throw new Swift_SwiftException('Unable to force signature timestamp ['.openssl_error_string().']');
+                throw new Swift_SwiftException('Unable to force signature timestamp [' . openssl_error_string() . ']');
             }
         }
         if (isset($this->_signerIdentity)) {
@@ -164,7 +161,7 @@ class Swift_Signers_OpenDKIMSigner extends Swift_Signers_DKIMSigner
      */
     public function setDebugHeaders($debug)
     {
-        $this->_debugHeaders = (bool) $debug;
+        $this->_debugHeaders = (bool)$debug;
 
         return $this;
     }

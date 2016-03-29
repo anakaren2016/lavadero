@@ -13,11 +13,6 @@ class IsInstanceOfTest extends \Hamcrest\AbstractMatcherTest
         $this->_subClassInstance = new \Hamcrest\Core\SampleSubClass('good');
     }
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Core\IsInstanceOf::anInstanceOf('stdClass');
-    }
-
     public function testEvaluatesToTrueIfArgumentIsInstanceOfASpecificClass()
     {
         assertThat($this->_baseClassInstance, anInstanceOf('Hamcrest\Core\SampleBaseClass'));
@@ -47,5 +42,10 @@ class IsInstanceOfTest extends \Hamcrest\AbstractMatcherTest
             anInstanceOf('Hamcrest\Core\SampleSubClass'),
             $this->_baseClassInstance
         );
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Core\IsInstanceOf::anInstanceOf('stdClass');
     }
 }

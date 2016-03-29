@@ -12,9 +12,9 @@
 namespace Monolog\Handler;
 
 use Gelf\Message;
-use Monolog\TestCase;
-use Monolog\Logger;
 use Monolog\Formatter\GelfMessageFormatter;
+use Monolog\Logger;
+use Monolog\TestCase;
 
 class GelfHandlerLegacyTest extends TestCase
 {

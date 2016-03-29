@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Covers Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
@@ -31,7 +31,7 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\CoversTag
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\CoversTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -42,7 +42,8 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
         $exContent,
         $exDescription,
         $exReference
-    ) {
+    )
+    {
         $tag = new CoversTag($type, $content);
 
         $this->assertEquals($type, $tag->getName());

@@ -4,11 +4,6 @@ namespace Hamcrest\Type;
 class IsBooleanTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Type\IsBoolean::booleanValue();
-    }
-
     public function testEvaluatesToTrueIfArgumentMatchesType()
     {
         assertThat(false, booleanValue());
@@ -31,5 +26,10 @@ class IsBooleanTest extends \Hamcrest\AbstractMatcherTest
     {
         $this->assertMismatchDescription('was null', booleanValue(), null);
         $this->assertMismatchDescription('was a string "foo"', booleanValue(), 'foo');
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Type\IsBoolean::booleanValue();
     }
 }

@@ -11,13 +11,13 @@
 
 namespace Symfony\Component\HttpKernel\Fragment;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Implements the inline rendering strategy where the Request is rendered by the current HTTP kernel.
@@ -32,7 +32,7 @@ class InlineFragmentRenderer extends RoutableFragmentRenderer
     /**
      * Constructor.
      *
-     * @param HttpKernelInterface      $kernel     A HttpKernelInterface instance
+     * @param HttpKernelInterface $kernel A HttpKernelInterface instance
      * @param EventDispatcherInterface $dispatcher A EventDispatcherInterface instance
      */
     public function __construct(HttpKernelInterface $kernel, EventDispatcherInterface $dispatcher = null)
@@ -122,7 +122,7 @@ class InlineFragmentRenderer extends RoutableFragmentRenderer
             if ($trustedHeaderName = Request::getTrustedHeaderName(Request::HEADER_CLIENT_IP)) {
                 $currentXForwardedFor = $request->headers->get($trustedHeaderName, '');
 
-                $server['HTTP_'.$trustedHeaderName] = ($currentXForwardedFor ? $currentXForwardedFor.', ' : '').$request->getClientIp();
+                $server['HTTP_' . $trustedHeaderName] = ($currentXForwardedFor ? $currentXForwardedFor . ', ' : '') . $request->getClientIp();
             }
         } catch (\InvalidArgumentException $e) {
             // Do nothing

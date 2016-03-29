@@ -46,7 +46,7 @@ class PHP_CodeCoverage_Report_XML_Totals
     public function __construct(DOMElement $container)
     {
         $this->container = $container;
-        $dom             = $container->ownerDocument;
+        $dom = $container->ownerDocument;
 
         $this->linesNode = $dom->createElementNS(
             'http://schema.phpunit.de/coverage/1.0',

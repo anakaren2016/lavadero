@@ -2,9 +2,9 @@
 
 namespace Illuminate\Queue\Jobs;
 
-use Illuminate\Queue\DatabaseQueue;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
+use Illuminate\Queue\DatabaseQueue;
 
 class DatabaseJob extends Job implements JobContract
 {
@@ -25,10 +25,10 @@ class DatabaseJob extends Job implements JobContract
     /**
      * Create a new job instance.
      *
-     * @param  \Illuminate\Container\Container  $container
-     * @param  \Illuminate\Queue\DatabaseQueue  $database
-     * @param  \StdClass  $job
-     * @param  string  $queue
+     * @param  \Illuminate\Container\Container $container
+     * @param  \Illuminate\Queue\DatabaseQueue $database
+     * @param  \StdClass $job
+     * @param  string $queue
      * @return void
      */
     public function __construct(Container $container, DatabaseQueue $database, $job, $queue)
@@ -65,7 +65,7 @@ class DatabaseJob extends Job implements JobContract
     /**
      * Release the job back into the queue.
      *
-     * @param  int  $delay
+     * @param  int $delay
      * @return void
      */
     public function release($delay = 0)
@@ -84,7 +84,7 @@ class DatabaseJob extends Job implements JobContract
      */
     public function attempts()
     {
-        return (int) $this->job->attempts;
+        return (int)$this->job->attempts;
     }
 
     /**

@@ -1,13 +1,10 @@
 <?php
+
 class Singleton
 {
     private static $uniqueInstance = null;
 
     protected function __construct()
-    {
-    }
-
-    final private function __clone()
     {
     }
 
@@ -18,5 +15,9 @@ class Singleton
         }
 
         return self::$uniqueInstance;
+    }
+
+    final private function __clone()
+    {
     }
 }

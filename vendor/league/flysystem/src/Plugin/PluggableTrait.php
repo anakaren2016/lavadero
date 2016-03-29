@@ -39,11 +39,11 @@ trait PluggableTrait
      */
     protected function findPlugin($method)
     {
-        if ( ! isset($this->plugins[$method])) {
+        if (!isset($this->plugins[$method])) {
             throw new PluginNotFoundException('Plugin not found for method: ' . $method);
         }
 
-        if ( ! method_exists($this->plugins[$method], 'handle')) {
+        if (!method_exists($this->plugins[$method], 'handle')) {
             throw new LogicException(get_class($this->plugins[$method]) . ' does not have a handle method.');
         }
 
@@ -54,7 +54,7 @@ trait PluggableTrait
      * Invoke a plugin by method name.
      *
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return mixed
      */
@@ -71,7 +71,7 @@ trait PluggableTrait
      * Plugins pass-through.
      *
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @throws BadMethodCallException
      *

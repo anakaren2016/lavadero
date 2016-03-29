@@ -35,9 +35,9 @@ class StreamOutput extends Output
     /**
      * Constructor.
      *
-     * @param resource                      $stream    A stream resource
-     * @param int                           $verbosity The verbosity level (one of the VERBOSITY constants in OutputInterface)
-     * @param bool|null                     $decorated Whether to decorate messages (null for auto-guessing)
+     * @param resource $stream A stream resource
+     * @param int $verbosity The verbosity level (one of the VERBOSITY constants in OutputInterface)
+     * @param bool|null $decorated Whether to decorate messages (null for auto-guessing)
      * @param OutputFormatterInterface|null $formatter Output formatter instance (null to use default OutputFormatter)
      *
      * @throws InvalidArgumentException When first argument is not a real stream
@@ -72,7 +72,7 @@ class StreamOutput extends Output
      */
     protected function doWrite($message, $newline)
     {
-        if (false === @fwrite($this->stream, $message.($newline ? PHP_EOL : ''))) {
+        if (false === @fwrite($this->stream, $message . ($newline ? PHP_EOL : ''))) {
             // should never happen
             throw new RuntimeException('Unable to write output.');
         }

@@ -90,7 +90,7 @@ class ArrayEveryEntryTokenSpec extends ObjectBehavior
 
     /**
      * @param \Prophecy\Argument\Token\TokenInterface $value
-     * @param \Iterator                               $object
+     * @param \Iterator $object
      */
     function it_scores_traversable_object_from_value_token($value, $object)
     {

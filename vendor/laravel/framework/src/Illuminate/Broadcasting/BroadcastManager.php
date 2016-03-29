@@ -2,14 +2,14 @@
 
 namespace Illuminate\Broadcasting;
 
-use Pusher;
 use Closure;
+use Illuminate\Broadcasting\Broadcasters\LogBroadcaster;
+use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
+use Illuminate\Broadcasting\Broadcasters\RedisBroadcaster;
+use Illuminate\Contracts\Broadcasting\Factory as FactoryContract;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
-use Illuminate\Broadcasting\Broadcasters\LogBroadcaster;
-use Illuminate\Broadcasting\Broadcasters\RedisBroadcaster;
-use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
-use Illuminate\Contracts\Broadcasting\Factory as FactoryContract;
+use Pusher;
 
 class BroadcastManager implements FactoryContract
 {
@@ -37,7 +37,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Create a new manager instance.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application $app
      * @return void
      */
     public function __construct($app)
@@ -48,7 +48,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Get a driver instance.
      *
-     * @param  string  $driver
+     * @param  string $driver
      * @return mixed
      */
     public function connection($driver = null)
@@ -59,7 +59,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Get a driver instance.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return mixed
      */
     public function driver($name = null)
@@ -72,7 +72,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Attempt to get the connection from the local cache.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return \Illuminate\Contracts\Broadcasting\Broadcaster
      */
     protected function get($name)
@@ -83,7 +83,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Resolve the given store.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return \Illuminate\Contracts\Broadcasting\Broadcaster
      *
      * @throws \InvalidArgumentException
@@ -99,7 +99,7 @@ class BroadcastManager implements FactoryContract
         if (isset($this->customCreators[$config['driver']])) {
             return $this->callCustomCreator($config);
         } else {
-            $driverMethod = 'create'.ucfirst($config['driver']).'Driver';
+            $driverMethod = 'create' . ucfirst($config['driver']) . 'Driver';
 
             if (method_exists($this, $driverMethod)) {
                 return $this->{$driverMethod}($config);
@@ -112,7 +112,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Call a custom driver creator.
      *
-     * @param  array  $config
+     * @param  array $config
      * @return mixed
      */
     protected function callCustomCreator(array $config)
@@ -123,7 +123,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Create an instance of the driver.
      *
-     * @param  array  $config
+     * @param  array $config
      * @return \Illuminate\Contracts\Broadcasting\Broadcaster
      */
     protected function createPusherDriver(array $config)
@@ -136,7 +136,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Create an instance of the driver.
      *
-     * @param  array  $config
+     * @param  array $config
      * @return \Illuminate\Contracts\Broadcasting\Broadcaster
      */
     protected function createRedisDriver(array $config)
@@ -149,7 +149,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Create an instance of the driver.
      *
-     * @param  array  $config
+     * @param  array $config
      * @return \Illuminate\Contracts\Broadcasting\Broadcaster
      */
     protected function createLogDriver(array $config)
@@ -162,7 +162,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Get the connection configuration.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return array
      */
     protected function getConfig($name)
@@ -183,7 +183,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Set the default driver name.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return void
      */
     public function setDefaultDriver($name)
@@ -194,8 +194,8 @@ class BroadcastManager implements FactoryContract
     /**
      * Register a custom driver creator Closure.
      *
-     * @param  string    $driver
-     * @param  \Closure  $callback
+     * @param  string $driver
+     * @param  \Closure $callback
      * @return $this
      */
     public function extend($driver, Closure $callback)
@@ -208,8 +208,8 @@ class BroadcastManager implements FactoryContract
     /**
      * Dynamically call the default driver instance.
      *
-     * @param  string  $method
-     * @param  array   $parameters
+     * @param  string $method
+     * @param  array $parameters
      * @return mixed
      */
     public function __call($method, $parameters)

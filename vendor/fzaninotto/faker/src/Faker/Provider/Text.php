@@ -19,7 +19,7 @@ abstract class Text extends \Faker\Provider\Base
      *
      * @example 'Alice, swallowing down her flamingo, and began by taking the little golden key'
      * @param integer $maxNbChars Maximum number of characters the text should contain (minimum: 10)
-     * @param integer $indexSize  Determines how many words are considered for the generation of the next word.
+     * @param integer $indexSize Determines how many words are considered for the generation of the next word.
      *                             The minimum is 1, and it produces the higher level of randomness, although the
      *                             generated text usually doesn't make sense. Higher index sizes (up to 5)
      *                             produce more correct text, at the price of less randomness.
@@ -120,18 +120,18 @@ abstract class Text extends \Faker\Provider\Base
         return implode(static::$separator, $words);
     }
 
-    protected static function strlen($text)
-    {
-        return function_exists('mb_strlen') ? mb_strlen($text, 'UTF-8') : strlen($text);
-    }
-
     protected static function validStart($word)
     {
         return preg_match('/^\p{Lu}/u', $word);
     }
 
+    protected static function strlen($text)
+    {
+        return function_exists('mb_strlen') ? mb_strlen($text, 'UTF-8') : strlen($text);
+    }
+
     protected static function appendEnd($text)
     {
-        return $text.'.';
+        return $text . '.';
     }
 }

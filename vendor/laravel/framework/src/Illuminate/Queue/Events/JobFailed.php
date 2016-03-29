@@ -28,9 +28,9 @@ class JobFailed
     /**
      * Create a new event instance.
      *
-     * @param  string  $connectionName
-     * @param  \Illuminate\Contracts\Jobs\Job  $job
-     * @param  array  $data
+     * @param  string $connectionName
+     * @param  \Illuminate\Contracts\Jobs\Job $job
+     * @param  array $data
      * @return void
      */
     public function __construct($connectionName, $job, $data)

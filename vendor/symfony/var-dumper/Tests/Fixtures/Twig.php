@@ -1,6 +1,7 @@
 <?php
 
 /* foo.twig */
+
 class __TwigTemplate_VarDumperFixture_u75a09 extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
@@ -9,14 +10,7 @@ class __TwigTemplate_VarDumperFixture_u75a09 extends Twig_Template
 
         $this->parent = false;
 
-        $this->blocks = array(
-        );
-    }
-
-    protected function doDisplay(array $context, array $blocks = array())
-    {
-        // line 2
-        throw new \Exception('Foobar');
+        $this->blocks = array();
     }
 
     public function getTemplateName()
@@ -26,7 +20,13 @@ class __TwigTemplate_VarDumperFixture_u75a09 extends Twig_Template
 
     public function getDebugInfo()
     {
-        return array (19 => 2);
+        return array(19 => 2);
+    }
+
+    protected function doDisplay(array $context, array $blocks = array())
+    {
+        // line 2
+        throw new \Exception('Foobar');
     }
 }
 /* foo bar*/

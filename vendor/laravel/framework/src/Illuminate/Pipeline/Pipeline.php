@@ -39,7 +39,7 @@ class Pipeline implements PipelineContract
     /**
      * Create a new class instance.
      *
-     * @param  \Illuminate\Contracts\Container\Container  $container
+     * @param  \Illuminate\Contracts\Container\Container $container
      * @return void
      */
     public function __construct(Container $container)
@@ -50,7 +50,7 @@ class Pipeline implements PipelineContract
     /**
      * Set the object being sent through the pipeline.
      *
-     * @param  mixed  $passable
+     * @param  mixed $passable
      * @return $this
      */
     public function send($passable)
@@ -63,7 +63,7 @@ class Pipeline implements PipelineContract
     /**
      * Set the array of pipes.
      *
-     * @param  array|mixed  $pipes
+     * @param  array|mixed $pipes
      * @return $this
      */
     public function through($pipes)
@@ -76,7 +76,7 @@ class Pipeline implements PipelineContract
     /**
      * Set the method to call on the pipes.
      *
-     * @param  string  $method
+     * @param  string $method
      * @return $this
      */
     public function via($method)
@@ -89,7 +89,7 @@ class Pipeline implements PipelineContract
     /**
      * Run the pipeline with a final destination callback.
      *
-     * @param  \Closure  $destination
+     * @param  \Closure $destination
      * @return mixed
      */
     public function then(Closure $destination)
@@ -121,7 +121,7 @@ class Pipeline implements PipelineContract
                     list($name, $parameters) = $this->parsePipeString($pipe);
 
                     return call_user_func_array([$this->container->make($name), $this->method],
-                            array_merge([$passable, $stack], $parameters));
+                        array_merge([$passable, $stack], $parameters));
                 }
             };
         };
@@ -130,7 +130,7 @@ class Pipeline implements PipelineContract
     /**
      * Get the initial slice to begin the stack call.
      *
-     * @param  \Closure  $destination
+     * @param  \Closure $destination
      * @return \Closure
      */
     protected function getInitialSlice(Closure $destination)

@@ -16,8 +16,8 @@ use Symfony\Component\Console\Descriptor\JsonDescriptor;
 use Symfony\Component\Console\Descriptor\MarkdownDescriptor;
 use Symfony\Component\Console\Descriptor\TextDescriptor;
 use Symfony\Component\Console\Descriptor\XmlDescriptor;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * This class adds helper method to describe objects in various formats.
@@ -40,8 +40,7 @@ class DescriptorHelper extends Helper
             ->register('txt', new TextDescriptor())
             ->register('xml', new XmlDescriptor())
             ->register('json', new JsonDescriptor())
-            ->register('md', new MarkdownDescriptor())
-        ;
+            ->register('md', new MarkdownDescriptor());
     }
 
     /**
@@ -52,8 +51,8 @@ class DescriptorHelper extends Helper
      * * raw_text: boolean, sets output type as raw
      *
      * @param OutputInterface $output
-     * @param object          $object
-     * @param array           $options
+     * @param object $object
+     * @param array $options
      *
      * @throws InvalidArgumentException when the given format is not supported
      */
@@ -75,7 +74,7 @@ class DescriptorHelper extends Helper
     /**
      * Registers a descriptor.
      *
-     * @param string              $format
+     * @param string $format
      * @param DescriptorInterface $descriptor
      *
      * @return DescriptorHelper

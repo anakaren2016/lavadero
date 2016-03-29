@@ -24,8 +24,8 @@ class SyncJob extends Job implements JobContract
     /**
      * Create a new job instance.
      *
-     * @param  \Illuminate\Container\Container  $container
-     * @param  string  $payload
+     * @param  \Illuminate\Container\Container $container
+     * @param  string $payload
      * @return void
      */
     public function __construct(Container $container, $payload)
@@ -57,7 +57,7 @@ class SyncJob extends Job implements JobContract
     /**
      * Release the job back into the queue.
      *
-     * @param  int   $delay
+     * @param  int $delay
      * @return void
      */
     public function release($delay = 0)

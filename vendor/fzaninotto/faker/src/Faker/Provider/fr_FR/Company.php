@@ -54,6 +54,10 @@ class Company extends \Faker\Provider\Company
     protected static $companySuffix = array('SA', 'S.A.', 'SARL', 'S.A.R.L.', 'S.A.S.', 'et Fils');
 
     protected static $siretNicFormats = array('####', '0###', '00#%');
+    /**
+     * @var array An array containing string which should not appear twice in a catch phrase.
+     */
+    protected static $wordsWhichShouldNotAppearTwice = array('sécurité', 'simpl');
 
     /**
      * Returns a random catch phrase noun.
@@ -105,6 +109,28 @@ class Company extends \Faker\Provider\Company
     }
 
     /**
+     * Validates a french catch phrase.
+     *
+     * @param string $catchPhrase The catch phrase to validate.
+     *
+     * @return boolean (true if valid, false otherwise)
+     */
+    protected static function isCatchPhraseValid($catchPhrase)
+    {
+        foreach (static::$wordsWhichShouldNotAppearTwice as $word) {
+            // Fastest way to check if a piece of word does not appear twice.
+            $beginPos = strpos($catchPhrase, $word);
+            $endPos = strrpos($catchPhrase, $word);
+
+            if ($beginPos !== false && $beginPos != $endPos) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Generates a siret number (14 digits) that passes the Luhn check.
      *
      * @see http://fr.wikipedia.org/wiki/Syst%C3%A8me_d'identification_du_r%C3%A9pertoire_des_%C3%A9tablissements
@@ -138,32 +164,5 @@ class Company extends \Faker\Provider\Company
         }
 
         return $siren;
-    }
-
-    /**
-     * @var array An array containing string which should not appear twice in a catch phrase.
-     */
-    protected static $wordsWhichShouldNotAppearTwice = array('sécurité', 'simpl');
-
-    /**
-     * Validates a french catch phrase.
-     *
-     * @param string $catchPhrase The catch phrase to validate.
-     *
-     * @return boolean (true if valid, false otherwise)
-     */
-    protected static function isCatchPhraseValid($catchPhrase)
-    {
-        foreach (static::$wordsWhichShouldNotAppearTwice as $word) {
-            // Fastest way to check if a piece of word does not appear twice.
-            $beginPos = strpos($catchPhrase, $word);
-            $endPos = strrpos($catchPhrase, $word);
-
-            if ($beginPos !== false && $beginPos != $endPos) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

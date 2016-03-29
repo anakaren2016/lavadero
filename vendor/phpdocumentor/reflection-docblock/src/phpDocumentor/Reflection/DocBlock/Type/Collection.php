@@ -54,29 +54,20 @@ class Collection extends \ArrayObject
      * Registers the namespace and aliases; uses that to add and expand the
      * given types.
      *
-     * @param string[] $types    Array containing a list of types to add to this
+     * @param string[] $types Array containing a list of types to add to this
      *     container.
-     * @param Context  $location The current invoking location.
+     * @param Context $location The current invoking location.
      */
     public function __construct(
         array $types = array(),
         Context $context = null
-    ) {
+    )
+    {
         $this->context = null === $context ? new Context() : $context;
 
         foreach ($types as $type) {
             $this->add($type);
         }
-    }
-
-    /**
-     * Returns the current invoking location.
-     *
-     * @return Context
-     */
-    public function getContext()
-    {
-        return $this->context;
     }
 
     /**
@@ -101,7 +92,7 @@ class Collection extends \ArrayObject
         if (!is_string($type)) {
             throw new \InvalidArgumentException(
                 'A type should be represented by a string, received: '
-                .var_export($type, true)
+                . var_export($type, true)
             );
         }
 
@@ -113,17 +104,6 @@ class Collection extends \ArrayObject
                 $this[] = $expanded_type;
             }
         }
-    }
-    
-    /**
-     * Returns a string representation of the collection.
-     * 
-     * @return string The resolved types across the collection, separated with
-     *     {@link self::OPERATOR_OR}.
-     */
-    public function __toString()
-    {
-        return implode(self::OPERATOR_OR, $this->getArrayCopy());
     }
 
     /**
@@ -190,19 +170,6 @@ class Collection extends \ArrayObject
     }
 
     /**
-     * Detects whether the given type represents a PHPDoc keyword.
-     *
-     * @param string $type A relative or absolute type as defined in the
-     *     phpDocumentor documentation.
-     *
-     * @return bool
-     */
-    protected function isTypeAKeyword($type)
-    {
-        return in_array(strtolower($type), static::$keywords, true);
-    }
-
-    /**
      * Detects whether the given type represents a relative or absolute path.
      *
      * This method will detect keywords as being absolute; even though they are
@@ -216,6 +183,40 @@ class Collection extends \ArrayObject
     protected function isRelativeType($type)
     {
         return ($type[0] !== self::OPERATOR_NAMESPACE)
-            || $this->isTypeAKeyword($type);
+        || $this->isTypeAKeyword($type);
+    }
+
+    /**
+     * Detects whether the given type represents a PHPDoc keyword.
+     *
+     * @param string $type A relative or absolute type as defined in the
+     *     phpDocumentor documentation.
+     *
+     * @return bool
+     */
+    protected function isTypeAKeyword($type)
+    {
+        return in_array(strtolower($type), static::$keywords, true);
+    }
+
+    /**
+     * Returns the current invoking location.
+     *
+     * @return Context
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Returns a string representation of the collection.
+     *
+     * @return string The resolved types across the collection, separated with
+     *     {@link self::OPERATOR_OR}.
+     */
+    public function __toString()
+    {
+        return implode(self::OPERATOR_OR, $this->getArrayCopy());
     }
 }

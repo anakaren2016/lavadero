@@ -17,7 +17,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
 {
     /**
      * @param PHP_CodeCoverage_Report_Node_Directory $node
-     * @param string                                 $file
+     * @param string $file
      */
     public function render(PHP_CodeCoverage_Report_Node_Directory $node, $file)
     {
@@ -37,7 +37,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
 
         $template->setVar(
             array(
-                'id'    => $node->getId(),
+                'id' => $node->getId(),
                 'items' => $items
             )
         );
@@ -47,23 +47,23 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Directory extends PHP_CodeCoverage_R
 
     /**
      * @param  PHP_CodeCoverage_Report_Node $item
-     * @param  bool                         $total
+     * @param  bool $total
      * @return string
      */
     protected function renderItem(PHP_CodeCoverage_Report_Node $item, $total = false)
     {
         $data = array(
-            'numClasses'                   => $item->getNumClassesAndTraits(),
-            'numTestedClasses'             => $item->getNumTestedClassesAndTraits(),
-            'numMethods'                   => $item->getNumMethods(),
-            'numTestedMethods'             => $item->getNumTestedMethods(),
-            'linesExecutedPercent'         => $item->getLineExecutedPercent(false),
+            'numClasses' => $item->getNumClassesAndTraits(),
+            'numTestedClasses' => $item->getNumTestedClassesAndTraits(),
+            'numMethods' => $item->getNumMethods(),
+            'numTestedMethods' => $item->getNumTestedMethods(),
+            'linesExecutedPercent' => $item->getLineExecutedPercent(false),
             'linesExecutedPercentAsString' => $item->getLineExecutedPercent(),
-            'numExecutedLines'             => $item->getNumExecutedLines(),
-            'numExecutableLines'           => $item->getNumExecutableLines(),
-            'testedMethodsPercent'         => $item->getTestedMethodsPercent(false),
+            'numExecutedLines' => $item->getNumExecutedLines(),
+            'numExecutableLines' => $item->getNumExecutableLines(),
+            'testedMethodsPercent' => $item->getTestedMethodsPercent(false),
             'testedMethodsPercentAsString' => $item->getTestedMethodsPercent(),
-            'testedClassesPercent'         => $item->getTestedClassesAndTraitsPercent(false),
+            'testedClassesPercent' => $item->getTestedClassesAndTraitsPercent(false),
             'testedClassesPercentAsString' => $item->getTestedClassesAndTraitsPercent()
         );
 

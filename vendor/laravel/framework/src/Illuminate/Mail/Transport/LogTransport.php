@@ -2,9 +2,9 @@
 
 namespace Illuminate\Mail\Transport;
 
+use Psr\Log\LoggerInterface;
 use Swift_Mime_Message;
 use Swift_Mime_MimeEntity;
-use Psr\Log\LoggerInterface;
 
 class LogTransport extends Transport
 {
@@ -18,7 +18,7 @@ class LogTransport extends Transport
     /**
      * Create a new log transport instance.
      *
-     * @param  \Psr\Log\LoggerInterface  $logger
+     * @param  \Psr\Log\LoggerInterface $logger
      * @return void
      */
     public function __construct(LoggerInterface $logger)
@@ -44,10 +44,10 @@ class LogTransport extends Transport
      */
     protected function getMimeEntityString(Swift_Mime_MimeEntity $entity)
     {
-        $string = (string) $entity->getHeaders().PHP_EOL.$entity->getBody();
+        $string = (string)$entity->getHeaders() . PHP_EOL . $entity->getBody();
 
         foreach ($entity->getChildren() as $children) {
-            $string .= PHP_EOL.PHP_EOL.$this->getMimeEntityString($children);
+            $string .= PHP_EOL . PHP_EOL . $this->getMimeEntityString($children);
         }
 
         return $string;

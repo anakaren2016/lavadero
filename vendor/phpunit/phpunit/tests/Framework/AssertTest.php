@@ -18,9 +18,15 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     private $filesDirectory;
 
-    protected function setUp()
+    /**
+     * @return array
+     */
+    public static function validInvalidJsonDataprovider()
     {
-        $this->filesDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
+        return array(
+            'error syntax in expected JSON' => array('{"Mascott"::}', '{"Mascott" : "Tux"}'),
+            'error UTF-8 in actual JSON' => array('{"Mascott" : "Tux"}', '{"Mascott" : :}'),
+        );
     }
 
     /**
@@ -232,9 +238,9 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertArraySubsetWithNoStrictCheckAndObjects()
     {
-        $obj       = new \stdClass;
+        $obj = new \stdClass;
         $reference = &$obj;
-        $array     = array('a' => $obj);
+        $array = array('a' => $obj);
 
         $this->assertArraySubset(array('a' => $reference), $array);
         $this->assertArraySubset(array('a' => new \stdClass), $array);
@@ -246,9 +252,9 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertArraySubsetWithStrictCheckAndObjects()
     {
-        $obj       = new \stdClass;
+        $obj = new \stdClass;
         $reference = &$obj;
-        $array     = array('a' => $obj);
+        $array = array('a' => $obj);
 
         $this->assertArraySubset(array('a' => $reference), $array, true);
 
@@ -262,8 +268,8 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertArraySubset
-     * @covers PHPUnit_Framework_Constraint_ArraySubset
+     * @covers       PHPUnit_Framework_Assert::assertArraySubset
+     * @covers       PHPUnit_Framework_Constraint_ArraySubset
      * @expectedException PHPUnit_Framework_Exception
      * @expectedExceptionMessage array or ArrayAccess
      * @dataProvider assertArraySubsetInvalidArgumentProvider
@@ -355,7 +361,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertArrayHasKeyAcceptsArrayObjectValue()
     {
-        $array        = new ArrayObject();
+        $array = new ArrayObject();
         $array['foo'] = 'bar';
         $this->assertArrayHasKey('foo', $array);
     }
@@ -366,7 +372,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertArrayHasKeyProperlyFailsWithArrayObjectValue()
     {
-        $array        = new ArrayObject();
+        $array = new ArrayObject();
         $array['bar'] = 'bar';
         $this->assertArrayHasKey('foo', $array);
     }
@@ -376,7 +382,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertArrayHasKeyAcceptsArrayAccessValue()
     {
-        $array        = new SampleArrayAccess();
+        $array = new SampleArrayAccess();
         $array['foo'] = 'bar';
         $this->assertArrayHasKey('foo', $array);
     }
@@ -387,7 +393,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertArrayHasKeyProperlyFailsWithArrayAccessValue()
     {
-        $array        = new SampleArrayAccess();
+        $array = new SampleArrayAccess();
         $array['bar'] = 'bar';
         $this->assertArrayHasKey('foo', $array);
     }
@@ -397,7 +403,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertArrayNotHasKeyAcceptsArrayAccessValue()
     {
-        $array        = new ArrayObject();
+        $array = new ArrayObject();
         $array['foo'] = 'bar';
         $this->assertArrayNotHasKey('bar', $array);
     }
@@ -408,7 +414,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertArrayNotHasKeyPropertlyFailsWithArrayAccessValue()
     {
-        $array        = new ArrayObject();
+        $array = new ArrayObject();
         $array['bar'] = 'bar';
         $this->assertArrayNotHasKey('bar', $array);
     }
@@ -660,192 +666,24 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-    protected function sameValues()
+    public function equalProvider()
     {
-        $object = new SampleClass(4, 8, 15);
-        // cannot use $filesDirectory, because neither setUp() nor
-        // setUpBeforeClass() are executed before the data providers
-        $file     = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'foo.xml';
-        $resource = fopen($file, 'r');
-
-        return array(
-            // null
-            array(null, null),
-            // strings
-            array('a', 'a'),
-            // integers
-            array(0, 0),
-            // floats
-            array(2.3, 2.3),
-            array(1/3, 1 - 2/3),
-            array(log(0), log(0)),
-            // arrays
-            array(array(), array()),
-            array(array(0 => 1), array(0 => 1)),
-            array(array(0 => null), array(0 => null)),
-            array(array('a', 'b' => array(1, 2)), array('a', 'b' => array(1, 2))),
-            // objects
-            array($object, $object),
-            // resources
-            array($resource, $resource),
-        );
-    }
-
-    protected function notEqualValues()
-    {
-        // cyclic dependencies
-        $book1                  = new Book;
-        $book1->author          = new Author('Terry Pratchett');
-        $book1->author->books[] = $book1;
-        $book2                  = new Book;
-        $book2->author          = new Author('Terry Pratch');
-        $book2->author->books[] = $book2;
-
-        $book3         = new Book;
-        $book3->author = 'Terry Pratchett';
-        $book4         = new stdClass;
-        $book4->author = 'Terry Pratchett';
-
-        $object1  = new SampleClass(4, 8, 15);
-        $object2  = new SampleClass(16, 23, 42);
-        $object3  = new SampleClass(4, 8, 15);
-        $storage1 = new SplObjectStorage;
-        $storage1->attach($object1);
-        $storage2 = new SplObjectStorage;
-        $storage2->attach($object3); // same content, different object
-
-        // cannot use $filesDirectory, because neither setUp() nor
-        // setUpBeforeClass() are executed before the data providers
-        $file = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'foo.xml';
-
-        return array(
-            // strings
-            array('a', 'b'),
-            array('a', 'A'),
-            // https://github.com/sebastianbergmann/phpunit/issues/1023
-            array('9E6666666','9E7777777'),
-            // integers
-            array(1, 2),
-            array(2, 1),
-            // floats
-            array(2.3, 4.2),
-            array(2.3, 4.2, 0.5),
-            array(array(2.3), array(4.2), 0.5),
-            array(array(array(2.3)), array(array(4.2)), 0.5),
-            array(new Struct(2.3), new Struct(4.2), 0.5),
-            array(array(new Struct(2.3)), array(new Struct(4.2)), 0.5),
-            // NAN
-            array(NAN, NAN),
-            // arrays
-            array(array(), array(0 => 1)),
-            array(array(0          => 1), array()),
-            array(array(0          => null), array()),
-            array(array(0          => 1, 1 => 2), array(0          => 1, 1 => 3)),
-            array(array('a', 'b' => array(1, 2)), array('a', 'b' => array(2, 1))),
-            // objects
-            array(new SampleClass(4, 8, 15), new SampleClass(16, 23, 42)),
-            array($object1, $object2),
-            array($book1, $book2),
-            array($book3, $book4), // same content, different class
-            // resources
-            array(fopen($file, 'r'), fopen($file, 'r')),
-            // SplObjectStorage
-            array($storage1, $storage2),
-            // DOMDocument
-            array(
-                PHPUnit_Util_XML::load('<root></root>'),
-                PHPUnit_Util_XML::load('<bar/>'),
-            ),
-            array(
-                PHPUnit_Util_XML::load('<foo attr1="bar"/>'),
-                PHPUnit_Util_XML::load('<foo attr1="foobar"/>'),
-            ),
-            array(
-                PHPUnit_Util_XML::load('<foo> bar </foo>'),
-                PHPUnit_Util_XML::load('<foo />'),
-            ),
-            array(
-                PHPUnit_Util_XML::load('<foo xmlns="urn:myns:bar"/>'),
-                PHPUnit_Util_XML::load('<foo xmlns="urn:notmyns:bar"/>'),
-            ),
-            array(
-                PHPUnit_Util_XML::load('<foo> bar </foo>'),
-                PHPUnit_Util_XML::load('<foo> bir </foo>'),
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 03:13:35', new DateTimeZone('America/New_York')),
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 03:13:35', new DateTimeZone('America/New_York')),
-                3500
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 05:13:35', new DateTimeZone('America/New_York')),
-                3500
-            ),
-            array(
-                new DateTime('2013-03-29', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
-            ),
-            array(
-                new DateTime('2013-03-29', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
-                43200
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/Chicago')),
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/Chicago')),
-                3500
-            ),
-            array(
-                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-30', new DateTimeZone('America/Chicago')),
-            ),
-            array(
-                new DateTime('2013-03-29T05:13:35-0600'),
-                new DateTime('2013-03-29T04:13:35-0600'),
-            ),
-            array(
-                new DateTime('2013-03-29T05:13:35-0600'),
-                new DateTime('2013-03-29T05:13:35-0500'),
-            ),
-            // Exception
-            //array(new Exception('Exception 1'), new Exception('Exception 2')),
-            // different types
-            array(new SampleClass(4, 8, 15), false),
-            array(false, new SampleClass(4, 8, 15)),
-            array(array(0        => 1, 1 => 2), false),
-            array(false, array(0 => 1, 1 => 2)),
-            array(array(), new stdClass),
-            array(new stdClass, array()),
-            // PHP: 0 == 'Foobar' => true!
-            // We want these values to differ
-            array(0, 'Foobar'),
-            array('Foobar', 0),
-            array(3, acos(8)),
-            array(acos(8), 3)
-        );
+        // same |= equal
+        return array_merge($this->equalValues(), $this->sameValues());
     }
 
     protected function equalValues()
     {
         // cyclic dependencies
-        $book1                  = new Book;
-        $book1->author          = new Author('Terry Pratchett');
+        $book1 = new Book;
+        $book1->author = new Author('Terry Pratchett');
         $book1->author->books[] = $book1;
-        $book2                  = new Book;
-        $book2->author          = new Author('Terry Pratchett');
+        $book2 = new Book;
+        $book2->author = new Author('Terry Pratchett');
         $book2->author->books[] = $book2;
 
-        $object1  = new SampleClass(4, 8, 15);
-        $object2  = new SampleClass(4, 8, 15);
+        $object1 = new SampleClass(4, 8, 15);
+        $object2 = new SampleClass(4, 8, 15);
         $storage1 = new SplObjectStorage;
         $storage1->attach($object1);
         $storage2 = new SplObjectStorage;
@@ -939,22 +777,190 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
             array('0', 0),
             array(2.3, '2.3'),
             array('2.3', 2.3),
-            array((string) (1/3), 1 - 2/3),
-            array(1/3, (string) (1 - 2/3)),
+            array((string)(1 / 3), 1 - 2 / 3),
+            array(1 / 3, (string)(1 - 2 / 3)),
             array('string representation', new ClassWithToString),
             array(new ClassWithToString, 'string representation'),
         );
     }
 
-    public function equalProvider()
+    protected function sameValues()
     {
-        // same |= equal
-        return array_merge($this->equalValues(), $this->sameValues());
+        $object = new SampleClass(4, 8, 15);
+        // cannot use $filesDirectory, because neither setUp() nor
+        // setUpBeforeClass() are executed before the data providers
+        $file = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'foo.xml';
+        $resource = fopen($file, 'r');
+
+        return array(
+            // null
+            array(null, null),
+            // strings
+            array('a', 'a'),
+            // integers
+            array(0, 0),
+            // floats
+            array(2.3, 2.3),
+            array(1 / 3, 1 - 2 / 3),
+            array(log(0), log(0)),
+            // arrays
+            array(array(), array()),
+            array(array(0 => 1), array(0 => 1)),
+            array(array(0 => null), array(0 => null)),
+            array(array('a', 'b' => array(1, 2)), array('a', 'b' => array(1, 2))),
+            // objects
+            array($object, $object),
+            // resources
+            array($resource, $resource),
+        );
     }
 
     public function notEqualProvider()
     {
         return $this->notEqualValues();
+    }
+
+    protected function notEqualValues()
+    {
+        // cyclic dependencies
+        $book1 = new Book;
+        $book1->author = new Author('Terry Pratchett');
+        $book1->author->books[] = $book1;
+        $book2 = new Book;
+        $book2->author = new Author('Terry Pratch');
+        $book2->author->books[] = $book2;
+
+        $book3 = new Book;
+        $book3->author = 'Terry Pratchett';
+        $book4 = new stdClass;
+        $book4->author = 'Terry Pratchett';
+
+        $object1 = new SampleClass(4, 8, 15);
+        $object2 = new SampleClass(16, 23, 42);
+        $object3 = new SampleClass(4, 8, 15);
+        $storage1 = new SplObjectStorage;
+        $storage1->attach($object1);
+        $storage2 = new SplObjectStorage;
+        $storage2->attach($object3); // same content, different object
+
+        // cannot use $filesDirectory, because neither setUp() nor
+        // setUpBeforeClass() are executed before the data providers
+        $file = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'foo.xml';
+
+        return array(
+            // strings
+            array('a', 'b'),
+            array('a', 'A'),
+            // https://github.com/sebastianbergmann/phpunit/issues/1023
+            array('9E6666666', '9E7777777'),
+            // integers
+            array(1, 2),
+            array(2, 1),
+            // floats
+            array(2.3, 4.2),
+            array(2.3, 4.2, 0.5),
+            array(array(2.3), array(4.2), 0.5),
+            array(array(array(2.3)), array(array(4.2)), 0.5),
+            array(new Struct(2.3), new Struct(4.2), 0.5),
+            array(array(new Struct(2.3)), array(new Struct(4.2)), 0.5),
+            // NAN
+            array(NAN, NAN),
+            // arrays
+            array(array(), array(0 => 1)),
+            array(array(0 => 1), array()),
+            array(array(0 => null), array()),
+            array(array(0 => 1, 1 => 2), array(0 => 1, 1 => 3)),
+            array(array('a', 'b' => array(1, 2)), array('a', 'b' => array(2, 1))),
+            // objects
+            array(new SampleClass(4, 8, 15), new SampleClass(16, 23, 42)),
+            array($object1, $object2),
+            array($book1, $book2),
+            array($book3, $book4), // same content, different class
+            // resources
+            array(fopen($file, 'r'), fopen($file, 'r')),
+            // SplObjectStorage
+            array($storage1, $storage2),
+            // DOMDocument
+            array(
+                PHPUnit_Util_XML::load('<root></root>'),
+                PHPUnit_Util_XML::load('<bar/>'),
+            ),
+            array(
+                PHPUnit_Util_XML::load('<foo attr1="bar"/>'),
+                PHPUnit_Util_XML::load('<foo attr1="foobar"/>'),
+            ),
+            array(
+                PHPUnit_Util_XML::load('<foo> bar </foo>'),
+                PHPUnit_Util_XML::load('<foo />'),
+            ),
+            array(
+                PHPUnit_Util_XML::load('<foo xmlns="urn:myns:bar"/>'),
+                PHPUnit_Util_XML::load('<foo xmlns="urn:notmyns:bar"/>'),
+            ),
+            array(
+                PHPUnit_Util_XML::load('<foo> bar </foo>'),
+                PHPUnit_Util_XML::load('<foo> bir </foo>'),
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 03:13:35', new DateTimeZone('America/New_York')),
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 03:13:35', new DateTimeZone('America/New_York')),
+                3500
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 05:13:35', new DateTimeZone('America/New_York')),
+                3500
+            ),
+            array(
+                new DateTime('2013-03-29', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
+            ),
+            array(
+                new DateTime('2013-03-29', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
+                43200
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/Chicago')),
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/Chicago')),
+                3500
+            ),
+            array(
+                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-30', new DateTimeZone('America/Chicago')),
+            ),
+            array(
+                new DateTime('2013-03-29T05:13:35-0600'),
+                new DateTime('2013-03-29T04:13:35-0600'),
+            ),
+            array(
+                new DateTime('2013-03-29T05:13:35-0600'),
+                new DateTime('2013-03-29T05:13:35-0500'),
+            ),
+            // Exception
+            //array(new Exception('Exception 1'), new Exception('Exception 2')),
+            // different types
+            array(new SampleClass(4, 8, 15), false),
+            array(false, new SampleClass(4, 8, 15)),
+            array(array(0 => 1, 1 => 2), false),
+            array(false, array(0 => 1, 1 => 2)),
+            array(array(), new stdClass),
+            array(new stdClass, array()),
+            // PHP: 0 == 'Foobar' => true!
+            // We want these values to differ
+            array(0, 'Foobar'),
+            array('Foobar', 0),
+            array(3, acos(8)),
+            array(acos(8), 3)
+        );
     }
 
     public function sameProvider()
@@ -970,7 +976,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertEquals
+     * @covers       PHPUnit_Framework_Assert::assertEquals
      * @dataProvider equalProvider
      */
     public function testAssertEqualsSucceeds($a, $b, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
@@ -979,7 +985,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertEquals
+     * @covers       PHPUnit_Framework_Assert::assertEquals
      * @dataProvider notEqualProvider
      */
     public function testAssertEqualsFails($a, $b, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
@@ -994,7 +1000,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertNotEquals
+     * @covers       PHPUnit_Framework_Assert::assertNotEquals
      * @dataProvider notEqualProvider
      */
     public function testAssertNotEqualsSucceeds($a, $b, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
@@ -1003,7 +1009,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertNotEquals
+     * @covers       PHPUnit_Framework_Assert::assertNotEquals
      * @dataProvider equalProvider
      */
     public function testAssertNotEqualsFails($a, $b, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
@@ -1018,7 +1024,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertSame
+     * @covers       PHPUnit_Framework_Assert::assertSame
      * @dataProvider sameProvider
      */
     public function testAssertSameSucceeds($a, $b)
@@ -1027,7 +1033,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertSame
+     * @covers       PHPUnit_Framework_Assert::assertSame
      * @dataProvider notSameProvider
      */
     public function testAssertSameFails($a, $b)
@@ -1042,7 +1048,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertNotSame
+     * @covers       PHPUnit_Framework_Assert::assertNotSame
      * @dataProvider notSameProvider
      */
     public function testAssertNotSameSucceeds($a, $b)
@@ -1051,7 +1057,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertNotSame
+     * @covers       PHPUnit_Framework_Assert::assertNotSame
      * @dataProvider sameProvider
      */
     public function testAssertNotSameFails($a, $b)
@@ -2691,7 +2697,7 @@ XML;
      */
     public function testObjectHasOnTheFlyAttribute()
     {
-        $obj      = new stdClass;
+        $obj = new stdClass;
         $obj->foo = 'bar';
 
         $this->assertObjectHasAttribute('foo', $obj);
@@ -2710,7 +2716,7 @@ XML;
      */
     public function testObjectNotHasOnTheFlyAttribute()
     {
-        $obj      = new stdClass;
+        $obj = new stdClass;
         $obj->foo = 'bar';
 
         $this->assertObjectNotHasAttribute('bar', $obj);
@@ -2951,6 +2957,7 @@ XML;
     {
         $this->assertThat(array('foo'), $this->containsOnly('string'));
     }
+
     /**
      * @covers PHPUnit_Framework_Assert::assertThat
      * @covers PHPUnit_Framework_Assert::containsOnlyInstancesOf
@@ -3020,7 +3027,7 @@ XML;
      */
     public function testAssertThatIdenticalTo()
     {
-        $value      = new stdClass;
+        $value = new stdClass;
         $constraint = $this->identicalTo($value);
 
         $this->assertThat($value, $constraint);
@@ -3115,7 +3122,9 @@ XML;
     {
         $this->assertThat(
             null,
-            $this->callback(function ($other) { return true; })
+            $this->callback(function ($other) {
+                return true;
+            })
         );
     }
 
@@ -3458,7 +3467,7 @@ XML;
      */
     public function testAssertAttributeEmpty()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = array();
 
         $this->assertAttributeEmpty('a', $o);
@@ -3478,7 +3487,7 @@ XML;
      */
     public function testAssertAttributeNotEmpty()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = array('b');
 
         $this->assertAttributeNotEmpty('a', $o);
@@ -3594,7 +3603,7 @@ XML;
      */
     public function testAssertAttributeCount()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = array();
 
         $this->assertAttributeCount(0, 'a', $o);
@@ -3639,7 +3648,7 @@ XML;
      */
     public function testAssertAttributeNotCount()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = array();
 
         $this->assertAttributeNotCount(1, 'a', $o);
@@ -3750,15 +3759,15 @@ XML;
     public function testAssertJsonStringEqualsJsonString()
     {
         $expected = '{"Mascott" : "Tux"}';
-        $actual   = '{"Mascott" : "Tux"}';
-        $message  = 'Given Json strings do not match';
+        $actual = '{"Mascott" : "Tux"}';
+        $message = 'Given Json strings do not match';
 
         $this->assertJsonStringEqualsJsonString($expected, $actual, $message);
     }
 
     /**
      * @dataProvider validInvalidJsonDataprovider
-     * @covers PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString
+     * @covers       PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString
      */
     public function testAssertJsonStringEqualsJsonStringErrorRaised($expected, $actual)
     {
@@ -3776,15 +3785,15 @@ XML;
     public function testAssertJsonStringNotEqualsJsonString()
     {
         $expected = '{"Mascott" : "Beastie"}';
-        $actual   = '{"Mascott" : "Tux"}';
-        $message  = 'Given Json strings do match';
+        $actual = '{"Mascott" : "Tux"}';
+        $message = 'Given Json strings do match';
 
         $this->assertJsonStringNotEqualsJsonString($expected, $actual, $message);
     }
 
     /**
      * @dataProvider validInvalidJsonDataprovider
-     * @covers PHPUnit_Framework_Assert::assertJsonStringNotEqualsJsonString
+     * @covers       PHPUnit_Framework_Assert::assertJsonStringNotEqualsJsonString
      */
     public function testAssertJsonStringNotEqualsJsonStringErrorRaised($expected, $actual)
     {
@@ -3801,8 +3810,8 @@ XML;
      */
     public function testAssertJsonStringEqualsJsonFile()
     {
-        $file    = __DIR__ . '/../_files/JsonData/simpleObject.json';
-        $actual  = json_encode(array('Mascott' => 'Tux'));
+        $file = __DIR__ . '/../_files/JsonData/simpleObject.json';
+        $actual = json_encode(array('Mascott' => 'Tux'));
         $message = '';
         $this->assertJsonStringEqualsJsonFile($file, $actual, $message);
     }
@@ -3812,8 +3821,8 @@ XML;
      */
     public function testAssertJsonStringEqualsJsonFileExpectingExpectationFailedException()
     {
-        $file    = __DIR__ . '/../_files/JsonData/simpleObject.json';
-        $actual  = json_encode(array('Mascott' => 'Beastie'));
+        $file = __DIR__ . '/../_files/JsonData/simpleObject.json';
+        $actual = json_encode(array('Mascott' => 'Beastie'));
         $message = '';
         try {
             $this->assertJsonStringEqualsJsonFile($file, $actual, $message);
@@ -3848,8 +3857,8 @@ XML;
      */
     public function testAssertJsonStringNotEqualsJsonFile()
     {
-        $file    = __DIR__ . '/../_files/JsonData/simpleObject.json';
-        $actual  = json_encode(array('Mascott' => 'Beastie'));
+        $file = __DIR__ . '/../_files/JsonData/simpleObject.json';
+        $actual = json_encode(array('Mascott' => 'Beastie'));
         $message = '';
         $this->assertJsonStringNotEqualsJsonFile($file, $actual, $message);
     }
@@ -3874,8 +3883,8 @@ XML;
     public function testAssertJsonFileNotEqualsJsonFile()
     {
         $fileExpected = __DIR__ . '/../_files/JsonData/simpleObject.json';
-        $fileActual   = __DIR__ . '/../_files/JsonData/arrayObject.json';
-        $message      = '';
+        $fileActual = __DIR__ . '/../_files/JsonData/arrayObject.json';
+        $message = '';
         $this->assertJsonFileNotEqualsJsonFile($fileExpected, $fileActual, $message);
     }
 
@@ -3884,7 +3893,7 @@ XML;
      */
     public function testAssertJsonFileEqualsJsonFile()
     {
-        $file    = __DIR__ . '/../_files/JsonData/simpleObject.json';
+        $file = __DIR__ . '/../_files/JsonData/simpleObject.json';
         $message = '';
         $this->assertJsonFileEqualsJsonFile($file, $file, $message);
     }
@@ -3919,7 +3928,7 @@ XML;
      */
     public function testAssertAttributeInstanceOf()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = new stdClass;
 
         $this->assertAttributeInstanceOf('stdClass', 'a', $o);
@@ -3955,7 +3964,7 @@ XML;
      */
     public function testAssertAttributeNotInstanceOf()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = new stdClass;
 
         $this->assertAttributeNotInstanceOf('Exception', 'a', $o);
@@ -4007,7 +4016,7 @@ XML;
      */
     public function testAssertAttributeInternalType()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = 1;
 
         $this->assertAttributeInternalType('integer', 'a', $o);
@@ -4043,7 +4052,7 @@ XML;
      */
     public function testAssertAttributeNotInternalType()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = 1;
 
         $this->assertAttributeNotInternalType('string', 'a', $o);
@@ -4117,14 +4126,8 @@ XML;
         $this->fail();
     }
 
-    /**
-     * @return array
-     */
-    public static function validInvalidJsonDataprovider()
+    protected function setUp()
     {
-        return array(
-            'error syntax in expected JSON' => array('{"Mascott"::}', '{"Mascott" : "Tux"}'),
-            'error UTF-8 in actual JSON'    => array('{"Mascott" : "Tux"}', '{"Mascott" : :}'),
-        );
+        $this->filesDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
     }
 }

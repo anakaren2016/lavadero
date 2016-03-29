@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\EventDispatcher\Debug;
 
+use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Stopwatch\Stopwatch;
-use Psr\Log\LoggerInterface;
 
 /**
  * Collects some data about event listeners.
@@ -37,8 +37,8 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
      * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher An EventDispatcherInterface instance
-     * @param Stopwatch                $stopwatch  A Stopwatch instance
-     * @param LoggerInterface          $logger     A LoggerInterface instance
+     * @param Stopwatch $stopwatch A Stopwatch instance
+     * @param LoggerInterface $logger A LoggerInterface instance
      */
     public function __construct(EventDispatcherInterface $dispatcher, Stopwatch $stopwatch, LoggerInterface $logger = null)
     {
@@ -150,7 +150,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
         foreach ($this->called as $eventName => $listeners) {
             foreach ($listeners as $listener) {
                 $info = $this->getListenerInfo($listener->getWrappedListener(), $eventName);
-                $called[$eventName.'.'.$info['pretty']] = $info;
+                $called[$eventName . '.' . $info['pretty']] = $info;
             }
         }
 
@@ -189,7 +189,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
 
                 if (!$called) {
                     $info = $this->getListenerInfo($listener, $eventName);
-                    $notCalled[$eventName.'.'.$info['pretty']] = $info;
+                    $notCalled[$eventName . '.' . $info['pretty']] = $info;
                 }
             }
         }
@@ -202,8 +202,8 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
     /**
      * Proxies all method calls to the original event dispatcher.
      *
-     * @param string $method    The method name
-     * @param array  $arguments The method arguments
+     * @param string $method The method name
+     * @param array $arguments The method arguments
      *
      * @return mixed
      */
@@ -216,7 +216,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
      * Called before dispatching the event.
      *
      * @param string $eventName The event name
-     * @param Event  $event     The event
+     * @param Event $event The event
      */
     protected function preDispatch($eventName, Event $event)
     {
@@ -226,7 +226,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
      * Called after dispatching the event.
      *
      * @param string $eventName The event name
-     * @param Event  $event     The event
+     * @param Event $event The event
      */
     protected function postDispatch($eventName, Event $event)
     {
@@ -287,7 +287,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
     /**
      * Returns information about the listener.
      *
-     * @param object $listener  The listener
+     * @param object $listener The listener
      * @param string $eventName The event name
      *
      * @return array Information about the listener
@@ -338,7 +338,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
                 'method' => $listener[1],
                 'file' => $file,
                 'line' => $line,
-                'pretty' => $class.'::'.$listener[1],
+                'pretty' => $class . '::' . $listener[1],
             );
         }
 

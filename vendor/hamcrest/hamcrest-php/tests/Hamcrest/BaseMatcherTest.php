@@ -18,6 +18,6 @@ class BaseMatcherTest extends \Hamcrest\BaseMatcher
     public function testDescribesItselfWithToStringMethod()
     {
         $someMatcher = new \Hamcrest\SomeMatcher();
-        $this->assertEquals('SOME DESCRIPTION', (string) $someMatcher);
+        $this->assertEquals('SOME DESCRIPTION', (string)$someMatcher);
     }
 }

@@ -20,8 +20,8 @@ class PHPUnit_TextUI_Command
      * @var array
      */
     protected $arguments = array(
-        'listGroups'              => false,
-        'loader'                  => null,
+        'listGroups' => false,
+        'loader' => null,
         'useDefaultConfiguration' => true
     );
 
@@ -34,55 +34,55 @@ class PHPUnit_TextUI_Command
      * @var array
      */
     protected $longOptions = array(
-        'colors=='             => null,
-        'bootstrap='           => null,
-        'columns='             => null,
-        'configuration='       => null,
-        'coverage-clover='     => null,
-        'coverage-crap4j='     => null,
-        'coverage-html='       => null,
-        'coverage-php='        => null,
-        'coverage-text=='      => null,
-        'coverage-xml='        => null,
-        'debug'                => null,
-        'exclude-group='       => null,
-        'filter='              => null,
-        'testsuite='           => null,
-        'group='               => null,
-        'help'                 => null,
-        'include-path='        => null,
-        'list-groups'          => null,
-        'loader='              => null,
-        'log-json='            => null,
-        'log-junit='           => null,
-        'log-tap='             => null,
-        'process-isolation'    => null,
-        'repeat='              => null,
-        'stderr'               => null,
-        'stop-on-error'        => null,
-        'stop-on-failure'      => null,
-        'stop-on-incomplete'   => null,
-        'stop-on-risky'        => null,
-        'stop-on-skipped'      => null,
+        'colors==' => null,
+        'bootstrap=' => null,
+        'columns=' => null,
+        'configuration=' => null,
+        'coverage-clover=' => null,
+        'coverage-crap4j=' => null,
+        'coverage-html=' => null,
+        'coverage-php=' => null,
+        'coverage-text==' => null,
+        'coverage-xml=' => null,
+        'debug' => null,
+        'exclude-group=' => null,
+        'filter=' => null,
+        'testsuite=' => null,
+        'group=' => null,
+        'help' => null,
+        'include-path=' => null,
+        'list-groups' => null,
+        'loader=' => null,
+        'log-json=' => null,
+        'log-junit=' => null,
+        'log-tap=' => null,
+        'process-isolation' => null,
+        'repeat=' => null,
+        'stderr' => null,
+        'stop-on-error' => null,
+        'stop-on-failure' => null,
+        'stop-on-incomplete' => null,
+        'stop-on-risky' => null,
+        'stop-on-skipped' => null,
         'report-useless-tests' => null,
-        'strict-coverage'      => null,
+        'strict-coverage' => null,
         'disallow-test-output' => null,
-        'enforce-time-limit'   => null,
-        'disallow-todo-tests'  => null,
-        'strict-global-state'  => null,
-        'strict'               => null,
-        'tap'                  => null,
-        'testdox'              => null,
-        'testdox-html='        => null,
-        'testdox-text='        => null,
-        'test-suffix='         => null,
-        'no-configuration'     => null,
-        'no-coverage'          => null,
-        'no-globals-backup'    => null,
-        'printer='             => null,
-        'static-backup'        => null,
-        'verbose'              => null,
-        'version'              => null
+        'enforce-time-limit' => null,
+        'disallow-todo-tests' => null,
+        'strict-global-state' => null,
+        'strict' => null,
+        'tap' => null,
+        'testdox' => null,
+        'testdox-html=' => null,
+        'testdox-text=' => null,
+        'test-suffix=' => null,
+        'no-configuration' => null,
+        'no-coverage' => null,
+        'no-globals-backup' => null,
+        'printer=' => null,
+        'static-backup' => null,
+        'verbose' => null,
+        'version' => null
     );
 
     /**
@@ -102,7 +102,7 @@ class PHPUnit_TextUI_Command
 
     /**
      * @param array $argv
-     * @param bool  $exit
+     * @param bool $exit
      *
      * @return int
      */
@@ -113,7 +113,8 @@ class PHPUnit_TextUI_Command
         $runner = $this->createRunner();
 
         if (is_object($this->arguments['test']) &&
-            $this->arguments['test'] instanceof PHPUnit_Framework_Test) {
+            $this->arguments['test'] instanceof PHPUnit_Framework_Test
+        ) {
             $suite = $this->arguments['test'];
         } else {
             $suite = $runner->getTest(
@@ -167,18 +168,6 @@ class PHPUnit_TextUI_Command
     }
 
     /**
-     * Create a TestRunner, override in subclasses.
-     *
-     * @return PHPUnit_TextUI_TestRunner
-     *
-     * @since  Method available since Release 3.6.0
-     */
-    protected function createRunner()
-    {
-        return new PHPUnit_TextUI_TestRunner($this->arguments['loader']);
-    }
-
-    /**
      * Handles the command-line arguments.
      *
      * A child class of PHPUnit_TextUI_Command can hook into the argument
@@ -227,10 +216,10 @@ class PHPUnit_TextUI_Command
     {
         if (defined('__PHPUNIT_PHAR__')) {
             $this->longOptions['check-version'] = null;
-            $this->longOptions['selfupdate']    = null;
-            $this->longOptions['self-update']   = null;
-            $this->longOptions['selfupgrade']   = null;
-            $this->longOptions['self-upgrade']  = null;
+            $this->longOptions['selfupdate'] = null;
+            $this->longOptions['self-update'] = null;
+            $this->longOptions['selfupgrade'] = null;
+            $this->longOptions['self-upgrade'] = null;
         }
 
         try {
@@ -255,7 +244,7 @@ class PHPUnit_TextUI_Command
 
                 case '--columns':
                     if (is_numeric($option[1])) {
-                        $this->arguments['columns'] = (int) $option[1];
+                        $this->arguments['columns'] = (int)$option[1];
                     } elseif ($option[1] == 'max') {
                         $this->arguments['columns'] = 'max';
                     }
@@ -287,9 +276,9 @@ class PHPUnit_TextUI_Command
                         $option[1] = 'php://stdout';
                     }
 
-                    $this->arguments['coverageText']                   = $option[1];
+                    $this->arguments['coverageText'] = $option[1];
                     $this->arguments['coverageTextShowUncoveredFiles'] = false;
-                    $this->arguments['coverageTextShowOnlySummary']    = false;
+                    $this->arguments['coverageTextShowOnlySummary'] = false;
                     break;
 
                 case '--coverage-xml':
@@ -377,7 +366,7 @@ class PHPUnit_TextUI_Command
                     break;
 
                 case '--repeat':
-                    $this->arguments['repeat'] = (int) $option[1];
+                    $this->arguments['repeat'] = (int)$option[1];
                     break;
 
                 case '--stderr':
@@ -471,10 +460,10 @@ class PHPUnit_TextUI_Command
                     break;
 
                 case '--strict':
-                    $this->arguments['reportUselessTests']         = true;
-                    $this->arguments['strictCoverage']             = true;
-                    $this->arguments['disallowTestOutput']         = true;
-                    $this->arguments['enforceTimeLimit']           = true;
+                    $this->arguments['reportUselessTests'] = true;
+                    $this->arguments['strictCoverage'] = true;
+                    $this->arguments['disallowTestOutput'] = true;
+                    $this->arguments['enforceTimeLimit'] = true;
                     $this->arguments['disallowTodoAnnotatedTests'] = true;
                     $this->arguments['deprecatedStrictModeOption'] = true;
                     break;
@@ -527,9 +516,10 @@ class PHPUnit_TextUI_Command
 
             if (isset($this->arguments['test']) &&
                 is_file($this->arguments['test']) &&
-                substr($this->arguments['test'], -5, 5) != '.phpt') {
+                substr($this->arguments['test'], -5, 5) != '.phpt'
+            ) {
                 $this->arguments['testFile'] = realpath($this->arguments['test']);
-                $this->arguments['test']     = substr($this->arguments['test'], 0, strrpos($this->arguments['test'], '.'));
+                $this->arguments['test'] = substr($this->arguments['test'], 0, strrpos($this->arguments['test'], '.'));
             }
         }
 
@@ -549,7 +539,8 @@ class PHPUnit_TextUI_Command
         }
 
         if (isset($this->arguments['configuration']) &&
-            is_dir($this->arguments['configuration'])) {
+            is_dir($this->arguments['configuration'])
+        ) {
             $configurationFile = $this->arguments['configuration'] . '/phpunit.xml';
 
             if (file_exists($configurationFile)) {
@@ -562,7 +553,8 @@ class PHPUnit_TextUI_Command
                 );
             }
         } elseif (!isset($this->arguments['configuration']) &&
-                  $this->arguments['useDefaultConfiguration']) {
+            $this->arguments['useDefaultConfiguration']
+        ) {
             if (file_exists('phpunit.xml')) {
                 $this->arguments['configuration'] = realpath('phpunit.xml');
             } elseif (file_exists('phpunit.xml.dist')) {
@@ -601,11 +593,11 @@ class PHPUnit_TextUI_Command
             /*
              * Issue #657
              */
-            if (isset($phpunit['stderr']) && ! isset($this->arguments['stderr'])) {
+            if (isset($phpunit['stderr']) && !isset($this->arguments['stderr'])) {
                 $this->arguments['stderr'] = $phpunit['stderr'];
             }
 
-            if (isset($phpunit['columns']) && ! isset($this->arguments['columns'])) {
+            if (isset($phpunit['columns']) && !isset($this->arguments['columns'])) {
                 $this->arguments['columns'] = $phpunit['columns'];
             }
 
@@ -657,7 +649,8 @@ class PHPUnit_TextUI_Command
         }
 
         if (isset($this->arguments['printer']) &&
-            is_string($this->arguments['printer'])) {
+            is_string($this->arguments['printer'])
+        ) {
             $this->arguments['printer'] = $this->handlePrinter($this->arguments['printer']);
         }
 
@@ -669,227 +662,33 @@ class PHPUnit_TextUI_Command
         }
 
         if (!isset($this->arguments['test']) ||
-            (isset($this->arguments['testDatabaseLogRevision']) && !isset($this->arguments['testDatabaseDSN']))) {
+            (isset($this->arguments['testDatabaseLogRevision']) && !isset($this->arguments['testDatabaseDSN']))
+        ) {
             $this->showHelp();
             exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
         }
     }
 
     /**
-     * Handles the loading of the PHPUnit_Runner_TestSuiteLoader implementation.
-     *
-     * @param string $loaderClass
-     * @param string $loaderFile
-     *
-     * @return PHPUnit_Runner_TestSuiteLoader
      */
-    protected function handleLoader($loaderClass, $loaderFile = '')
+    private function showError($message)
     {
-        if (!class_exists($loaderClass, false)) {
-            if ($loaderFile == '') {
-                $loaderFile = PHPUnit_Util_Filesystem::classNameToFilename(
-                    $loaderClass
-                );
-            }
+        $this->printVersionString();
 
-            $loaderFile = stream_resolve_include_path($loaderFile);
+        print $message . "\n";
 
-            if ($loaderFile) {
-                require $loaderFile;
-            }
-        }
+        exit(PHPUnit_TextUI_TestRunner::FAILURE_EXIT);
+    }
 
-        if (class_exists($loaderClass, false)) {
-            $class = new ReflectionClass($loaderClass);
-
-            if ($class->implementsInterface('PHPUnit_Runner_TestSuiteLoader') &&
-                $class->isInstantiable()) {
-                return $class->newInstance();
-            }
-        }
-
-        if ($loaderClass == 'PHPUnit_Runner_StandardTestSuiteLoader') {
+    private function printVersionString()
+    {
+        if ($this->versionStringPrinted) {
             return;
         }
 
-        $this->showError(
-            sprintf(
-                'Could not use "%s" as loader.',
-                $loaderClass
-            )
-        );
-    }
+        print PHPUnit_Runner_Version::getVersionString() . "\n\n";
 
-    /**
-     * Handles the loading of the PHPUnit_Util_Printer implementation.
-     *
-     * @param string $printerClass
-     * @param string $printerFile
-     *
-     * @return PHPUnit_Util_Printer
-     */
-    protected function handlePrinter($printerClass, $printerFile = '')
-    {
-        if (!class_exists($printerClass, false)) {
-            if ($printerFile == '') {
-                $printerFile = PHPUnit_Util_Filesystem::classNameToFilename(
-                    $printerClass
-                );
-            }
-
-            $printerFile = stream_resolve_include_path($printerFile);
-
-            if ($printerFile) {
-                require $printerFile;
-            }
-        }
-
-        if (class_exists($printerClass)) {
-            $class = new ReflectionClass($printerClass);
-
-            if ($class->implementsInterface('PHPUnit_Framework_TestListener') &&
-                $class->isSubclassOf('PHPUnit_Util_Printer') &&
-                $class->isInstantiable()) {
-                if ($class->isSubclassOf('PHPUnit_TextUI_ResultPrinter')) {
-                    return $printerClass;
-                }
-
-                $outputStream = isset($this->arguments['stderr']) ? 'php://stderr' : null;
-
-                return $class->newInstance($outputStream);
-            }
-        }
-
-        $this->showError(
-            sprintf(
-                'Could not use "%s" as printer.',
-                $printerClass
-            )
-        );
-    }
-
-    /**
-     * Loads a bootstrap file.
-     *
-     * @param string $filename
-     */
-    protected function handleBootstrap($filename)
-    {
-        try {
-            PHPUnit_Util_Fileloader::checkAndLoad($filename);
-        } catch (PHPUnit_Framework_Exception $e) {
-            $this->showError($e->getMessage());
-        }
-    }
-
-    /**
-     * @since Method available since Release 4.0.0
-     */
-    protected function handleSelfUpdate($upgrade = false)
-    {
-        $this->printVersionString();
-
-        $localFilename = realpath($_SERVER['argv'][0]);
-
-        if (!is_writable($localFilename)) {
-            print 'No write permission to update ' . $localFilename . "\n";
-            exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
-        }
-
-        if (!extension_loaded('openssl')) {
-            print "The OpenSSL extension is not loaded.\n";
-            exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
-        }
-
-        if (!$upgrade) {
-            $remoteFilename = sprintf(
-                'https://phar.phpunit.de/phpunit-%s.phar',
-                file_get_contents(
-                    sprintf(
-                        'https://phar.phpunit.de/latest-version-of/phpunit-%s',
-                        PHPUnit_Runner_Version::series()
-                    )
-                )
-            );
-        } else {
-            $remoteFilename = sprintf(
-                'https://phar.phpunit.de/phpunit%s.phar',
-                PHPUnit_Runner_Version::getReleaseChannel()
-            );
-        }
-
-        $tempFilename = tempnam(sys_get_temp_dir(), 'phpunit') . '.phar';
-
-        // Workaround for https://bugs.php.net/bug.php?id=65538
-        $caFile = dirname($tempFilename) . '/ca.pem';
-        copy(__PHPUNIT_PHAR_ROOT__ . '/ca.pem', $caFile);
-
-        print 'Updating the PHPUnit PHAR ... ';
-
-        $options = array(
-            'ssl' => array(
-                'allow_self_signed' => false,
-                'cafile'            => $caFile,
-                'verify_peer'       => true
-            )
-        );
-
-        if (PHP_VERSION_ID < 50600) {
-            $options['ssl']['CN_match']        = 'phar.phpunit.de';
-            $options['ssl']['SNI_server_name'] = 'phar.phpunit.de';
-        }
-
-        file_put_contents(
-            $tempFilename,
-            file_get_contents(
-                $remoteFilename,
-                false,
-                stream_context_create($options)
-            )
-        );
-
-        chmod($tempFilename, 0777 & ~umask());
-
-        try {
-            $phar = new Phar($tempFilename);
-            unset($phar);
-            rename($tempFilename, $localFilename);
-            unlink($caFile);
-        } catch (Throwable $_e) {
-            $e = $_e;
-        } catch (Exception $_e) {
-            $e = $_e;
-        }
-
-        if (isset($e)) {
-            unlink($caFile);
-            unlink($tempFilename);
-            print " done\n\n" . $e->getMessage() . "\n";
-            exit(2);
-        }
-
-        print " done\n";
-        exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
-    }
-
-    /**
-     * @since Method available since Release 4.8.0
-     */
-    protected function handleVersionCheck()
-    {
-        $this->printVersionString();
-
-        $latestVersion = file_get_contents('https://phar.phpunit.de/latest-version-of/phpunit');
-        $isOutdated    = version_compare($latestVersion, PHPUnit_Runner_Version::id(), '>');
-
-        if ($isOutdated) {
-            print "You are not using the latest version of PHPUnit.\n";
-            print 'Use "phpunit --self-upgrade" to install PHPUnit ' . $latestVersion . "\n";
-        } else {
-            print "You are using the latest version of PHPUnit.\n";
-        }
-
-        exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
+        $this->versionStringPrinted = true;
     }
 
     /**
@@ -986,31 +785,240 @@ EOT;
     }
 
     /**
+     * @since Method available since Release 4.8.0
+     */
+    protected function handleVersionCheck()
+    {
+        $this->printVersionString();
+
+        $latestVersion = file_get_contents('https://phar.phpunit.de/latest-version-of/phpunit');
+        $isOutdated = version_compare($latestVersion, PHPUnit_Runner_Version::id(), '>');
+
+        if ($isOutdated) {
+            print "You are not using the latest version of PHPUnit.\n";
+            print 'Use "phpunit --self-upgrade" to install PHPUnit ' . $latestVersion . "\n";
+        } else {
+            print "You are using the latest version of PHPUnit.\n";
+        }
+
+        exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
+    }
+
+    /**
+     * @since Method available since Release 4.0.0
+     */
+    protected function handleSelfUpdate($upgrade = false)
+    {
+        $this->printVersionString();
+
+        $localFilename = realpath($_SERVER['argv'][0]);
+
+        if (!is_writable($localFilename)) {
+            print 'No write permission to update ' . $localFilename . "\n";
+            exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
+        }
+
+        if (!extension_loaded('openssl')) {
+            print "The OpenSSL extension is not loaded.\n";
+            exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
+        }
+
+        if (!$upgrade) {
+            $remoteFilename = sprintf(
+                'https://phar.phpunit.de/phpunit-%s.phar',
+                file_get_contents(
+                    sprintf(
+                        'https://phar.phpunit.de/latest-version-of/phpunit-%s',
+                        PHPUnit_Runner_Version::series()
+                    )
+                )
+            );
+        } else {
+            $remoteFilename = sprintf(
+                'https://phar.phpunit.de/phpunit%s.phar',
+                PHPUnit_Runner_Version::getReleaseChannel()
+            );
+        }
+
+        $tempFilename = tempnam(sys_get_temp_dir(), 'phpunit') . '.phar';
+
+        // Workaround for https://bugs.php.net/bug.php?id=65538
+        $caFile = dirname($tempFilename) . '/ca.pem';
+        copy(__PHPUNIT_PHAR_ROOT__ . '/ca.pem', $caFile);
+
+        print 'Updating the PHPUnit PHAR ... ';
+
+        $options = array(
+            'ssl' => array(
+                'allow_self_signed' => false,
+                'cafile' => $caFile,
+                'verify_peer' => true
+            )
+        );
+
+        if (PHP_VERSION_ID < 50600) {
+            $options['ssl']['CN_match'] = 'phar.phpunit.de';
+            $options['ssl']['SNI_server_name'] = 'phar.phpunit.de';
+        }
+
+        file_put_contents(
+            $tempFilename,
+            file_get_contents(
+                $remoteFilename,
+                false,
+                stream_context_create($options)
+            )
+        );
+
+        chmod($tempFilename, 0777 & ~umask());
+
+        try {
+            $phar = new Phar($tempFilename);
+            unset($phar);
+            rename($tempFilename, $localFilename);
+            unlink($caFile);
+        } catch (Throwable $_e) {
+            $e = $_e;
+        } catch (Exception $_e) {
+            $e = $_e;
+        }
+
+        if (isset($e)) {
+            unlink($caFile);
+            unlink($tempFilename);
+            print " done\n\n" . $e->getMessage() . "\n";
+            exit(2);
+        }
+
+        print " done\n";
+        exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
+    }
+
+    /**
      * Custom callback for test suite discovery.
      */
     protected function handleCustomTestSuite()
     {
     }
 
-    private function printVersionString()
+    /**
+     * Handles the loading of the PHPUnit_Runner_TestSuiteLoader implementation.
+     *
+     * @param string $loaderClass
+     * @param string $loaderFile
+     *
+     * @return PHPUnit_Runner_TestSuiteLoader
+     */
+    protected function handleLoader($loaderClass, $loaderFile = '')
     {
-        if ($this->versionStringPrinted) {
+        if (!class_exists($loaderClass, false)) {
+            if ($loaderFile == '') {
+                $loaderFile = PHPUnit_Util_Filesystem::classNameToFilename(
+                    $loaderClass
+                );
+            }
+
+            $loaderFile = stream_resolve_include_path($loaderFile);
+
+            if ($loaderFile) {
+                require $loaderFile;
+            }
+        }
+
+        if (class_exists($loaderClass, false)) {
+            $class = new ReflectionClass($loaderClass);
+
+            if ($class->implementsInterface('PHPUnit_Runner_TestSuiteLoader') &&
+                $class->isInstantiable()
+            ) {
+                return $class->newInstance();
+            }
+        }
+
+        if ($loaderClass == 'PHPUnit_Runner_StandardTestSuiteLoader') {
             return;
         }
 
-        print PHPUnit_Runner_Version::getVersionString() . "\n\n";
-
-        $this->versionStringPrinted = true;
+        $this->showError(
+            sprintf(
+                'Could not use "%s" as loader.',
+                $loaderClass
+            )
+        );
     }
 
     /**
+     * Loads a bootstrap file.
+     *
+     * @param string $filename
      */
-    private function showError($message)
+    protected function handleBootstrap($filename)
     {
-        $this->printVersionString();
+        try {
+            PHPUnit_Util_Fileloader::checkAndLoad($filename);
+        } catch (PHPUnit_Framework_Exception $e) {
+            $this->showError($e->getMessage());
+        }
+    }
 
-        print $message . "\n";
+    /**
+     * Handles the loading of the PHPUnit_Util_Printer implementation.
+     *
+     * @param string $printerClass
+     * @param string $printerFile
+     *
+     * @return PHPUnit_Util_Printer
+     */
+    protected function handlePrinter($printerClass, $printerFile = '')
+    {
+        if (!class_exists($printerClass, false)) {
+            if ($printerFile == '') {
+                $printerFile = PHPUnit_Util_Filesystem::classNameToFilename(
+                    $printerClass
+                );
+            }
 
-        exit(PHPUnit_TextUI_TestRunner::FAILURE_EXIT);
+            $printerFile = stream_resolve_include_path($printerFile);
+
+            if ($printerFile) {
+                require $printerFile;
+            }
+        }
+
+        if (class_exists($printerClass)) {
+            $class = new ReflectionClass($printerClass);
+
+            if ($class->implementsInterface('PHPUnit_Framework_TestListener') &&
+                $class->isSubclassOf('PHPUnit_Util_Printer') &&
+                $class->isInstantiable()
+            ) {
+                if ($class->isSubclassOf('PHPUnit_TextUI_ResultPrinter')) {
+                    return $printerClass;
+                }
+
+                $outputStream = isset($this->arguments['stderr']) ? 'php://stderr' : null;
+
+                return $class->newInstance($outputStream);
+            }
+        }
+
+        $this->showError(
+            sprintf(
+                'Could not use "%s" as printer.',
+                $printerClass
+            )
+        );
+    }
+
+    /**
+     * Create a TestRunner, override in subclasses.
+     *
+     * @return PHPUnit_TextUI_TestRunner
+     *
+     * @since  Method available since Release 3.6.0
+     */
+    protected function createRunner()
+    {
+        return new PHPUnit_TextUI_TestRunner($this->arguments['loader']);
     }
 }

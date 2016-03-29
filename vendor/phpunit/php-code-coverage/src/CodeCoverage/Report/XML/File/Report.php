@@ -53,11 +53,6 @@ class PHP_CodeCoverage_Report_XML_File_Report extends PHP_CodeCoverage_Report_XM
         return $this->getUnitObject('class', $name);
     }
 
-    public function getTraitObject($name)
-    {
-        return $this->getUnitObject('trait', $name);
-    }
-
     private function getUnitObject($tagName, $name)
     {
         $node = $this->contextNode->appendChild(
@@ -68,5 +63,10 @@ class PHP_CodeCoverage_Report_XML_File_Report extends PHP_CodeCoverage_Report_XM
         );
 
         return new PHP_CodeCoverage_Report_XML_File_Unit($node, $name);
+    }
+
+    public function getTraitObject($name)
+    {
+        return $this->getUnitObject('trait', $name);
     }
 }

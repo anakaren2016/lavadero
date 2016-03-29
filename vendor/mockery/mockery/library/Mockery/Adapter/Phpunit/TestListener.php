@@ -28,7 +28,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
      * statically stored Mockery container for the next test.
      *
      * @param  PHPUnit_Framework_Test $test
-     * @param  float                  $time
+     * @param  float $time
      */
     public function endTest(\PHPUnit_Framework_Test $test, $time)
     {
@@ -52,14 +52,16 @@ class TestListener implements \PHPUnit_Framework_TestListener
     public function startTestSuite(\PHPUnit_Framework_TestSuite $suite)
     {
         if (class_exists('\\PHP_CodeCoverage_Filter')
-        && method_exists('\\PHP_CodeCoverage_Filter', 'getInstance')) {
+            && method_exists('\\PHP_CodeCoverage_Filter', 'getInstance')
+        ) {
             \PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(
-                 __DIR__.'/../../../Mockery/', '.php', '', 'PHPUNIT'
+                __DIR__ . '/../../../Mockery/', '.php', '', 'PHPUNIT'
             );
 
-            \PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__DIR__.'/../../../Mockery.php', 'PHPUNIT');
+            \PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__DIR__ . '/../../../Mockery.php', 'PHPUNIT');
         }
     }
+
     /**
      *  The Listening methods below are not required for Mockery
      */

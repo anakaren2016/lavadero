@@ -13,9 +13,9 @@ namespace Symfony\Component\Console\Tester;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\StreamOutput;
 
 /**
  * Eases the testing of console commands.
@@ -48,7 +48,7 @@ class CommandTester
      *  * decorated:   Sets the output decorated flag
      *  * verbosity:   Sets the output verbosity flag
      *
-     * @param array $input   An array of command arguments and options
+     * @param array $input An array of command arguments and options
      * @param array $options An array of execution options
      *
      * @return int The command exit code

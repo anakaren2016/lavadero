@@ -22,16 +22,9 @@ abstract class Seeder
     protected $command;
 
     /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    abstract public function run();
-
-    /**
      * Seed the given connection from the given path.
      *
-     * @param  string  $class
+     * @param  string $class
      * @return void
      */
     public function call($class)
@@ -44,9 +37,16 @@ abstract class Seeder
     }
 
     /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    abstract public function run();
+
+    /**
      * Resolve an instance of the given seeder class.
      *
-     * @param  string  $class
+     * @param  string $class
      * @return \Illuminate\Database\Seeder
      */
     protected function resolve($class)
@@ -69,7 +69,7 @@ abstract class Seeder
     /**
      * Set the IoC container instance.
      *
-     * @param  \Illuminate\Container\Container  $container
+     * @param  \Illuminate\Container\Container $container
      * @return $this
      */
     public function setContainer(Container $container)
@@ -82,7 +82,7 @@ abstract class Seeder
     /**
      * Set the console command instance.
      *
-     * @param  \Illuminate\Console\Command  $command
+     * @param  \Illuminate\Console\Command $command
      * @return $this
      */
     public function setCommand(Command $command)

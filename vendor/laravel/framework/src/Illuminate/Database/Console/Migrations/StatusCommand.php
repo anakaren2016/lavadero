@@ -48,14 +48,14 @@ class StatusCommand extends BaseCommand
      */
     public function fire()
     {
-        if (! $this->migrator->repositoryExists()) {
+        if (!$this->migrator->repositoryExists()) {
             return $this->error('No migrations found.');
         }
 
         $this->migrator->setConnection($this->input->getOption('database'));
 
-        if (! is_null($path = $this->input->getOption('path'))) {
-            $path = $this->laravel->basePath().'/'.$path;
+        if (!is_null($path = $this->input->getOption('path'))) {
+            $path = $this->laravel->basePath() . '/' . $path;
         } else {
             $path = $this->getMigrationPath();
         }
@@ -78,7 +78,7 @@ class StatusCommand extends BaseCommand
     /**
      * Get all of the migration files.
      *
-     * @param  string  $path
+     * @param  string $path
      * @return array
      */
     protected function getAllMigrationFiles($path)

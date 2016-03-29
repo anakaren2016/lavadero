@@ -1,9 +1,9 @@
 <?php
 namespace Hamcrest;
 
-/*
- Copyright (c) 2009 hamcrest.org
- */
+    /*
+     Copyright (c) 2009 hamcrest.org
+     */
 
 /**
  * Null implementation of {@link Hamcrest\Description}.

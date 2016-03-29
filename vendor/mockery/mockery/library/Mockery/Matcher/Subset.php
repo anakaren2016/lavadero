@@ -31,7 +31,7 @@ class Subset extends MatcherAbstract
      */
     public function match(&$actual)
     {
-        foreach ($this->_expected as $k=>$v) {
+        foreach ($this->_expected as $k => $v) {
             if (!array_key_exists($k, $actual)) {
                 return false;
             }
@@ -51,8 +51,8 @@ class Subset extends MatcherAbstract
     {
         $return = '<Subset[';
         $elements = array();
-        foreach ($this->_expected as $k=>$v) {
-            $elements[] = $k . '=' . (string) $v;
+        foreach ($this->_expected as $k => $v) {
+            $elements[] = $k . '=' . (string)$v;
         }
         $return .= implode(', ', $elements) . ']>';
         return $return;

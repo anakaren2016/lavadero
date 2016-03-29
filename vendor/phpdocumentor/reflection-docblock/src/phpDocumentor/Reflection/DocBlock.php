@@ -12,9 +12,9 @@
 
 namespace phpDocumentor\Reflection;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Context;
 use phpDocumentor\Reflection\DocBlock\Location;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
  * Parses the DocBlock for any structure.
@@ -61,9 +61,9 @@ class DocBlock implements \Reflector
      *
      * @param \Reflector|string $docblock A docblock comment (including
      *     asterisks) or reflector supporting the getDocComment method.
-     * @param Context           $context  The context in which the DocBlock
+     * @param Context $context The context in which the DocBlock
      *     occurs.
-     * @param Location          $location The location within the file that this
+     * @param Location $location The location within the file that this
      *     DocBlock occurs in.
      *
      * @throws \InvalidArgumentException if the given argument does not have the
@@ -73,7 +73,8 @@ class DocBlock implements \Reflector
         $docblock,
         Context $context = null,
         Location $location = null
-    ) {
+    )
+    {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
                 throw new \InvalidArgumentException(
@@ -94,7 +95,7 @@ class DocBlock implements \Reflector
         $this->long_description = new DocBlock\Description($long, $this);
         $this->parseTags($tags);
 
-        $this->context  = $context;
+        $this->context = $context;
         $this->location = $location;
     }
 
@@ -247,10 +248,10 @@ class DocBlock implements \Reflector
 
     /**
      * Gets the text portion of the doc block.
-     * 
+     *
      * Gets the text portion (short and long description combined) of the doc
      * block.
-     * 
+     *
      * @return string The text portion of the doc block.
      */
     public function getText()
@@ -267,21 +268,22 @@ class DocBlock implements \Reflector
 
     /**
      * Set the text portion of the doc block.
-     * 
+     *
      * Sets the text portion (short and long description combined) of the doc
      * block.
      *
      * @param string $docblock The new text portion of the doc block.
-     * 
+     *
      * @return $this This doc block.
      */
     public function setText($comment)
     {
-        list(,$short, $long) = $this->splitDocBlock($comment);
+        list(, $short, $long) = $this->splitDocBlock($comment);
         $this->short_description = $short;
         $this->long_description = new DocBlock\Description($long, $this);
         return $this;
     }
+
     /**
      * Returns the opening line or also known as short description.
      *

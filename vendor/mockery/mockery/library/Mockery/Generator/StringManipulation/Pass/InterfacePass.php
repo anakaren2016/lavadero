@@ -8,7 +8,7 @@ class InterfacePass implements Pass
 {
     public function apply($code, MockConfiguration $config)
     {
-        $interfaces = array_reduce((array) $config->getTargetInterfaces(), function ($code, $i) {
+        $interfaces = array_reduce((array)$config->getTargetInterfaces(), function ($code, $i) {
             return $code . ", \\" . $i->getName();
         }, "");
 

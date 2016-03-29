@@ -53,7 +53,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $route = new Route('/{foo}');
         $route->setOptions(array('foo' => 'bar'));
         $this->assertEquals(array_merge(array(
-        'compiler_class' => 'Symfony\\Component\\Routing\\RouteCompiler',
+            'compiler_class' => 'Symfony\\Component\\Routing\\RouteCompiler',
         ), array('foo' => 'bar')), $route->getOptions(), '->setOptions() sets the options');
         $this->assertEquals($route, $route->setOptions(array()), '->setOptions() implements a fluent interface');
 
@@ -86,7 +86,9 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar2', $route->getDefault('foo2'), '->getDefault() return the default value');
         $this->assertNull($route->getDefault('not_defined'), '->getDefault() return null if default value is not set');
 
-        $route->setDefault('_controller', $closure = function () { return 'Hello'; });
+        $route->setDefault('_controller', $closure = function () {
+            return 'Hello';
+        });
         $this->assertEquals($closure, $route->getDefault('_controller'), '->setDefault() sets a default value');
 
         $route->setDefaults(array('foo' => 'foo'));
@@ -134,11 +136,11 @@ class RouteTest extends \PHPUnit_Framework_TestCase
     public function getInvalidRequirements()
     {
         return array(
-           array(''),
-           array(array()),
-           array('^$'),
-           array('^'),
-           array('$'),
+            array(''),
+            array(array()),
+            array('^$'),
+            array('^'),
+            array('$'),
         );
     }
 

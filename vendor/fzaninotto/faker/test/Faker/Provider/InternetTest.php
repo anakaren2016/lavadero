@@ -14,7 +14,7 @@ class InternetTest extends \PHPUnit_Framework_TestCase
      * @var Generator
      */
     private $faker;
-    
+
     public function setUp()
     {
         $faker = new Generator();
@@ -50,7 +50,7 @@ class InternetTest extends \PHPUnit_Framework_TestCase
         $emailAddress = $this->faker->email();
         $this->assertRegExp($pattern, $emailAddress);
     }
-    
+
     /**
      * @requires PHP 5.4
      * @dataProvider localeDataProvider
@@ -66,15 +66,15 @@ class InternetTest extends \PHPUnit_Framework_TestCase
     public function loadLocalProviders($locale)
     {
         $providerPath = realpath(__DIR__ . '/../../../src/Faker/Provider');
-        if (file_exists($providerPath.'/'.$locale.'/Internet.php')) {
+        if (file_exists($providerPath . '/' . $locale . '/Internet.php')) {
             $internet = "\\Faker\\Provider\\$locale\\Internet";
             $this->faker->addProvider(new $internet($this->faker));
         }
-        if (file_exists($providerPath.'/'.$locale.'/Person.php')) {
+        if (file_exists($providerPath . '/' . $locale . '/Person.php')) {
             $person = "\\Faker\\Provider\\$locale\\Person";
             $this->faker->addProvider(new $person($this->faker));
         }
-        if (file_exists($providerPath.'/'.$locale.'/Company.php')) {
+        if (file_exists($providerPath . '/' . $locale . '/Company.php')) {
             $company = "\\Faker\\Provider\\$locale\\Company";
             $this->faker->addProvider(new $company($this->faker));
         }

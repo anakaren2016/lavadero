@@ -31,9 +31,9 @@ class DatabaseFailedJobProvider implements FailedJobProviderInterface
     /**
      * Create a new database failed job provider.
      *
-     * @param  \Illuminate\Database\ConnectionResolverInterface  $resolver
-     * @param  string  $database
-     * @param  string  $table
+     * @param  \Illuminate\Database\ConnectionResolverInterface $resolver
+     * @param  string $database
+     * @param  string $table
      * @return void
      */
     public function __construct(ConnectionResolverInterface $resolver, $database, $table)
@@ -46,9 +46,9 @@ class DatabaseFailedJobProvider implements FailedJobProviderInterface
     /**
      * Log a failed job into storage.
      *
-     * @param  string  $connection
-     * @param  string  $queue
-     * @param  string  $payload
+     * @param  string $connection
+     * @param  string $queue
+     * @param  string $payload
      * @return void
      */
     public function log($connection, $queue, $payload)
@@ -56,6 +56,16 @@ class DatabaseFailedJobProvider implements FailedJobProviderInterface
         $failed_at = Carbon::now();
 
         $this->getTable()->insert(compact('connection', 'queue', 'payload', 'failed_at'));
+    }
+
+    /**
+     * Get a new query builder instance for the table.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    protected function getTable()
+    {
+        return $this->resolver->connection($this->database)->table($this->table);
     }
 
     /**
@@ -71,7 +81,7 @@ class DatabaseFailedJobProvider implements FailedJobProviderInterface
     /**
      * Get a single failed job.
      *
-     * @param  mixed  $id
+     * @param  mixed $id
      * @return array
      */
     public function find($id)
@@ -82,7 +92,7 @@ class DatabaseFailedJobProvider implements FailedJobProviderInterface
     /**
      * Delete a single failed job from storage.
      *
-     * @param  mixed  $id
+     * @param  mixed $id
      * @return bool
      */
     public function forget($id)
@@ -98,15 +108,5 @@ class DatabaseFailedJobProvider implements FailedJobProviderInterface
     public function flush()
     {
         $this->getTable()->delete();
-    }
-
-    /**
-     * Get a new query builder instance for the table.
-     *
-     * @return \Illuminate\Database\Query\Builder
-     */
-    protected function getTable()
-    {
-        return $this->resolver->connection($this->database)->table($this->table);
     }
 }

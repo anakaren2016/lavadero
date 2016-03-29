@@ -36,8 +36,8 @@ interface SerializerInterface
      * `$forSerialization` is true, then only data relevant to serializing the
      * closure is returned.
      *
-     * @param \Closure $closure          Closure to analyze.
-     * @param bool     $forSerialization Include only serialization data.
+     * @param \Closure $closure Closure to analyze.
+     * @param bool $forSerialization Include only serialization data.
      *
      * @return \Closure
      */

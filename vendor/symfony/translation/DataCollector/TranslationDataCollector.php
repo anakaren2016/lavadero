@@ -97,7 +97,7 @@ class TranslationDataCollector extends DataCollector implements LateDataCollecto
     {
         $result = array();
         foreach ($messages as $key => $message) {
-            $messageId = $message['locale'].$message['domain'].$message['id'];
+            $messageId = $message['locale'] . $message['domain'] . $message['id'];
 
             if (!isset($result[$messageId])) {
                 $message['count'] = 1;
@@ -139,10 +139,10 @@ class TranslationDataCollector extends DataCollector implements LateDataCollecto
 
         if (false !== $encoding = mb_detect_encoding($string, null, true)) {
             if (mb_strlen($string, $encoding) > $length) {
-                return mb_substr($string, 0, $length - 3, $encoding).'...';
+                return mb_substr($string, 0, $length - 3, $encoding) . '...';
             }
         } elseif (strlen($string) > $length) {
-            return substr($string, 0, $length - 3).'...';
+            return substr($string, 0, $length - 3) . '...';
         }
 
         return $string;

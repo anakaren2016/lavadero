@@ -61,8 +61,8 @@ class MongoDbSessionHandler implements \SessionHandlerInterface
      * If you use such an index, you can drop `gc_probability` to 0 since
      * no garbage-collection is required.
      *
-     * @param \Mongo|\MongoClient $mongo   A MongoClient or Mongo instance
-     * @param array               $options An associative array of field options
+     * @param \Mongo|\MongoClient $mongo A MongoClient or Mongo instance
+     * @param array $options An associative array of field options
      *
      * @throws \InvalidArgumentException When MongoClient or Mongo instance not provided
      * @throws \InvalidArgumentException When "database" or "collection" not provided
@@ -116,6 +116,20 @@ class MongoDbSessionHandler implements \SessionHandlerInterface
     }
 
     /**
+     * Return a "MongoCollection" instance.
+     *
+     * @return \MongoCollection
+     */
+    private function getCollection()
+    {
+        if (null === $this->collection) {
+            $this->collection = $this->mongo->selectCollection($this->options['database'], $this->options['collection']);
+        }
+
+        return $this->collection;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function gc($maxlifetime)
@@ -132,7 +146,7 @@ class MongoDbSessionHandler implements \SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        $expiry = new \MongoDate(time() + (int) ini_get('session.gc_maxlifetime'));
+        $expiry = new \MongoDate(time() + (int)ini_get('session.gc_maxlifetime'));
 
         $fields = array(
             $this->options['data_field'] => new \MongoBinData($data, \MongoBinData::BYTE_ARRAY),
@@ -160,20 +174,6 @@ class MongoDbSessionHandler implements \SessionHandlerInterface
         ));
 
         return null === $dbData ? '' : $dbData[$this->options['data_field']]->bin;
-    }
-
-    /**
-     * Return a "MongoCollection" instance.
-     *
-     * @return \MongoCollection
-     */
-    private function getCollection()
-    {
-        if (null === $this->collection) {
-            $this->collection = $this->mongo->selectCollection($this->options['database'], $this->options['collection']);
-        }
-
-        return $this->collection;
     }
 
     /**

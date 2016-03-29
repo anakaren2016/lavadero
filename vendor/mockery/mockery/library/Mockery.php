@@ -22,7 +22,6 @@ use Mockery\ExpectationInterface;
 use Mockery\Generator\CachingGenerator;
 use Mockery\Generator\Generator;
 use Mockery\Generator\MockConfigurationBuilder;
-use Mockery\Generator\StringManipulationGenerator;
 use Mockery\Generator\StringManipulation\Pass\CallTypeHintPass;
 use Mockery\Generator\StringManipulation\Pass\ClassNamePass;
 use Mockery\Generator\StringManipulation\Pass\ClassPass;
@@ -31,6 +30,7 @@ use Mockery\Generator\StringManipulation\Pass\InterfacePass;
 use Mockery\Generator\StringManipulation\Pass\MethodDefinitionPass;
 use Mockery\Generator\StringManipulation\Pass\RemoveBuiltinMethodsThatAreFinalPass;
 use Mockery\Generator\StringManipulation\Pass\RemoveUnserializeForInternalSerializableClassesPass;
+use Mockery\Generator\StringManipulationGenerator;
 use Mockery\Loader\EvalLoader;
 use Mockery\Loader\Loader;
 
@@ -438,7 +438,7 @@ class Mockery
                 $argument = preg_replace("{\s}", '', var_export($sample, true));
             }
 
-            return ((strlen($argument) > 1000) ? substr($argument, 0, 1000).'...)' : $argument);
+            return ((strlen($argument) > 1000) ? substr($argument, 0, 1000) . '...)' : $argument);
         }
 
         if (is_bool($argument)) {
@@ -453,7 +453,7 @@ class Mockery
             return 'NULL';
         }
 
-        $argument = (string) $argument;
+        $argument = (string)$argument;
 
         return $depth === 0 ? '"' . $argument . '"' : $argument;
     }
@@ -704,9 +704,10 @@ class Mockery
      * @return \Mockery\Mock
      */
     private static function getNewDemeterMock(Mockery\Container $container,
-        $method,
-        Mockery\ExpectationInterface $exp
-    ) {
+                                              $method,
+                                              Mockery\ExpectationInterface $exp
+    )
+    {
         $mock = $container->mock('demeter_' . $method);
         $exp->andReturn($mock);
 

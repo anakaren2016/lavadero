@@ -99,13 +99,13 @@ class SsiTest extends \PHPUnit_Framework_TestCase
         $response = new Response('foo <!--#include virtual="..." -->');
         $ssi->process($request, $response);
 
-        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'...\', \'\', false) ?>'."\n", $response->getContent());
+        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'...\', \'\', false) ?>' . "\n", $response->getContent());
         $this->assertEquals('SSI', $response->headers->get('x-body-eval'));
 
         $response = new Response('foo <!--#include virtual="foo\'" -->');
         $ssi->process($request, $response);
 
-        $this->assertEquals("foo <?php echo \$this->surrogate->handle(\$this, 'foo\\'', '', false) ?>"."\n", $response->getContent());
+        $this->assertEquals("foo <?php echo \$this->surrogate->handle(\$this, 'foo\\'', '', false) ?>" . "\n", $response->getContent());
     }
 
     public function testProcessEscapesPhpTags()
@@ -194,19 +194,16 @@ class SsiTest extends \PHPUnit_Framework_TestCase
     {
         $cache = $this->getMock('Symfony\Component\HttpKernel\HttpCache\HttpCache', array('getRequest', 'handle'), array(), '', false);
         $cache->expects($this->any())
-              ->method('getRequest')
-              ->will($this->returnValue($request))
-        ;
+            ->method('getRequest')
+            ->will($this->returnValue($request));
         if (is_array($response)) {
             $cache->expects($this->any())
-                  ->method('handle')
-                  ->will(call_user_func_array(array($this, 'onConsecutiveCalls'), $response))
-            ;
+                ->method('handle')
+                ->will(call_user_func_array(array($this, 'onConsecutiveCalls'), $response));
         } else {
             $cache->expects($this->any())
-                  ->method('handle')
-                  ->will($this->returnValue($response))
-            ;
+                ->method('handle')
+                ->will($this->returnValue($response));
         }
 
         return $cache;

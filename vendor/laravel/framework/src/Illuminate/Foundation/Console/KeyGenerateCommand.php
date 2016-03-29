@@ -2,8 +2,8 @@
 
 namespace Illuminate\Foundation\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
 class KeyGenerateCommand extends Command
@@ -34,15 +34,15 @@ class KeyGenerateCommand extends Command
         $key = $this->getRandomKey($app['config']['app.cipher']);
 
         if ($this->option('show')) {
-            return $this->line('<comment>'.$key.'</comment>');
+            return $this->line('<comment>' . $key . '</comment>');
         }
 
-        $path = $app->environmentPath().'/'.$app->environmentFile();
+        $path = $app->environmentPath() . '/' . $app->environmentFile();
 
         if (file_exists($path)) {
-            $content = str_replace('APP_KEY='.$app['config']['app.key'], 'APP_KEY='.$key, file_get_contents($path));
+            $content = str_replace('APP_KEY=' . $app['config']['app.key'], 'APP_KEY=' . $key, file_get_contents($path));
 
-            if (! Str::contains($content, 'APP_KEY')) {
+            if (!Str::contains($content, 'APP_KEY')) {
                 $content = sprintf("%s\nAPP_KEY=%s\n", $content, $key);
             }
 
@@ -57,7 +57,7 @@ class KeyGenerateCommand extends Command
     /**
      * Generate a random key for the application.
      *
-     * @param  string  $cipher
+     * @param  string $cipher
      * @return string
      */
     protected function getRandomKey($cipher)

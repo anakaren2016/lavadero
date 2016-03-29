@@ -4,11 +4,6 @@ namespace Hamcrest\Core;
 class IsIdenticalTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Core\IsIdentical::identicalTo('irrelevant');
-    }
-
     public function testEvaluatesToTrueIfArgumentIsReferenceToASpecifiedObject()
     {
         $o1 = new \stdClass();
@@ -26,5 +21,10 @@ class IsIdenticalTest extends \Hamcrest\AbstractMatcherTest
     public function testReturnsReadableDescriptionFromToStringWhenInitialisedWithNull()
     {
         $this->assertDescription('null', identicalTo(null));
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Core\IsIdentical::identicalTo('irrelevant');
     }
 }

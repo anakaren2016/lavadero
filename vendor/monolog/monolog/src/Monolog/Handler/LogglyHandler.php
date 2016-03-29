@@ -11,8 +11,8 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Logger;
 use Monolog\Formatter\LogglyFormatter;
+use Monolog\Logger;
 
 /**
  * Sends errors to Loggly.
@@ -56,11 +56,6 @@ class LogglyHandler extends AbstractProcessingHandler
         }
     }
 
-    protected function write(array $record)
-    {
-        $this->send($record["formatted"], self::ENDPOINT_SINGLE);
-    }
-
     public function handleBatch(array $records)
     {
         $level = $this->level;
@@ -74,6 +69,11 @@ class LogglyHandler extends AbstractProcessingHandler
         }
     }
 
+    protected function write(array $record)
+    {
+        $this->send($record["formatted"], self::ENDPOINT_SINGLE);
+    }
+
     protected function send($data, $endpoint)
     {
         $url = sprintf("https://%s/%s/%s/", self::HOST, $endpoint, $this->token);
@@ -81,7 +81,7 @@ class LogglyHandler extends AbstractProcessingHandler
         $headers = array('Content-Type: application/json');
 
         if (!empty($this->tag)) {
-            $headers[] = 'X-LOGGLY-TAG: '.implode(',', $this->tag);
+            $headers[] = 'X-LOGGLY-TAG: ' . implode(',', $this->tag);
         }
 
         $ch = curl_init();

@@ -31,7 +31,7 @@ class RefreshCommand extends Command
      */
     public function fire()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return;
         }
 
@@ -72,7 +72,7 @@ class RefreshCommand extends Command
     /**
      * Run the database seeder command.
      *
-     * @param  string  $database
+     * @param  string $database
      * @return void
      */
     protected function runSeeder($database)

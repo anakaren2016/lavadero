@@ -25,28 +25,6 @@ class IsCloseTo extends TypeSafeMatcher
         $this->_delta = $delta;
     }
 
-    protected function matchesSafely($item)
-    {
-        return $this->_actualDelta($item) <= 0.0;
-    }
-
-    protected function describeMismatchSafely($item, Description $mismatchDescription)
-    {
-        $mismatchDescription->appendValue($item)
-                                                ->appendText(' differed by ')
-                                                ->appendValue($this->_actualDelta($item))
-                                                ;
-    }
-
-    public function describeTo(Description $description)
-    {
-        $description->appendText('a numeric value within ')
-                                ->appendValue($this->_delta)
-                                ->appendText(' of ')
-                                ->appendValue($this->_value)
-                                ;
-    }
-
     /**
      * Matches if value is a number equal to $value within some range of
      * acceptable error $delta.
@@ -58,10 +36,30 @@ class IsCloseTo extends TypeSafeMatcher
         return new self($value, $delta);
     }
 
-    // -- Private Methods
+    public function describeTo(Description $description)
+    {
+        $description->appendText('a numeric value within ')
+            ->appendValue($this->_delta)
+            ->appendText(' of ')
+            ->appendValue($this->_value);
+    }
+
+    protected function matchesSafely($item)
+    {
+        return $this->_actualDelta($item) <= 0.0;
+    }
 
     private function _actualDelta($item)
     {
         return (abs(($item - $this->_value)) - $this->_delta);
+    }
+
+    // -- Private Methods
+
+    protected function describeMismatchSafely($item, Description $mismatchDescription)
+    {
+        $mismatchDescription->appendValue($item)
+            ->appendText(' differed by ')
+            ->appendValue($this->_actualDelta($item));
     }
 }

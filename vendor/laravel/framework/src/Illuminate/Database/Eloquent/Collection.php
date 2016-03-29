@@ -10,8 +10,8 @@ class Collection extends BaseCollection
     /**
      * Find a model in the collection by key.
      *
-     * @param  mixed  $key
-     * @param  mixed  $default
+     * @param  mixed $key
+     * @param  mixed $default
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function find($key, $default = null)
@@ -29,7 +29,7 @@ class Collection extends BaseCollection
     /**
      * Load a set of relationships onto the collection.
      *
-     * @param  mixed  $relations
+     * @param  mixed $relations
      * @return $this
      */
     public function load($relations)
@@ -48,23 +48,10 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Add an item to the collection.
-     *
-     * @param  mixed  $item
-     * @return $this
-     */
-    public function add($item)
-    {
-        $this->items[] = $item;
-
-        return $this;
-    }
-
-    /**
      * Determine if a key exists in the collection.
      *
-     * @param  mixed  $key
-     * @param  mixed  $value
+     * @param  mixed $key
+     * @param  mixed $value
      * @return bool
      */
     public function contains($key, $value = null)
@@ -99,7 +86,7 @@ class Collection extends BaseCollection
     /**
      * Merge the collection with the given items.
      *
-     * @param  \ArrayAccess|array  $items
+     * @param  \ArrayAccess|array $items
      * @return static
      */
     public function merge($items)
@@ -114,9 +101,28 @@ class Collection extends BaseCollection
     }
 
     /**
+     * Get a dictionary keyed by primary keys.
+     *
+     * @param  \ArrayAccess|array|null $items
+     * @return array
+     */
+    public function getDictionary($items = null)
+    {
+        $items = is_null($items) ? $this->items : $items;
+
+        $dictionary = [];
+
+        foreach ($items as $value) {
+            $dictionary[$value->getKey()] = $value;
+        }
+
+        return $dictionary;
+    }
+
+    /**
      * Diff the collection with the given items.
      *
-     * @param  \ArrayAccess|array  $items
+     * @param  \ArrayAccess|array $items
      * @return static
      */
     public function diff($items)
@@ -126,7 +132,7 @@ class Collection extends BaseCollection
         $dictionary = $this->getDictionary($items);
 
         foreach ($this->items as $item) {
-            if (! isset($dictionary[$item->getKey()])) {
+            if (!isset($dictionary[$item->getKey()])) {
                 $diff->add($item);
             }
         }
@@ -135,9 +141,22 @@ class Collection extends BaseCollection
     }
 
     /**
+     * Add an item to the collection.
+     *
+     * @param  mixed $item
+     * @return $this
+     */
+    public function add($item)
+    {
+        $this->items[] = $item;
+
+        return $this;
+    }
+
+    /**
      * Intersect the collection with the given items.
      *
-     * @param  \ArrayAccess|array  $items
+     * @param  \ArrayAccess|array $items
      * @return static
      */
     public function intersect($items)
@@ -158,12 +177,12 @@ class Collection extends BaseCollection
     /**
      * Return only unique items from the collection.
      *
-     * @param  string|callable|null  $key
+     * @param  string|callable|null $key
      * @return static
      */
     public function unique($key = null)
     {
-        if (! is_null($key)) {
+        if (!is_null($key)) {
             return parent::unique($key);
         }
 
@@ -173,7 +192,7 @@ class Collection extends BaseCollection
     /**
      * Returns only the models from the collection with the specified keys.
      *
-     * @param  mixed  $keys
+     * @param  mixed $keys
      * @return static
      */
     public function only($keys)
@@ -186,7 +205,7 @@ class Collection extends BaseCollection
     /**
      * Returns all models in the collection except the models with specified keys.
      *
-     * @param  mixed  $keys
+     * @param  mixed $keys
      * @return static
      */
     public function except($keys)
@@ -199,7 +218,20 @@ class Collection extends BaseCollection
     /**
      * Make the given, typically hidden, attributes visible across the entire collection.
      *
-     * @param  array|string  $attributes
+     * @param  array|string $attributes
+     * @return $this
+     *
+     * @deprecated since version 5.2. Use the "makeVisible" method directly.
+     */
+    public function withHidden($attributes)
+    {
+        return $this->makeVisible($attributes);
+    }
+
+    /**
+     * Make the given, typically hidden, attributes visible across the entire collection.
+     *
+     * @param  array|string $attributes
      * @return $this
      */
     public function makeVisible($attributes)
@@ -212,51 +244,29 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Make the given, typically hidden, attributes visible across the entire collection.
-     *
-     * @param  array|string  $attributes
-     * @return $this
-     *
-     * @deprecated since version 5.2. Use the "makeVisible" method directly.
-     */
-    public function withHidden($attributes)
-    {
-        return $this->makeVisible($attributes);
-    }
-
-    /**
-     * Get a dictionary keyed by primary keys.
-     *
-     * @param  \ArrayAccess|array|null  $items
-     * @return array
-     */
-    public function getDictionary($items = null)
-    {
-        $items = is_null($items) ? $this->items : $items;
-
-        $dictionary = [];
-
-        foreach ($items as $value) {
-            $dictionary[$value->getKey()] = $value;
-        }
-
-        return $dictionary;
-    }
-
-    /**
      * The following methods are intercepted to always return base collections.
      */
 
     /**
      * Get an array with the values of a given key.
      *
-     * @param  string  $value
-     * @param  string|null  $key
+     * @param  string $value
+     * @param  string|null $key
      * @return \Illuminate\Support\Collection
      */
     public function pluck($value, $key = null)
     {
         return $this->toBase()->pluck($value, $key);
+    }
+
+    /**
+     * Get a base Support collection instance from this collection.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function toBase()
+    {
+        return new BaseCollection($this->items);
     }
 
     /**
@@ -293,7 +303,7 @@ class Collection extends BaseCollection
     /**
      * Get a flattened array of the items in the collection.
      *
-     * @param  int  $depth
+     * @param  int $depth
      * @return \Illuminate\Support\Collection
      */
     public function flatten($depth = INF)
@@ -309,15 +319,5 @@ class Collection extends BaseCollection
     public function flip()
     {
         return $this->toBase()->flip();
-    }
-
-    /**
-     * Get a base Support collection instance from this collection.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function toBase()
-    {
-        return new BaseCollection($this->items);
     }
 }

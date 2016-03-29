@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\HttpKernel\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Adds services tagged kernel.fragment_renderer as HTTP content rendering strategies.
@@ -26,7 +26,7 @@ class FragmentRendererPass implements CompilerPassInterface
 
     /**
      * @param string $handlerService Service name of the fragment handler in the container
-     * @param string $rendererTag    Tag name used for fragments
+     * @param string $rendererTag Tag name used for fragments
      */
     public function __construct($handlerService = 'fragment.handler', $rendererTag = 'kernel.fragment_renderer')
     {

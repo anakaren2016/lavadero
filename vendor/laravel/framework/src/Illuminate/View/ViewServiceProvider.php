@@ -2,11 +2,11 @@
 
 namespace Illuminate\View;
 
-use Illuminate\View\Engines\PhpEngine;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Engines\EngineResolver;
-use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\View\Engines\PhpEngine;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -38,7 +38,7 @@ class ViewServiceProvider extends ServiceProvider
             // environment can resolve the engines it needs for various views based
             // on the extension of view files. We call a method for each engines.
             foreach (['php', 'blade'] as $engine) {
-                $this->{'register'.ucfirst($engine).'Engine'}($resolver);
+                $this->{'register' . ucfirst($engine) . 'Engine'}($resolver);
             }
 
             return $resolver;
@@ -48,7 +48,7 @@ class ViewServiceProvider extends ServiceProvider
     /**
      * Register the PHP engine implementation.
      *
-     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
+     * @param  \Illuminate\View\Engines\EngineResolver $resolver
      * @return void
      */
     public function registerPhpEngine($resolver)
@@ -61,7 +61,7 @@ class ViewServiceProvider extends ServiceProvider
     /**
      * Register the Blade engine implementation.
      *
-     * @param  \Illuminate\View\Engines\EngineResolver  $resolver
+     * @param  \Illuminate\View\Engines\EngineResolver $resolver
      * @return void
      */
     public function registerBladeEngine($resolver)

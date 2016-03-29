@@ -38,15 +38,15 @@ class PHP_CodeCoverage_Report_HTML
     /**
      * Constructor.
      *
-     * @param int    $lowUpperBound
-     * @param int    $highLowerBound
+     * @param int $lowUpperBound
+     * @param int $highLowerBound
      * @param string $generator
      */
     public function __construct($lowUpperBound = 50, $highLowerBound = 90, $generator = '')
     {
-        $this->generator      = $generator;
+        $this->generator = $generator;
         $this->highLowerBound = $highLowerBound;
-        $this->lowUpperBound  = $lowUpperBound;
+        $this->lowUpperBound = $lowUpperBound;
 
         $this->templatePath = sprintf(
             '%s%sHTML%sRenderer%sTemplate%s',
@@ -60,7 +60,7 @@ class PHP_CodeCoverage_Report_HTML
 
     /**
      * @param PHP_CodeCoverage $coverage
-     * @param string           $target
+     * @param string $target
      */
     public function process(PHP_CodeCoverage $coverage, $target)
     {
@@ -126,34 +126,7 @@ class PHP_CodeCoverage_Report_HTML
     }
 
     /**
-     * @param string $target
-     */
-    private function copyFiles($target)
-    {
-        $dir = $this->getDirectory($target . 'css');
-        copy($this->templatePath . 'css/bootstrap.min.css', $dir . 'bootstrap.min.css');
-        copy($this->templatePath . 'css/nv.d3.min.css', $dir . 'nv.d3.min.css');
-        copy($this->templatePath . 'css/style.css', $dir . 'style.css');
-
-        $dir = $this->getDirectory($target . 'fonts');
-        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.eot', $dir . 'glyphicons-halflings-regular.eot');
-        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.svg', $dir . 'glyphicons-halflings-regular.svg');
-        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.ttf', $dir . 'glyphicons-halflings-regular.ttf');
-        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.woff', $dir . 'glyphicons-halflings-regular.woff');
-        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.woff2', $dir . 'glyphicons-halflings-regular.woff2');
-
-        $dir = $this->getDirectory($target . 'js');
-        copy($this->templatePath . 'js/bootstrap.min.js', $dir . 'bootstrap.min.js');
-        copy($this->templatePath . 'js/d3.min.js', $dir . 'd3.min.js');
-        copy($this->templatePath . 'js/holder.min.js', $dir . 'holder.min.js');
-        copy($this->templatePath . 'js/html5shiv.min.js', $dir . 'html5shiv.min.js');
-        copy($this->templatePath . 'js/jquery.min.js', $dir . 'jquery.min.js');
-        copy($this->templatePath . 'js/nv.d3.min.js', $dir . 'nv.d3.min.js');
-        copy($this->templatePath . 'js/respond.min.js', $dir . 'respond.min.js');
-    }
-
-    /**
-     * @param  string                     $directory
+     * @param  string $directory
      * @return string
      * @throws PHP_CodeCoverage_Exception
      * @since  Method available since Release 1.2.0
@@ -178,5 +151,32 @@ class PHP_CodeCoverage_Report_HTML
                 $directory
             )
         );
+    }
+
+    /**
+     * @param string $target
+     */
+    private function copyFiles($target)
+    {
+        $dir = $this->getDirectory($target . 'css');
+        copy($this->templatePath . 'css/bootstrap.min.css', $dir . 'bootstrap.min.css');
+        copy($this->templatePath . 'css/nv.d3.min.css', $dir . 'nv.d3.min.css');
+        copy($this->templatePath . 'css/style.css', $dir . 'style.css');
+
+        $dir = $this->getDirectory($target . 'fonts');
+        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.eot', $dir . 'glyphicons-halflings-regular.eot');
+        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.svg', $dir . 'glyphicons-halflings-regular.svg');
+        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.ttf', $dir . 'glyphicons-halflings-regular.ttf');
+        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.woff', $dir . 'glyphicons-halflings-regular.woff');
+        copy($this->templatePath . 'fonts/glyphicons-halflings-regular.woff2', $dir . 'glyphicons-halflings-regular.woff2');
+
+        $dir = $this->getDirectory($target . 'js');
+        copy($this->templatePath . 'js/bootstrap.min.js', $dir . 'bootstrap.min.js');
+        copy($this->templatePath . 'js/d3.min.js', $dir . 'd3.min.js');
+        copy($this->templatePath . 'js/holder.min.js', $dir . 'holder.min.js');
+        copy($this->templatePath . 'js/html5shiv.min.js', $dir . 'html5shiv.min.js');
+        copy($this->templatePath . 'js/jquery.min.js', $dir . 'jquery.min.js');
+        copy($this->templatePath . 'js/nv.d3.min.js', $dir . 'nv.d3.min.js');
+        copy($this->templatePath . 'js/respond.min.js', $dir . 'respond.min.js');
     }
 }

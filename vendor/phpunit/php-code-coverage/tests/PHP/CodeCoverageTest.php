@@ -10,7 +10,7 @@
 
 if (!defined('TEST_FILES_PATH')) {
     define(
-        'TEST_FILES_PATH',
+    'TEST_FILES_PATH',
         dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .
         '_files' . DIRECTORY_SEPARATOR
     );
@@ -31,11 +31,6 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
      * @var PHP_CodeCoverage
      */
     private $coverage;
-
-    protected function setUp()
-    {
-        $this->coverage = new PHP_CodeCoverage;
-    }
 
     /**
      * @covers PHP_CodeCoverage::__construct
@@ -62,7 +57,7 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
      */
     public function testConstructor2()
     {
-        $filter   = new PHP_CodeCoverage_Filter;
+        $filter = new PHP_CodeCoverage_Filter;
         $coverage = new PHP_CodeCoverage(null, $filter);
 
         $this->assertAttributeInstanceOf(
@@ -276,10 +271,10 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
 
         $this->assertEquals(
             array(
-                'BankAccountTest::testBalanceIsInitiallyZero'       => array('size' => $size, 'status' => null),
-                'BankAccountTest::testBalanceCannotBecomeNegative'  => array('size' => $size, 'status' => null),
+                'BankAccountTest::testBalanceIsInitiallyZero' => array('size' => $size, 'status' => null),
+                'BankAccountTest::testBalanceCannotBecomeNegative' => array('size' => $size, 'status' => null),
                 'BankAccountTest::testBalanceCannotBecomeNegative2' => array('size' => $size, 'status' => null),
-                'BankAccountTest::testDepositWithdrawMoney'         => array('size' => $size, 'status' => null)
+                'BankAccountTest::testDepositWithdrawMoney' => array('size' => $size, 'status' => null)
             ),
             $coverage->getTests()
         );
@@ -369,6 +364,21 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
     }
 
     /**
+     * @return ReflectionMethod
+     */
+    private function getLinesToBeIgnored()
+    {
+        $getLinesToBeIgnored = new ReflectionMethod(
+            'PHP_CodeCoverage',
+            'getLinesToBeIgnored'
+        );
+
+        $getLinesToBeIgnored->setAccessible(true);
+
+        return $getLinesToBeIgnored;
+    }
+
+    /**
      * @covers PHP_CodeCoverage::getLinesToBeIgnored
      */
     public function testGetLinesToBeIgnored2()
@@ -455,21 +465,6 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
     }
 
     /**
-     * @return ReflectionMethod
-     */
-    private function getLinesToBeIgnored()
-    {
-        $getLinesToBeIgnored = new ReflectionMethod(
-            'PHP_CodeCoverage',
-            'getLinesToBeIgnored'
-        );
-
-        $getLinesToBeIgnored->setAccessible(true);
-
-        return $getLinesToBeIgnored;
-    }
-
-    /**
      * @covers PHP_CodeCoverage::getLinesToBeIgnored
      */
     public function testGetLinesToBeIgnoredWhenIgnoreIsDisabled()
@@ -483,5 +478,10 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
                 TEST_FILES_PATH . 'source_with_ignore.php'
             )
         );
+    }
+
+    protected function setUp()
+    {
+        $this->coverage = new PHP_CodeCoverage;
     }
 }

@@ -5,15 +5,13 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
 {
     protected $_buffer;
 
-    abstract protected function _initializeBuffer();
-
     public function setUp()
     {
         if (true == getenv('TRAVIS')) {
             $this->markTestSkipped(
-                'Will fail on travis-ci if not skipped due to travis blocking '.
+                'Will fail on travis-ci if not skipped due to travis blocking ' .
                 'socket mailing tcp connections.'
-             );
+            );
         }
 
         $this->_buffer = new Swift_Transport_StreamBuffer(
@@ -28,11 +26,13 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
         $line = $this->_buffer->readLine(0);
         $this->assertRegExp('/^[0-9]{3}.*?\r\n$/D', $line);
         $seq = $this->_buffer->write("QUIT\r\n");
-        $this->assertTrue((bool) $seq);
+        $this->assertTrue((bool)$seq);
         $line = $this->_buffer->readLine($seq);
         $this->assertRegExp('/^[0-9]{3}.*?\r\n$/D', $line);
         $this->_buffer->terminate();
     }
+
+    abstract protected function _initializeBuffer();
 
     public function testWrite()
     {
@@ -42,12 +42,12 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
         $this->assertRegExp('/^[0-9]{3}.*?\r\n$/D', $line);
 
         $seq = $this->_buffer->write("HELO foo\r\n");
-        $this->assertTrue((bool) $seq);
+        $this->assertTrue((bool)$seq);
         $line = $this->_buffer->readLine($seq);
         $this->assertRegExp('/^[0-9]{3}.*?\r\n$/D', $line);
 
         $seq = $this->_buffer->write("QUIT\r\n");
-        $this->assertTrue((bool) $seq);
+        $this->assertTrue((bool)$seq);
         $line = $this->_buffer->readLine($seq);
         $this->assertRegExp('/^[0-9]{3}.*?\r\n$/D', $line);
         $this->_buffer->terminate();
@@ -80,6 +80,11 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
         $this->_buffer->write('y');
     }
 
+    private function _createMockInputStream()
+    {
+        return $this->getMock('Swift_InputByteStream');
+    }
+
     public function testBindingOtherStreamsMirrorsFlushOperations()
     {
         $this->_initializeBuffer();
@@ -97,6 +102,8 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
 
         $this->_buffer->flushBuffers();
     }
+
+    // -- Creation Methods
 
     public function testUnbindingStreamPreventsFurtherWrites()
     {
@@ -123,12 +130,5 @@ abstract class Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
         $this->_buffer->unbind($is2);
 
         $this->_buffer->write('y');
-    }
-
-    // -- Creation Methods
-
-    private function _createMockInputStream()
-    {
-        return $this->getMock('Swift_InputByteStream');
     }
 }

@@ -9,7 +9,7 @@ trait InteractsWithSession
     /**
      * Set the session to the given array.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return $this
      */
     public function withSession(array $data)
@@ -22,7 +22,7 @@ trait InteractsWithSession
     /**
      * Set the session to the given array.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return void
      */
     public function session(array $data)
@@ -41,7 +41,7 @@ trait InteractsWithSession
      */
     protected function startSession()
     {
-        if (! $this->app['session']->isStarted()) {
+        if (!$this->app['session']->isStarted()) {
             $this->app['session']->start();
         }
     }
@@ -61,8 +61,8 @@ trait InteractsWithSession
     /**
      * Assert that the session has a given value.
      *
-     * @param  string|array  $key
-     * @param  mixed  $value
+     * @param  string|array $key
+     * @param  mixed $value
      * @return void
      */
     public function seeInSession($key, $value = null)
@@ -75,8 +75,8 @@ trait InteractsWithSession
     /**
      * Assert that the session has a given value.
      *
-     * @param  string|array  $key
-     * @param  mixed  $value
+     * @param  string|array $key
+     * @param  mixed $value
      * @return void
      */
     public function assertSessionHas($key, $value = null)
@@ -95,7 +95,7 @@ trait InteractsWithSession
     /**
      * Assert that the session has a given list of values.
      *
-     * @param  array  $bindings
+     * @param  array $bindings
      * @return void
      */
     public function assertSessionHasAll(array $bindings)
@@ -112,15 +112,15 @@ trait InteractsWithSession
     /**
      * Assert that the session has errors bound.
      *
-     * @param  string|array  $bindings
-     * @param  mixed  $format
+     * @param  string|array $bindings
+     * @param  mixed $format
      * @return void
      */
     public function assertSessionHasErrors($bindings = [], $format = null)
     {
         $this->assertSessionHas('errors');
 
-        $bindings = (array) $bindings;
+        $bindings = (array)$bindings;
 
         $errors = $this->app['session.store']->get('errors');
 

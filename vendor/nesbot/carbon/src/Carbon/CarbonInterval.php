@@ -13,9 +13,9 @@ namespace Carbon;
 
 use DateInterval;
 use InvalidArgumentException;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Translation\Loader\ArrayLoader;
 
 /**
  * A simple API extension for DateInterval.
@@ -122,25 +122,25 @@ class CarbonInterval extends DateInterval
     {
         $spec = static::PERIOD_PREFIX;
 
-        $spec .= $years > 0 ? $years.static::PERIOD_YEARS : '';
-        $spec .= $months > 0 ? $months.static::PERIOD_MONTHS : '';
+        $spec .= $years > 0 ? $years . static::PERIOD_YEARS : '';
+        $spec .= $months > 0 ? $months . static::PERIOD_MONTHS : '';
 
         $specDays = 0;
         $specDays += $weeks > 0 ? $weeks * Carbon::DAYS_PER_WEEK : 0;
         $specDays += $days > 0 ? $days : 0;
 
-        $spec .= $specDays > 0 ? $specDays.static::PERIOD_DAYS : '';
+        $spec .= $specDays > 0 ? $specDays . static::PERIOD_DAYS : '';
 
         if ($hours > 0 || $minutes > 0 || $seconds > 0) {
             $spec .= static::PERIOD_TIME_PREFIX;
-            $spec .= $hours > 0 ? $hours.static::PERIOD_HOURS : '';
-            $spec .= $minutes > 0 ? $minutes.static::PERIOD_MINUTES : '';
-            $spec .= $seconds > 0 ? $seconds.static::PERIOD_SECONDS : '';
+            $spec .= $hours > 0 ? $hours . static::PERIOD_HOURS : '';
+            $spec .= $minutes > 0 ? $minutes . static::PERIOD_MINUTES : '';
+            $spec .= $seconds > 0 ? $seconds . static::PERIOD_SECONDS : '';
         }
 
         if ($spec === static::PERIOD_PREFIX) {
             // Allow the zero interval.
-            $spec .= '0'.static::PERIOD_YEARS;
+            $spec .= '0' . static::PERIOD_YEARS;
         }
 
         parent::__construct($spec);
@@ -174,7 +174,7 @@ class CarbonInterval extends DateInterval
      *       have the same names.
      *
      * @param string $name
-     * @param array  $args
+     * @param array $args
      *
      * @return static
      */
@@ -298,7 +298,7 @@ class CarbonInterval extends DateInterval
         static::translator()->setLocale($locale);
 
         // Ensure the locale has been loaded.
-        static::translator()->addResource('array', require __DIR__.'/Lang/'.$locale.'.php', $locale);
+        static::translator()->addResource('array', require __DIR__ . '/Lang/' . $locale . '.php', $locale);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -351,7 +351,7 @@ class CarbonInterval extends DateInterval
      * Set a part of the CarbonInterval object
      *
      * @param string $name
-     * @param int    $val
+     * @param int $val
      *
      * @throws InvalidArgumentException
      */
@@ -392,7 +392,7 @@ class CarbonInterval extends DateInterval
      * Allow setting of weeks and days to be cumulative.
      *
      * @param int $weeks Number of weeks to set
-     * @param int $days  Number of days to set
+     * @param int $days Number of days to set
      *
      * @return static
      */
@@ -410,7 +410,7 @@ class CarbonInterval extends DateInterval
      *       have the same names.
      *
      * @param string $name
-     * @param array  $args
+     * @param array $args
      *
      * @return static
      */

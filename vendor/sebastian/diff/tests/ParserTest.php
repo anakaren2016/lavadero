@@ -19,11 +19,6 @@ class ParserTest extends PHPUnit_Framework_TestCase
      */
     private $parser;
 
-    protected function setUp()
-    {
-        $this->parser = new Parser;
-    }
-
     public function testParse()
     {
         $content = file_get_contents(__DIR__ . '/fixtures/patch.txt');
@@ -58,5 +53,10 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $this->assertCount(5, $chunks[0]->getLines());
         $this->assertCount(5, $chunks[1]->getLines());
         $this->assertCount(5, $chunks[2]->getLines());
+    }
+
+    protected function setUp()
+    {
+        $this->parser = new Parser;
     }
 }

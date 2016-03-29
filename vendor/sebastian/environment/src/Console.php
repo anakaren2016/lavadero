@@ -14,7 +14,7 @@ namespace SebastianBergmann\Environment;
  */
 class Console
 {
-    const STDIN  = 0;
+    const STDIN = 0;
     const STDOUT = 1;
     const STDERR = 2;
 
@@ -37,6 +37,18 @@ class Console
         }
 
         return $this->isInteractive(STDOUT);
+    }
+
+    /**
+     * Returns if the file descriptor is an interactive terminal or not.
+     *
+     * @param int|resource $fileDescriptor
+     *
+     * @return bool
+     */
+    public function isInteractive($fileDescriptor = self::STDOUT)
+    {
+        return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
     }
 
     /**
@@ -85,29 +97,17 @@ class Console
         }
 
         if (preg_match('#\d+ (\d+)#', shell_exec('stty size'), $match) === 1) {
-            if ((int) $match[1] > 0) {
-                return (int) $match[1];
+            if ((int)$match[1] > 0) {
+                return (int)$match[1];
             }
         }
 
         if (preg_match('#columns = (\d+);#', shell_exec('stty'), $match) === 1) {
-            if ((int) $match[1] > 0) {
-                return (int) $match[1];
+            if ((int)$match[1] > 0) {
+                return (int)$match[1];
             }
         }
 
         return 80;
-    }
-
-    /**
-     * Returns if the file descriptor is an interactive terminal or not.
-     *
-     * @param int|resource $fileDescriptor
-     *
-     * @return bool
-     */
-    public function isInteractive($fileDescriptor = self::STDOUT)
-    {
-        return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
     }
 }

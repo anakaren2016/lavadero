@@ -15,11 +15,6 @@ class StringContainsIgnoringCaseTest extends \Hamcrest\AbstractMatcherTest
         );
     }
 
-    protected function createMatcher()
-    {
-        return $this->_stringContains;
-    }
-
     public function testEvaluatesToTrueIfArgumentContainsSpecifiedSubstring()
     {
         $this->assertTrue(
@@ -76,5 +71,10 @@ class StringContainsIgnoringCaseTest extends \Hamcrest\AbstractMatcherTest
             . strtolower(self::EXCERPT) . '"',
             $this->_stringContains
         );
+    }
+
+    protected function createMatcher()
+    {
+        return $this->_stringContains;
     }
 }

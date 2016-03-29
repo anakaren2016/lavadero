@@ -89,16 +89,6 @@ class Context
     }
 
     /**
-     * Set the most recent return value.
-     *
-     * @param mixed $value
-     */
-    public function setReturnValue($value)
-    {
-        $this->returnValue = $value;
-    }
-
-    /**
      * Get the most recent return value.
      *
      * @return mixed
@@ -109,13 +99,13 @@ class Context
     }
 
     /**
-     * Set the most recent Exception.
+     * Set the most recent return value.
      *
-     * @param \Exception $e
+     * @param mixed $value
      */
-    public function setLastException(\Exception $e)
+    public function setReturnValue($value)
     {
-        $this->lastException = $e;
+        $this->returnValue = $value;
     }
 
     /**
@@ -132,5 +122,15 @@ class Context
         }
 
         return $this->lastException;
+    }
+
+    /**
+     * Set the most recent Exception.
+     *
+     * @param \Exception $e
+     */
+    public function setLastException(\Exception $e)
+    {
+        $this->lastException = $e;
     }
 }

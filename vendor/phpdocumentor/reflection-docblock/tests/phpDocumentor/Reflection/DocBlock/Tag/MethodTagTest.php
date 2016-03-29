@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Method Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
@@ -23,18 +23,18 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 class MethodTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param string $signature       The signature to test.
-     * @param bool   $valid           Whether the given signature is expected to
+     * @param string $signature The signature to test.
+     * @param bool $valid Whether the given signature is expected to
      *     be valid.
-     * @param string $expected_name   The method name that is expected from this
+     * @param string $expected_name The method name that is expected from this
      *     signature.
      * @param string $expected_return The return type that is expected from this
      *     signature.
-     * @param bool   $paramCount      Number of parameters in the signature.
-     * @param string $description     The short description mentioned in the
+     * @param bool $paramCount Number of parameters in the signature.
+     * @param string $description The short description mentioned in the
      *     signature.
-     * 
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag
+     *
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\MethodTag
      * @dataProvider getTestSignatures
      *
      * @return void
@@ -47,7 +47,8 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         $expected_isStatic,
         $paramCount,
         $description
-    ) {
+    )
+    {
         ob_start();
         $tag = new MethodTag('method', $signature);
         $stdout = ob_get_clean();

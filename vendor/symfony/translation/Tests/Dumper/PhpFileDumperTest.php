@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Translation\Tests\Dumper;
 
-use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Dumper\PhpFileDumper;
+use Symfony\Component\Translation\MessageCatalogue;
 
 class PhpFileDumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,6 +23,6 @@ class PhpFileDumperTest extends \PHPUnit_Framework_TestCase
 
         $dumper = new PhpFileDumper();
 
-        $this->assertStringEqualsFile(__DIR__.'/../fixtures/resources.php', $dumper->formatCatalogue($catalogue, 'messages'));
+        $this->assertStringEqualsFile(__DIR__ . '/../fixtures/resources.php', $dumper->formatCatalogue($catalogue, 'messages'));
     }
 }

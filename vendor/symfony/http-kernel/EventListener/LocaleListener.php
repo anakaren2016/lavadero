@@ -11,13 +11,13 @@
 
 namespace Symfony\Component\HttpKernel\EventListener;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RequestContextAwareInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\RequestContextAwareInterface;
 
 /**
  * Initializes the locale based on the current request.
@@ -33,9 +33,9 @@ class LocaleListener implements EventSubscriberInterface
     /**
      * Constructor.
      *
-     * @param RequestStack                      $requestStack  A RequestStack instance
-     * @param string                            $defaultLocale The default locale
-     * @param RequestContextAwareInterface|null $router        The router
+     * @param RequestStack $requestStack A RequestStack instance
+     * @param string $defaultLocale The default locale
+     * @param RequestContextAwareInterface|null $router The router
      */
     public function __construct(RequestStack $requestStack, $defaultLocale = 'en', RequestContextAwareInterface $router = null)
     {

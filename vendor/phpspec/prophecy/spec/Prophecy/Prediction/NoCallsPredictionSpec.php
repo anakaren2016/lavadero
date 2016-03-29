@@ -21,9 +21,9 @@ class NoCallsPredictionSpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Prophecy\ObjectProphecy    $object
-     * @param \Prophecy\Prophecy\MethodProphecy    $method
-     * @param \Prophecy\Call\Call                  $call
+     * @param \Prophecy\Prophecy\ObjectProphecy $object
+     * @param \Prophecy\Prophecy\MethodProphecy $method
+     * @param \Prophecy\Call\Call $call
      * @param \Prophecy\Argument\ArgumentsWildcard $arguments
      */
     function it_throws_UnexpectedCallsException_if_calls_found($object, $method, $call, $arguments)

@@ -35,7 +35,7 @@ class ClassNode extends AbstractNode
 
     /**
      * @param NodeInterface $selector
-     * @param string        $name
+     * @param string $name
      */
     public function __construct(NodeInterface $selector, $name)
     {

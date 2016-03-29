@@ -12,11 +12,6 @@ class IsCallableTest extends \Hamcrest\AbstractMatcherTest
     {
     }
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Type\IsCallable::callableValue();
-    }
-
     public function testEvaluatesToTrueIfArgumentIsFunctionName()
     {
         assertThat('preg_match', callableValue());
@@ -99,5 +94,10 @@ class IsCallableTest extends \Hamcrest\AbstractMatcherTest
             callableValue(),
             'invalid-function'
         );
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Type\IsCallable::callableValue();
     }
 }

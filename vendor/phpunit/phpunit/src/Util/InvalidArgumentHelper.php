@@ -17,9 +17,9 @@
 class PHPUnit_Util_InvalidArgumentHelper
 {
     /**
-     * @param int    $argument
+     * @param int $argument
      * @param string $type
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return PHPUnit_Framework_Exception
      */

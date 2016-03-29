@@ -100,6 +100,15 @@ class DayOfWeekField extends AbstractField
         return $this->isSatisfied($fieldValue, $value);
     }
 
+    private function convertLiterals($string)
+    {
+        return str_ireplace(
+            array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'),
+            range(0, 6),
+            $string
+        );
+    }
+
     public function increment(\DateTime $date, $invert = false)
     {
         if ($invert) {
@@ -124,14 +133,5 @@ class DayOfWeekField extends AbstractField
         }
 
         return true;
-    }
-
-    private function convertLiterals($string)
-    {
-        return str_ireplace(
-            array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'),
-            range(0, 6),
-            $string
-        );
     }
 }

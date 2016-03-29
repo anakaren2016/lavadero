@@ -29,10 +29,10 @@ class Yaml
      *   print_r($array);
      *  </code>
      *
-     * @param string $input                  A string containing YAML
-     * @param bool   $exceptionOnInvalidType True if an exception must be thrown on invalid types false otherwise
-     * @param bool   $objectSupport          True if object support is enabled, false otherwise
-     * @param bool   $objectForMap           True if maps should return a stdClass instead of array()
+     * @param string $input A string containing YAML
+     * @param bool $exceptionOnInvalidType True if an exception must be thrown on invalid types false otherwise
+     * @param bool $objectSupport True if object support is enabled, false otherwise
+     * @param bool $objectForMap True if maps should return a stdClass instead of array()
      *
      * @return mixed The YAML converted to a PHP value
      *
@@ -51,11 +51,11 @@ class Yaml
      * The dump method, when supplied with an array, will do its best
      * to convert the array into friendly YAML.
      *
-     * @param array $array                  PHP array
-     * @param int   $inline                 The level where you switch to inline YAML
-     * @param int   $indent                 The amount of spaces to use for indentation of nested nodes.
-     * @param bool  $exceptionOnInvalidType true if an exception must be thrown on invalid types (a PHP resource or object), false otherwise
-     * @param bool  $objectSupport          true if object support is enabled, false otherwise
+     * @param array $array PHP array
+     * @param int $inline The level where you switch to inline YAML
+     * @param int $indent The amount of spaces to use for indentation of nested nodes.
+     * @param bool $exceptionOnInvalidType true if an exception must be thrown on invalid types (a PHP resource or object), false otherwise
+     * @param bool $objectSupport true if object support is enabled, false otherwise
      *
      * @return string A YAML string representing the original PHP array
      */

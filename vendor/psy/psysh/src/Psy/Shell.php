@@ -43,10 +43,10 @@ class Shell extends Application
 {
     const VERSION = 'v0.7.2';
 
-    const PROMPT      = '>>> ';
+    const PROMPT = '>>> ';
     const BUFF_PROMPT = '... ';
-    const REPLAY      = '--> ';
-    const RETVAL      = '=> ';
+    const REPLAY = '--> ';
+    const RETVAL = '=> ';
 
     private $config;
     private $cleaner;
@@ -70,10 +70,10 @@ class Shell extends Application
      */
     public function __construct(Configuration $config = null)
     {
-        $this->config   = $config ?: new Configuration();
-        $this->cleaner  = $this->config->getCodeCleaner();
-        $this->loop     = $this->config->getLoop();
-        $this->context  = new Context();
+        $this->config = $config ?: new Configuration();
+        $this->cleaner = $this->config->getCodeCleaner();
+        $this->loop = $this->config->getLoop();
+        $this->context = new Context();
         $this->includes = array();
         $this->readline = $this->config->getReadline();
 
@@ -91,7 +91,7 @@ class Shell extends Application
     public static function isIncluded(array $trace)
     {
         return isset($trace[0]['function']) &&
-          in_array($trace[0]['function'], array('require', 'include', 'require_once', 'include_once'));
+        in_array($trace[0]['function'], array('require', 'include', 'require_once', 'include_once'));
     }
 
     /**
@@ -123,7 +123,7 @@ class Shell extends Application
      *
      * This only really works in PHP 5.4+ and HHVM 3.5+, so upgrade already.
      *
-     * @param array  $vars Scope variables from the calling context (default: array())
+     * @param array $vars Scope variables from the calling context (default: array())
      * @param object $bind Bound object ($this) value for the shell
      *
      * @return array Scope variables from the debugger session.
@@ -252,7 +252,7 @@ class Shell extends Application
     /**
      * Runs the current application.
      *
-     * @param InputInterface  $input  An Input instance
+     * @param InputInterface $input An Input instance
      * @param OutputInterface $output An Output instance
      *
      * @return int 0 if everything went fine, or an error code
@@ -281,7 +281,7 @@ class Shell extends Application
      *
      * @throws Exception if thrown via the `throw-up` command.
      *
-     * @param InputInterface  $input  An Input instance
+     * @param InputInterface $input An Input instance
      * @param OutputInterface $output An Output instance
      *
      * @return int 0 if everything went fine, or an error code
@@ -480,7 +480,7 @@ class Shell extends Application
             }
 
             $this->codeBuffer[] = $code;
-            $this->code         = $this->cleaner->clean($this->codeBuffer, $this->config->requireSemicolons());
+            $this->code = $this->cleaner->clean($this->codeBuffer, $this->config->requireSemicolons());
         } catch (\Exception $e) {
             // Add failed code blocks to the readline history.
             $this->readline->addHistory(implode("\n", $this->codeBuffer));
@@ -538,7 +538,7 @@ class Shell extends Application
     public function resetCodeBuffer()
     {
         $this->codeBuffer = array();
-        $this->code       = false;
+        $this->code = false;
     }
 
     /**
@@ -550,7 +550,7 @@ class Shell extends Application
      */
     public function addInput($input)
     {
-        foreach ((array) $input as $line) {
+        foreach ((array)$input as $line) {
             $this->inputBuffer[] = $line;
         }
     }
@@ -594,7 +594,7 @@ class Shell extends Application
      * This is used by the shell loop for rendering output from evaluated code.
      *
      * @param string $out
-     * @param int    $phase Output buffering phase
+     * @param int $phase Output buffering phase
      */
     public function writeStdout($out, $phase = PHP_OUTPUT_HANDLER_END)
     {
@@ -629,7 +629,7 @@ class Shell extends Application
     public function writeReturnValue($ret)
     {
         $this->context->setReturnValue($ret);
-        $ret    = $this->presentValue($ret);
+        $ret = $this->presentValue($ret);
         $indent = str_repeat(' ', strlen(self::RETVAL));
 
         $this->output->writeln(self::RETVAL . str_replace(PHP_EOL, PHP_EOL . $indent, $ret));
@@ -643,7 +643,7 @@ class Shell extends Application
      *
      * Stores $e as the last Exception in the Shell Context.
      *
-     * @param \Exception      $e      An exception instance
+     * @param \Exception $e An exception instance
      * @param OutputInterface $output An OutputInterface instance
      */
     public function writeException(\Exception $e)
@@ -712,10 +712,10 @@ class Shell extends Application
      *
      * @throws \Psy\Exception\ErrorException depending on the current error_reporting level.
      *
-     * @param int    $errno   Error type
-     * @param string $errstr  Message
+     * @param int $errno Error type
+     * @param string $errstr Message
      * @param string $errfile Filename
-     * @param int    $errline Line number
+     * @param int $errline Line number
      */
     public function handleError($errno, $errstr, $errfile, $errline)
     {

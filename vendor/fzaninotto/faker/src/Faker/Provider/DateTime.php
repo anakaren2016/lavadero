@@ -4,45 +4,7 @@ namespace Faker\Provider;
 
 class DateTime extends \Faker\Provider\Base
 {
-    protected static $century = array('I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI');
-
-    protected static function getMaxTimestamp($max = 'now')
-    {
-        if (is_numeric($max)) {
-            return (int) $max;
-        }
-
-        if ($max instanceof \DateTime) {
-            return $max->getTimestamp();
-        }
-
-        return strtotime(empty($max) ? 'now' : $max);
-    }
-
-    /**
-     * Get a timestamp between January 1, 1970 and now
-     *
-     * @param \DateTime|int|string $max maximum timestamp used as random end limit, default to "now"
-     * @return int
-     *
-     * @example 1061306726
-     */
-    public static function unixTime($max = 'now')
-    {
-        return mt_rand(0, static::getMaxTimestamp($max));
-    }
-
-    /**
-     * Get a datetime object for a date between January 1, 1970 and now
-     *
-     * @param \DateTime|int|string $max maximum timestamp used as random end limit, default to "now"
-     * @example DateTime('2005-08-16 20:39:21')
-     * @return \DateTime
-     */
-    public static function dateTime($max = 'now')
-    {
-        return new \DateTime('@' . static::unixTime($max));
-    }
+    protected static $century = array('I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI');
 
     /**
      * Get a datetime object for a date between January 1, 001 and now
@@ -54,6 +16,19 @@ class DateTime extends \Faker\Provider\Base
     public static function dateTimeAD($max = 'now')
     {
         return new \DateTime('@' . mt_rand(-62135597361, static::getMaxTimestamp($max)));
+    }
+
+    protected static function getMaxTimestamp($max = 'now')
+    {
+        if (is_numeric($max)) {
+            return (int)$max;
+        }
+
+        if ($max instanceof \DateTime) {
+            return $max->getTimestamp();
+        }
+
+        return strtotime(empty($max) ? 'now' : $max);
     }
 
     /**
@@ -71,8 +46,8 @@ class DateTime extends \Faker\Provider\Base
     /**
      * Get a date string between January 1, 1970 and now
      *
-     * @param string               $format
-     * @param \DateTime|int|string $max    maximum timestamp used as random end limit, default to "now"
+     * @param string $format
+     * @param \DateTime|int|string $max maximum timestamp used as random end limit, default to "now"
      * @return string
      * @example '2008-11-27'
      */
@@ -82,10 +57,35 @@ class DateTime extends \Faker\Provider\Base
     }
 
     /**
+     * Get a datetime object for a date between January 1, 1970 and now
+     *
+     * @param \DateTime|int|string $max maximum timestamp used as random end limit, default to "now"
+     * @example DateTime('2005-08-16 20:39:21')
+     * @return \DateTime
+     */
+    public static function dateTime($max = 'now')
+    {
+        return new \DateTime('@' . static::unixTime($max));
+    }
+
+    /**
+     * Get a timestamp between January 1, 1970 and now
+     *
+     * @param \DateTime|int|string $max maximum timestamp used as random end limit, default to "now"
+     * @return int
+     *
+     * @example 1061306726
+     */
+    public static function unixTime($max = 'now')
+    {
+        return mt_rand(0, static::getMaxTimestamp($max));
+    }
+
+    /**
      * Get a time string (24h format by default)
      *
-     * @param string               $format
-     * @param \DateTime|int|string $max    maximum timestamp used as random end limit, default to "now"
+     * @param string $format
+     * @param \DateTime|int|string $max maximum timestamp used as random end limit, default to "now"
      * @return string
      * @example '15:02:34'
      */
@@ -95,11 +95,21 @@ class DateTime extends \Faker\Provider\Base
     }
 
     /**
+     * @param \DateTime|int|string $max maximum timestamp used as random end limit, default to "now"
+     * @example DateTime('1964-04-04 11:02:02')
+     * @return \DateTime
+     */
+    public static function dateTimeThisCentury($max = 'now')
+    {
+        return static::dateTimeBetween('-100 year', $max);
+    }
+
+    /**
      * Get a DateTime object based on a random date between two given dates.
      * Accepts date strings that can be recognized by strtotime().
      *
      * @param string $startDate Defaults to 30 years ago
-     * @param string $endDate   Defaults to "now"
+     * @param string $endDate Defaults to "now"
      * @example DateTime('1999-02-02 11:42:52')
      * @return \DateTime
      */
@@ -118,16 +128,6 @@ class DateTime extends \Faker\Provider\Base
         $ts->setTimezone(new \DateTimeZone(date_default_timezone_get()));
 
         return $ts;
-    }
-
-    /**
-     * @param \DateTime|int|string $max maximum timestamp used as random end limit, default to "now"
-     * @example DateTime('1964-04-04 11:02:02')
-     * @return \DateTime
-     */
-    public static function dateTimeThisCentury($max = 'now')
-    {
-        return static::dateTimeBetween('-100 year', $max);
     }
 
     /**

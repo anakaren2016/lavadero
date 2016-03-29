@@ -67,10 +67,10 @@ interface SurrogateInterface
     /**
      * Renders a Surrogate tag.
      *
-     * @param string $uri          A URI
-     * @param string $alt          An alternate URI
-     * @param bool   $ignoreErrors Whether to ignore errors or not
-     * @param string $comment      A comment to add as an esi:include tag
+     * @param string $uri A URI
+     * @param string $alt An alternate URI
+     * @param bool $ignoreErrors Whether to ignore errors or not
+     * @param string $comment A comment to add as an esi:include tag
      *
      * @return string
      */
@@ -79,7 +79,7 @@ interface SurrogateInterface
     /**
      * Replaces a Response Surrogate tags with the included resource content.
      *
-     * @param Request  $request  A Request instance
+     * @param Request $request A Request instance
      * @param Response $response A Response instance
      *
      * @return Response
@@ -89,10 +89,10 @@ interface SurrogateInterface
     /**
      * Handles a Surrogate from the cache.
      *
-     * @param HttpCache $cache        An HttpCache instance
-     * @param string    $uri          The main URI
-     * @param string    $alt          An alternative URI
-     * @param bool      $ignoreErrors Whether to ignore errors or not
+     * @param HttpCache $cache An HttpCache instance
+     * @param string $uri The main URI
+     * @param string $alt An alternative URI
+     * @param bool $ignoreErrors Whether to ignore errors or not
      *
      * @return string
      *

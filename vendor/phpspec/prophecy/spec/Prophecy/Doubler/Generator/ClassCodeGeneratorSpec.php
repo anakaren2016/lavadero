@@ -7,10 +7,10 @@ use PhpSpec\ObjectBehavior;
 class ClassCodeGeneratorSpec extends ObjectBehavior
 {
     /**
-     * @param \Prophecy\Doubler\Generator\Node\ClassNode    $class
-     * @param \Prophecy\Doubler\Generator\Node\MethodNode   $method1
-     * @param \Prophecy\Doubler\Generator\Node\MethodNode   $method2
-     * @param \Prophecy\Doubler\Generator\Node\MethodNode   $method3
+     * @param \Prophecy\Doubler\Generator\Node\ClassNode $class
+     * @param \Prophecy\Doubler\Generator\Node\MethodNode $method1
+     * @param \Prophecy\Doubler\Generator\Node\MethodNode $method2
+     * @param \Prophecy\Doubler\Generator\Node\MethodNode $method3
      * @param \Prophecy\Doubler\Generator\Node\ArgumentNode $argument11
      * @param \Prophecy\Doubler\Generator\Node\ArgumentNode $argument12
      * @param \Prophecy\Doubler\Generator\Node\ArgumentNode $argument21
@@ -127,11 +127,11 @@ PHP;
     }
 
     /**
-     * @param \Prophecy\Doubler\Generator\Node\ClassNode    $class
-     * @param \Prophecy\Doubler\Generator\Node\MethodNode   $method1
-     * @param \Prophecy\Doubler\Generator\Node\MethodNode   $method2
-     * @param \Prophecy\Doubler\Generator\Node\MethodNode   $method3
-     * @param \Prophecy\Doubler\Generator\Node\MethodNode   $method4
+     * @param \Prophecy\Doubler\Generator\Node\ClassNode $class
+     * @param \Prophecy\Doubler\Generator\Node\MethodNode $method1
+     * @param \Prophecy\Doubler\Generator\Node\MethodNode $method2
+     * @param \Prophecy\Doubler\Generator\Node\MethodNode $method3
+     * @param \Prophecy\Doubler\Generator\Node\MethodNode $method4
      * @param \Prophecy\Doubler\Generator\Node\ArgumentNode $argument1
      * @param \Prophecy\Doubler\Generator\Node\ArgumentNode $argument2
      * @param \Prophecy\Doubler\Generator\Node\ArgumentNode $argument3
@@ -231,8 +231,8 @@ PHP;
     }
 
     /**
-     * @param \Prophecy\Doubler\Generator\Node\ClassNode    $class
-     * @param \Prophecy\Doubler\Generator\Node\MethodNode   $method
+     * @param \Prophecy\Doubler\Generator\Node\ClassNode $class
+     * @param \Prophecy\Doubler\Generator\Node\MethodNode $method
      * @param \Prophecy\Doubler\Generator\Node\ArgumentNode $argument
      */
     function it_overrides_properly_methods_with_args_passed_by_reference(
@@ -260,7 +260,7 @@ PHP;
         $argument->isVariadic()->willReturn(false);
 
         $code = $this->generate('CustomClass', $class);
-        $expected =<<<'PHP'
+        $expected = <<<'PHP'
 namespace  {
 class CustomClass extends \RuntimeException implements \Prophecy\Doubler\Generator\MirroredInterface {
 
@@ -286,7 +286,7 @@ PHP;
         $class->getMethods()->willReturn(array());
 
         $code = $this->generate('CustomClass', $class);
-        $expected =<<<'PHP'
+        $expected = <<<'PHP'
 namespace  {
 class CustomClass extends \stdClass implements \Prophecy\Doubler\Generator\MirroredInterface {
 
@@ -309,7 +309,7 @@ PHP;
         $class->getMethods()->willReturn(array());
 
         $code = $this->generate('My\Awesome\CustomClass', $class);
-        $expected =<<<'PHP'
+        $expected = <<<'PHP'
 namespace My\Awesome {
 class CustomClass extends \stdClass implements \Prophecy\Doubler\Generator\MirroredInterface {
 

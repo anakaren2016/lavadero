@@ -8,6 +8,11 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
         $this->assertEquals(Swift_Mime_Header::TYPE_ID, $header->getFieldType());
     }
 
+    private function _getHeader($name)
+    {
+        return new Swift_Mime_Headers_IdentificationHeader($name, new Swift_Mime_Grammar());
+    }
+
     public function testValueMatchesMsgIdSpec()
     {
         /* -- RFC 2822, 3.6.4.
@@ -104,7 +109,7 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
             $header->setId('a b c@d');
             $this->fail(
                 'Exception should be thrown since "a b c" is not valid id-left.'
-                );
+            );
         } catch (Exception $e) {
         }
     }
@@ -140,7 +145,7 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
             $header->setId('a@b c d');
             $this->fail(
                 'Exception should be thrown since "b c d" is not valid id-right.'
-                );
+            );
         } catch (Exception $e) {
         }
     }
@@ -156,7 +161,7 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
             $header->setId('abc');
             $this->fail(
                 'Exception should be thrown since "abc" is does not contain @.'
-                );
+            );
         } catch (Exception $e) {
         }
     }
@@ -179,11 +184,6 @@ class Swift_Mime_Headers_IdentificationHeaderTest extends \PHPUnit_Framework_Tes
     {
         $header = $this->_getHeader('References');
         $header->setIds(array('a@b', 'x@y'));
-        $this->assertEquals('References: <a@b> <x@y>'."\r\n", $header->toString());
-    }
-
-    private function _getHeader($name)
-    {
-        return new Swift_Mime_Headers_IdentificationHeader($name, new Swift_Mime_Grammar());
+        $this->assertEquals('References: <a@b> <x@y>' . "\r\n", $header->toString());
     }
 }

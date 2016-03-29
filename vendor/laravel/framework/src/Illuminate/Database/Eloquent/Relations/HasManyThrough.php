@@ -2,12 +2,12 @@
 
 namespace Illuminate\Database\Eloquent\Relations;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Expression;
 
 class HasManyThrough extends Relation
 {
@@ -42,12 +42,12 @@ class HasManyThrough extends Relation
     /**
      * Create a new has many through relationship instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Illuminate\Database\Eloquent\Model  $farParent
-     * @param  \Illuminate\Database\Eloquent\Model  $parent
-     * @param  string  $firstKey
-     * @param  string  $secondKey
-     * @param  string  $localKey
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Model $farParent
+     * @param  \Illuminate\Database\Eloquent\Model $parent
+     * @param  string $firstKey
+     * @param  string $secondKey
+     * @param  string $localKey
      * @return void
      */
     public function __construct(Builder $query, Model $farParent, Model $parent, $firstKey, $secondKey, $localKey)
@@ -74,16 +74,16 @@ class HasManyThrough extends Relation
         $this->setJoin();
 
         if (static::$constraints) {
-            $this->query->where($parentTable.'.'.$this->firstKey, '=', $localValue);
+            $this->query->where($parentTable . '.' . $this->firstKey, '=', $localValue);
         }
     }
 
     /**
      * Add the constraints for a relationship query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Illuminate\Database\Eloquent\Builder  $parent
-     * @param  array|mixed  $columns
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder $parent
+     * @param  array|mixed $columns
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getRelationQuery(Builder $query, Builder $parent, $columns = ['*'])
@@ -94,7 +94,7 @@ class HasManyThrough extends Relation
 
         $query->select($columns);
 
-        $key = $this->wrap($parentTable.'.'.$this->firstKey);
+        $key = $this->wrap($parentTable . '.' . $this->firstKey);
 
         return $query->where($this->getHasCompareKey(), '=', new Expression($key));
     }
@@ -102,14 +102,14 @@ class HasManyThrough extends Relation
     /**
      * Set the join clause on the query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder|null  $query
+     * @param  \Illuminate\Database\Eloquent\Builder|null $query
      * @return void
      */
     protected function setJoin(Builder $query = null)
     {
         $query = $query ?: $this->query;
 
-        $foreignKey = $this->related->getTable().'.'.$this->secondKey;
+        $foreignKey = $this->related->getTable() . '.' . $this->secondKey;
 
         $query->join($this->parent->getTable(), $this->getQualifiedParentKeyName(), '=', $foreignKey);
 
@@ -131,21 +131,21 @@ class HasManyThrough extends Relation
     /**
      * Set the constraints for an eager load of the relation.
      *
-     * @param  array  $models
+     * @param  array $models
      * @return void
      */
     public function addEagerConstraints(array $models)
     {
         $table = $this->parent->getTable();
 
-        $this->query->whereIn($table.'.'.$this->firstKey, $this->getKeys($models));
+        $this->query->whereIn($table . '.' . $this->firstKey, $this->getKeys($models));
     }
 
     /**
      * Initialize the relation on a set of models.
      *
-     * @param  array   $models
-     * @param  string  $relation
+     * @param  array $models
+     * @param  string $relation
      * @return array
      */
     public function initRelation(array $models, $relation)
@@ -160,9 +160,9 @@ class HasManyThrough extends Relation
     /**
      * Match the eagerly loaded results to their parents.
      *
-     * @param  array   $models
-     * @param  \Illuminate\Database\Eloquent\Collection  $results
-     * @param  string  $relation
+     * @param  array $models
+     * @param  \Illuminate\Database\Eloquent\Collection $results
+     * @param  string $relation
      * @return array
      */
     public function match(array $models, Collection $results, $relation)
@@ -188,7 +188,7 @@ class HasManyThrough extends Relation
     /**
      * Build model dictionary keyed by the relation's foreign key.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection  $results
+     * @param  \Illuminate\Database\Eloquent\Collection $results
      * @return array
      */
     protected function buildDictionary(Collection $results)
@@ -220,7 +220,7 @@ class HasManyThrough extends Relation
     /**
      * Execute the query and get the first related model.
      *
-     * @param  array   $columns
+     * @param  array $columns
      * @return mixed
      */
     public function first($columns = ['*'])
@@ -233,14 +233,14 @@ class HasManyThrough extends Relation
     /**
      * Execute the query and get the first result or throw an exception.
      *
-     * @param  array  $columns
+     * @param  array $columns
      * @return \Illuminate\Database\Eloquent\Model|static
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function firstOrFail($columns = ['*'])
     {
-        if (! is_null($model = $this->first($columns))) {
+        if (!is_null($model = $this->first($columns))) {
             return $model;
         }
 
@@ -250,8 +250,8 @@ class HasManyThrough extends Relation
     /**
      * Find a related model by its primary key.
      *
-     * @param  mixed  $id
-     * @param  array  $columns
+     * @param  mixed $id
+     * @param  array $columns
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|null
      */
     public function find($id, $columns = ['*'])
@@ -268,8 +268,8 @@ class HasManyThrough extends Relation
     /**
      * Find multiple related models by their primary keys.
      *
-     * @param  mixed  $ids
-     * @param  array  $columns
+     * @param  mixed $ids
+     * @param  array $columns
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findMany($ids, $columns = ['*'])
@@ -286,8 +286,8 @@ class HasManyThrough extends Relation
     /**
      * Find a related model by its primary key or throw an exception.
      *
-     * @param  mixed  $id
-     * @param  array  $columns
+     * @param  mixed $id
+     * @param  array $columns
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
@@ -300,7 +300,7 @@ class HasManyThrough extends Relation
             if (count($result) == count(array_unique($id))) {
                 return $result;
             }
-        } elseif (! is_null($result)) {
+        } elseif (!is_null($result)) {
             return $result;
         }
 
@@ -310,7 +310,7 @@ class HasManyThrough extends Relation
     /**
      * Execute the query as a "select" statement.
      *
-     * @param  array  $columns
+     * @param  array $columns
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function get($columns = ['*'])
@@ -339,25 +339,25 @@ class HasManyThrough extends Relation
     /**
      * Set the select clause for the relation query.
      *
-     * @param  array  $columns
+     * @param  array $columns
      * @return array
      */
     protected function getSelectColumns(array $columns = ['*'])
     {
         if ($columns == ['*']) {
-            $columns = [$this->related->getTable().'.*'];
+            $columns = [$this->related->getTable() . '.*'];
         }
 
-        return array_merge($columns, [$this->parent->getTable().'.'.$this->firstKey]);
+        return array_merge($columns, [$this->parent->getTable() . '.' . $this->firstKey]);
     }
 
     /**
      * Get a paginator for the "select" statement.
      *
-     * @param  int  $perPage
-     * @param  array  $columns
-     * @param  string  $pageName
-     * @param  int  $page
+     * @param  int $perPage
+     * @param  array $columns
+     * @param  string $pageName
+     * @param  int $page
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
@@ -370,9 +370,9 @@ class HasManyThrough extends Relation
     /**
      * Paginate the given query into a simple paginator.
      *
-     * @param  int  $perPage
-     * @param  array  $columns
-     * @param  string  $pageName
+     * @param  int $perPage
+     * @param  array $columns
+     * @param  string $pageName
      * @return \Illuminate\Contracts\Pagination\Paginator
      */
     public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page')
@@ -399,7 +399,7 @@ class HasManyThrough extends Relation
      */
     public function getForeignKey()
     {
-        return $this->related->getTable().'.'.$this->secondKey;
+        return $this->related->getTable() . '.' . $this->secondKey;
     }
 
     /**
@@ -409,6 +409,6 @@ class HasManyThrough extends Relation
      */
     public function getThroughKey()
     {
-        return $this->parent->getTable().'.'.$this->firstKey;
+        return $this->parent->getTable() . '.' . $this->firstKey;
     }
 }

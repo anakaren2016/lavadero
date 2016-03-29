@@ -45,8 +45,8 @@ class AttributeMatchingExtension extends AbstractExtension
 
     /**
      * @param XPathExpr $xpath
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      */
@@ -57,8 +57,8 @@ class AttributeMatchingExtension extends AbstractExtension
 
     /**
      * @param XPathExpr $xpath
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      */
@@ -69,8 +69,8 @@ class AttributeMatchingExtension extends AbstractExtension
 
     /**
      * @param XPathExpr $xpath
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      */
@@ -79,14 +79,14 @@ class AttributeMatchingExtension extends AbstractExtension
         return $xpath->addCondition($value ? sprintf(
             '%1$s and contains(concat(\' \', normalize-space(%1$s), \' \'), %2$s)',
             $attribute,
-            Translator::getXpathLiteral(' '.$value.' ')
+            Translator::getXpathLiteral(' ' . $value . ' ')
         ) : '0');
     }
 
     /**
      * @param XPathExpr $xpath
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      */
@@ -96,14 +96,14 @@ class AttributeMatchingExtension extends AbstractExtension
             '%1$s and (%1$s = %2$s or starts-with(%1$s, %3$s))',
             $attribute,
             Translator::getXpathLiteral($value),
-            Translator::getXpathLiteral($value.'-')
+            Translator::getXpathLiteral($value . '-')
         ));
     }
 
     /**
      * @param XPathExpr $xpath
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      */
@@ -118,8 +118,8 @@ class AttributeMatchingExtension extends AbstractExtension
 
     /**
      * @param XPathExpr $xpath
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      */
@@ -135,8 +135,8 @@ class AttributeMatchingExtension extends AbstractExtension
 
     /**
      * @param XPathExpr $xpath
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      */
@@ -151,8 +151,8 @@ class AttributeMatchingExtension extends AbstractExtension
 
     /**
      * @param XPathExpr $xpath
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      */

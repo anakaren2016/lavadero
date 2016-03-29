@@ -62,7 +62,7 @@ class ArrayConverter
                  * $tree['foo'] was string before we found array {bar: test2}.
                  *  Treat new element as string too, e.g. add $tree['foo.bar'] = 'test2';
                  */
-                $elem = &$elem[ implode('.', array_slice($parts, $i)) ];
+                $elem = &$elem[implode('.', array_slice($parts, $i))];
                 break;
             }
             $parentOfElem = &$elem;
@@ -90,9 +90,9 @@ class ArrayConverter
 
         foreach ($node as $id => $value) {
             if (is_string($value)) {
-                $tree[$prefix.$id] = $value;
+                $tree[$prefix . $id] = $value;
             } else {
-                self::cancelExpand($tree, $prefix.$id, $value);
+                self::cancelExpand($tree, $prefix . $id, $value);
             }
         }
     }

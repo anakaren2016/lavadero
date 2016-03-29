@@ -4,11 +4,6 @@ namespace Hamcrest\Type;
 class IsScalarTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Type\IsScalar::scalarValue();
-    }
-
     public function testEvaluatesToTrueIfArgumentMatchesType()
     {
         assertThat(true, scalarValue());
@@ -35,5 +30,10 @@ class IsScalarTest extends \Hamcrest\AbstractMatcherTest
     {
         $this->assertMismatchDescription('was null', scalarValue(), null);
         $this->assertMismatchDescription('was an array ["foo"]', scalarValue(), array('foo'));
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Type\IsScalar::scalarValue();
     }
 }

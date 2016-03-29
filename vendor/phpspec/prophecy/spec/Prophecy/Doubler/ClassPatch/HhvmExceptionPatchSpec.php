@@ -18,7 +18,7 @@ class HhvmExceptionPatchSpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Doubler\Generator\Node\ClassNode  $node
+     * @param \Prophecy\Doubler\Generator\Node\ClassNode $node
      * @param \Prophecy\Doubler\Generator\Node\MethodNode $method
      * @param \Prophecy\Doubler\Generator\Node\MethodNode $getterMethod
      */

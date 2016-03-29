@@ -23,8 +23,8 @@ class QueryException extends PDOException
     /**
      * Create a new query exception instance.
      *
-     * @param  string  $sql
-     * @param  array  $bindings
+     * @param  string $sql
+     * @param  array $bindings
      * @param  \Exception $previous
      * @return void
      */
@@ -46,14 +46,14 @@ class QueryException extends PDOException
     /**
      * Format the SQL error message.
      *
-     * @param  string  $sql
-     * @param  array  $bindings
+     * @param  string $sql
+     * @param  array $bindings
      * @param  \Exception $previous
      * @return string
      */
     protected function formatMessage($sql, $bindings, $previous)
     {
-        return $previous->getMessage().' (SQL: '.str_replace_array('\?', $bindings, $sql).')';
+        return $previous->getMessage() . ' (SQL: ' . str_replace_array('\?', $bindings, $sql) . ')';
     }
 
     /**

@@ -39,7 +39,7 @@ interface StoreInterface
      * Existing entries are read and any that match the response are removed. This
      * method calls write with the new list of cache entries.
      *
-     * @param Request  $request  A Request instance
+     * @param Request $request A Request instance
      * @param Response $response A Response instance
      *
      * @return string The key under which the response is stored

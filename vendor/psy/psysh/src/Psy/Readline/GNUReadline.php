@@ -25,6 +25,16 @@ class GNUReadline implements Readline
     protected $eraseDups;
 
     /**
+     * GNU Readline constructor.
+     */
+    public function __construct($historyFile = null, $historySize = 0, $eraseDups = false)
+    {
+        $this->historyFile = $historyFile;
+        $this->historySize = $historySize;
+        $this->eraseDups = $eraseDups;
+    }
+
+    /**
      * GNU Readline is supported iff `readline_list_history` is defined. PHP
      * decided it would be awesome to swap out GNU Readline for Libedit, but
      * they ended up shipping an incomplete implementation. So we've got this.
@@ -37,16 +47,6 @@ class GNUReadline implements Readline
     }
 
     /**
-     * GNU Readline constructor.
-     */
-    public function __construct($historyFile = null, $historySize = 0, $eraseDups = false)
-    {
-        $this->historyFile = $historyFile;
-        $this->historySize = $historySize;
-        $this->eraseDups = $eraseDups;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function addHistory($line)
@@ -56,62 +56,6 @@ class GNUReadline implements Readline
         }
 
         return $res;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function clearHistory()
-    {
-        if ($res = readline_clear_history()) {
-            $this->writeHistory();
-        }
-
-        return $res;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function listHistory()
-    {
-        return readline_list_history();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function readHistory()
-    {
-        // Workaround PHP bug #69054
-        //
-        // If open_basedir is set, readline_read_history() segfaults. This will be fixed in 5.6.7:
-        //
-        //     https://github.com/php/php-src/blob/423a057023ef3c00d2ffc16a6b43ba01d0f71796/NEWS#L19-L21
-        //
-        // TODO: add a PHP version check after next point release
-        if (!ini_get('open_basedir')) {
-            readline_read_history();
-        }
-        readline_clear_history();
-
-        return readline_read_history($this->historyFile);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function readline($prompt = null)
-    {
-        return readline($prompt);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function redisplay()
-    {
-        readline_redisplay();
     }
 
     /**
@@ -151,5 +95,61 @@ class GNUReadline implements Readline
         }
 
         return readline_write_history($this->historyFile);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function listHistory()
+    {
+        return readline_list_history();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clearHistory()
+    {
+        if ($res = readline_clear_history()) {
+            $this->writeHistory();
+        }
+
+        return $res;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function readHistory()
+    {
+        // Workaround PHP bug #69054
+        //
+        // If open_basedir is set, readline_read_history() segfaults. This will be fixed in 5.6.7:
+        //
+        //     https://github.com/php/php-src/blob/423a057023ef3c00d2ffc16a6b43ba01d0f71796/NEWS#L19-L21
+        //
+        // TODO: add a PHP version check after next point release
+        if (!ini_get('open_basedir')) {
+            readline_read_history();
+        }
+        readline_clear_history();
+
+        return readline_read_history($this->historyFile);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function readline($prompt = null)
+    {
+        return readline($prompt);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function redisplay()
+    {
+        readline_redisplay();
     }
 }

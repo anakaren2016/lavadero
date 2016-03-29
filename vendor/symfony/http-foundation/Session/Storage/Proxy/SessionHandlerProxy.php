@@ -42,7 +42,7 @@ class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterf
      */
     public function open($savePath, $sessionName)
     {
-        return (bool) $this->handler->open($savePath, $sessionName);
+        return (bool)$this->handler->open($savePath, $sessionName);
     }
 
     /**
@@ -50,7 +50,7 @@ class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterf
      */
     public function close()
     {
-        return (bool) $this->handler->close();
+        return (bool)$this->handler->close();
     }
 
     /**
@@ -58,7 +58,7 @@ class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterf
      */
     public function read($sessionId)
     {
-        return (string) $this->handler->read($sessionId);
+        return (string)$this->handler->read($sessionId);
     }
 
     /**
@@ -66,7 +66,7 @@ class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterf
      */
     public function write($sessionId, $data)
     {
-        return (bool) $this->handler->write($sessionId, $data);
+        return (bool)$this->handler->write($sessionId, $data);
     }
 
     /**
@@ -74,7 +74,7 @@ class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterf
      */
     public function destroy($sessionId)
     {
-        return (bool) $this->handler->destroy($sessionId);
+        return (bool)$this->handler->destroy($sessionId);
     }
 
     /**
@@ -82,6 +82,6 @@ class SessionHandlerProxy extends AbstractProxy implements \SessionHandlerInterf
      */
     public function gc($maxlifetime)
     {
-        return (bool) $this->handler->gc($maxlifetime);
+        return (bool)$this->handler->gc($maxlifetime);
     }
 }

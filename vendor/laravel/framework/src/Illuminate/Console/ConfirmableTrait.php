@@ -9,8 +9,8 @@ trait ConfirmableTrait
     /**
      * Confirm before proceeding with the action.
      *
-     * @param  string    $warning
-     * @param  \Closure|bool|null  $callback
+     * @param  string $warning
+     * @param  \Closure|bool|null $callback
      * @return bool
      */
     public function confirmToProceed($warning = 'Application In Production!', $callback = null)
@@ -25,13 +25,13 @@ trait ConfirmableTrait
             }
 
             $this->comment(str_repeat('*', strlen($warning) + 12));
-            $this->comment('*     '.$warning.'     *');
+            $this->comment('*     ' . $warning . '     *');
             $this->comment(str_repeat('*', strlen($warning) + 12));
             $this->output->writeln('');
 
             $confirmed = $this->confirm('Do you really wish to run this command? [y/N]');
 
-            if (! $confirmed) {
+            if (!$confirmed) {
                 $this->comment('Command Cancelled!');
 
                 return false;

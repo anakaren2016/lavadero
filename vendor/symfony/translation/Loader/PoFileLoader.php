@@ -100,7 +100,7 @@ class PoFileLoader extends FileLoader
                 $item['ids']['plural'] = substr($line, 14, -1);
             } elseif (substr($line, 0, 7) === 'msgstr[') {
                 $size = strpos($line, ']');
-                $item['translated'][(int) substr($line, 7, 1)] = substr($line, $size + 3, -1);
+                $item['translated'][(int)substr($line, 7, 1)] = substr($line, $size + 3, -1);
             }
         }
         // save last item

@@ -45,11 +45,6 @@ XML;
 HTML;
     }
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Xml\HasXPath::hasXPath('/users/user');
-    }
-
     public function testMatchesWhenXPathIsFound()
     {
         assertThat('one match', self::$doc, hasXPath('user[id = "bob"]'));
@@ -194,5 +189,10 @@ HTML;
             hasXPath('/users/user/id', 'Frank'),
             self::$doc
         );
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Xml\HasXPath::hasXPath('/users/user');
     }
 }

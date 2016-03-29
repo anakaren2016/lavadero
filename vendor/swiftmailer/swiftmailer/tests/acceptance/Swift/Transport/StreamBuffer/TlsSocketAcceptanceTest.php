@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/AbstractStreamBufferAcceptanceTest.php';
+require_once __DIR__ . '/AbstractStreamBufferAcceptanceTest.php';
 
 class Swift_Transport_StreamBuffer_TlsSocketAcceptanceTest
     extends Swift_Transport_StreamBuffer_AbstractStreamBufferAcceptanceTest
@@ -11,13 +11,13 @@ class Swift_Transport_StreamBuffer_TlsSocketAcceptanceTest
         if (!in_array('tls', $streams)) {
             $this->markTestSkipped(
                 'TLS is not configured for your system.  It is not possible to run this test'
-             );
+            );
         }
         if (!defined('SWIFT_TLS_HOST')) {
             $this->markTestSkipped(
-                'Cannot run test without a TLS enabled SMTP host to connect to (define '.
+                'Cannot run test without a TLS enabled SMTP host to connect to (define ' .
                 'SWIFT_TLS_HOST in tests/acceptance.conf.php if you wish to run this test)'
-             );
+            );
         }
         parent::setUp();
     }
@@ -35,6 +35,6 @@ class Swift_Transport_StreamBuffer_TlsSocketAcceptanceTest
             'protocol' => 'tls',
             'blocking' => 1,
             'timeout' => 15,
-            ));
+        ));
     }
 }

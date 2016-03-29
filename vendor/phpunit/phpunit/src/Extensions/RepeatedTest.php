@@ -27,8 +27,8 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
 
     /**
      * @param PHPUnit_Framework_Test $test
-     * @param int                    $timesRepeat
-     * @param bool                   $processIsolation
+     * @param int $timesRepeat
+     * @param bool $processIsolation
      *
      * @throws PHPUnit_Framework_Exception
      */
@@ -37,7 +37,8 @@ class PHPUnit_Extensions_RepeatedTest extends PHPUnit_Extensions_TestDecorator
         parent::__construct($test);
 
         if (is_integer($timesRepeat) &&
-            $timesRepeat >= 0) {
+            $timesRepeat >= 0
+        ) {
             $this->timesRepeat = $timesRepeat;
         } else {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(

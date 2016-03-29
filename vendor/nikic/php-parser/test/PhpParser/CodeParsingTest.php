@@ -11,7 +11,8 @@ class CodeParsingTest extends CodeTestAbstract
     /**
      * @dataProvider provideTestParse
      */
-    public function testParse($name, $code, $expected, $mode) {
+    public function testParse($name, $code, $expected, $mode)
+    {
         $lexer = new Lexer\Emulative(array('usedAttributes' => array(
             'startLine', 'endLine', 'startFilePos', 'endFilePos'
         )));
@@ -37,7 +38,8 @@ class CodeParsingTest extends CodeTestAbstract
         }
     }
 
-    private function getParseOutput(Parser $parser, $code) {
+    private function getParseOutput(Parser $parser, $code)
+    {
         $stmts = $parser->parse($code);
         $errors = $parser->getErrors();
 
@@ -54,16 +56,18 @@ class CodeParsingTest extends CodeTestAbstract
         return canonicalize($output);
     }
 
-    public function provideTestParse() {
-        return $this->getTests(__DIR__ . '/../code/parser', 'test');
-    }
-
-    private function formatErrorMessage(Error $e, $code) {
+    private function formatErrorMessage(Error $e, $code)
+    {
         if ($e->hasColumnInfo()) {
             return $e->getRawMessage() . ' from ' . $e->getStartLine() . ':' . $e->getStartColumn($code)
-                . ' to ' . $e->getEndLine() . ':' . $e->getEndColumn($code);
+            . ' to ' . $e->getEndLine() . ':' . $e->getEndColumn($code);
         } else {
             return $e->getMessage();
         }
+    }
+
+    public function provideTestParse()
+    {
+        return $this->getTests(__DIR__ . '/../code/parser', 'test');
     }
 }

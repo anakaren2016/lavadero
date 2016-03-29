@@ -4,10 +4,12 @@ namespace Hamcrest;
 class Thingy
 {
     private $_result;
+
     public function __construct($result)
     {
         $this->_result = $result;
     }
+
     public function getResult()
     {
         return $this->_result;
@@ -15,12 +17,14 @@ class Thingy
 }
 
 /* Test-specific subclass only */
+
 class ResultMatcher extends \Hamcrest\FeatureMatcher
 {
     public function __construct()
     {
         parent::__construct(self::TYPE_ANY, null, equalTo('bar'), 'Thingy with result', 'result');
     }
+
     public function featureValueOf($actual)
     {
         if ($actual instanceof \Hamcrest\Thingy) {
@@ -39,9 +43,9 @@ class FeatureMatcherTest extends \Hamcrest\AbstractMatcherTest
         $this->_resultMatcher = $this->_resultMatcher();
     }
 
-    protected function createMatcher()
+    private function _resultMatcher()
     {
-        return $this->_resultMatcher();
+        return new \Hamcrest\ResultMatcher();
     }
 
     public function testMatchesPartOfAnObject()
@@ -66,8 +70,8 @@ class FeatureMatcherTest extends \Hamcrest\AbstractMatcherTest
 
     // -- Creation Methods
 
-    private function _resultMatcher()
+    protected function createMatcher()
     {
-        return new \Hamcrest\ResultMatcher();
+        return $this->_resultMatcher();
     }
 }

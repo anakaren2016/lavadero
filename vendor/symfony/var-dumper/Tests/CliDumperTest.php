@@ -24,7 +24,7 @@ class CliDumperTest extends \PHPUnit_Framework_TestCase
 
     public function testGet()
     {
-        require __DIR__.'/Fixtures/dumb-var.php';
+        require __DIR__ . '/Fixtures/dumb-var.php';
 
         $dumper = new CliDumper('php://output');
         $dumper->setColors(false);
@@ -43,7 +43,7 @@ class CliDumperTest extends \PHPUnit_Framework_TestCase
         $out = ob_get_clean();
         $out = preg_replace('/[ \t]+$/m', '', $out);
         $intMax = PHP_INT_MAX;
-        $res = (int) $var['res'];
+        $res = (int)$var['res'];
 
         $r = defined('HHVM_VERSION') ? '' : '#%d';
         $this->assertStringMatchesFormat(
@@ -145,7 +145,7 @@ EOTXT
         ob_start();
         $dumper->dump($data);
         $out = ob_get_clean();
-        $res = (int) $var;
+        $res = (int)$var;
 
         $this->assertStringMatchesFormat(
             <<<EOTXT
@@ -161,7 +161,7 @@ EOTXT
     {
         $out = fopen('php://memory', 'r+b');
 
-        require_once __DIR__.'/Fixtures/Twig.php';
+        require_once __DIR__ . '/Fixtures/Twig.php';
         $twig = new \__TwigTemplate_VarDumperFixture_u75a09(new \Twig_Environment(new \Twig_Loader_Filesystem()));
 
         $dumper = new CliDumper();
@@ -184,7 +184,7 @@ EOTXT
             };'),
         ));
         $line = __LINE__ - 2;
-        $ref = (int) $out;
+        $ref = (int)$out;
 
         $data = $cloner->cloneVar($out);
         $dumper->dump($data, $out);
@@ -275,7 +275,7 @@ EOTXT
 
     public function testRefsInProperties()
     {
-        $var = (object) array('foo' => 'foo');
+        $var = (object)array('foo' => 'foo');
         $var->bar = &$var->foo;
 
         $dumper = new CliDumper();
@@ -344,7 +344,7 @@ EOTXT
 
         $dumper = new CliDumper(function ($line, $depth) use (&$out) {
             if ($depth >= 0) {
-                $out .= str_repeat('  ', $depth).$line."\n";
+                $out .= str_repeat('  ', $depth) . $line . "\n";
             }
         });
         $dumper->setColors(false);
@@ -395,7 +395,7 @@ EOTXT
         $out = '';
         $dumper->dump($data, function ($line, $depth) use (&$out) {
             if ($depth >= 0) {
-                $out .= str_repeat('  ', $depth).$line."\n";
+                $out .= str_repeat('  ', $depth) . $line . "\n";
             }
         });
 

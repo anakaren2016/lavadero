@@ -10,15 +10,15 @@ class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_
     {
         if (!defined('SWIFT_SMTP_HOST')) {
             $this->markTestSkipped(
-                'Cannot run test without an SMTP host to connect to (define '.
+                'Cannot run test without an SMTP host to connect to (define ' .
                 'SWIFT_SMTP_HOST in tests/acceptance.conf.php if you wish to run this test)'
-             );
+            );
         }
 
         $serverStarted = false;
         for ($i = 0; $i < 5; ++$i) {
             $this->_randomHighPort = rand(50000, 65000);
-            $this->_server = stream_socket_server('tcp://127.0.0.1:'.$this->_randomHighPort);
+            $this->_server = stream_socket_server('tcp://127.0.0.1:' . $this->_randomHighPort);
             if ($this->_server) {
                 $serverStarted = true;
             }
@@ -27,6 +27,18 @@ class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_
         $this->_buffer = new Swift_Transport_StreamBuffer(
             $this->getMock('Swift_ReplacementFilterFactory')
         );
+    }
+
+    public function testTimeoutException()
+    {
+        $this->_initializeBuffer();
+        $e = null;
+        try {
+            $line = $this->_buffer->readLine(0);
+        } catch (Exception $e) {
+        }
+        $this->assertInstanceof('Swift_IoException', $e, 'IO Exception Not Thrown On Connection Timeout');
+        $this->assertRegExp('/Connection to .* Timed Out/', $e->getMessage());
     }
 
     protected function _initializeBuffer()
@@ -41,19 +53,7 @@ class Swift_Transport_StreamBuffer_SocketTimeoutTest extends \PHPUnit_Framework_
             'protocol' => 'tcp',
             'blocking' => 1,
             'timeout' => 1,
-            ));
-    }
-
-    public function testTimeoutException()
-    {
-        $this->_initializeBuffer();
-        $e = null;
-        try {
-            $line = $this->_buffer->readLine(0);
-        } catch (Exception $e) {
-        }
-        $this->assertInstanceof('Swift_IoException', $e, 'IO Exception Not Thrown On Connection Timeout');
-        $this->assertRegExp('/Connection to .* Timed Out/', $e->getMessage());
+        ));
     }
 
     public function tearDown()

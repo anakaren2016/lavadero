@@ -6,28 +6,31 @@ use PhpParser\Comment;
 
 abstract class ParserTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @expectedException \PhpParser\Error
+     * @expectedExceptionMessage Syntax error, unexpected EOF on line 1
+     */
+    public function testParserThrowsSyntaxError()
+    {
+        $parser = $this->getParser(new Lexer());
+        $parser->parse('<?php foo');
+    }
+
     /** @returns Parser */
     abstract protected function getParser(Lexer $lexer);
 
     /**
      * @expectedException \PhpParser\Error
-     * @expectedExceptionMessage Syntax error, unexpected EOF on line 1
-     */
-    public function testParserThrowsSyntaxError() {
-        $parser = $this->getParser(new Lexer());
-        $parser->parse('<?php foo');
-    }
-
-    /**
-     * @expectedException \PhpParser\Error
      * @expectedExceptionMessage Cannot use foo as self because 'self' is a special class name on line 1
      */
-    public function testParserThrowsSpecialError() {
+    public function testParserThrowsSpecialError()
+    {
         $parser = $this->getParser(new Lexer());
         $parser->parse('<?php use foo as self;');
     }
 
-    public function testAttributeAssignment() {
+    public function testAttributeAssignment()
+    {
         $lexer = new Lexer(array(
             'usedAttributes' => array(
                 'comments', 'startLine', 'endLine',
@@ -100,15 +103,18 @@ EOC;
      * @expectedException \RangeException
      * @expectedExceptionMessage The lexer returned an invalid token (id=999, value=foobar)
      */
-    public function testInvalidToken() {
+    public function testInvalidToken()
+    {
         $lexer = new InvalidTokenLexer;
         $parser = $this->getParser($lexer);
         $parser->parse('dummy');
     }
 }
 
-class InvalidTokenLexer extends Lexer {
-    public function getNextToken(&$value = null, &$startAttributes = null, &$endAttributes = null) {
+class InvalidTokenLexer extends Lexer
+{
+    public function getNextToken(&$value = null, &$startAttributes = null, &$endAttributes = null)
+    {
         $value = 'foobar';
         return 999;
     }

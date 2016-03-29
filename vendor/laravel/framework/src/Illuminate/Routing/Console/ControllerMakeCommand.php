@@ -36,21 +36,21 @@ class ControllerMakeCommand extends GeneratorCommand
     protected function getStub()
     {
         if ($this->option('resource')) {
-            return __DIR__.'/stubs/controller.stub';
+            return __DIR__ . '/stubs/controller.stub';
         }
 
-        return __DIR__.'/stubs/controller.plain.stub';
+        return __DIR__ . '/stubs/controller.plain.stub';
     }
 
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param  string $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Http\Controllers';
+        return $rootNamespace . '\Http\Controllers';
     }
 
     /**
@@ -70,7 +70,7 @@ class ControllerMakeCommand extends GeneratorCommand
      *
      * Remove the base controller import if we are already in base namespace.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return string
      */
     protected function buildClass($name)

@@ -13,11 +13,6 @@ class StringStartsWithTest extends \Hamcrest\AbstractMatcherTest
         $this->_stringStartsWith = \Hamcrest\Text\StringStartsWith::startsWith(self::EXCERPT);
     }
 
-    protected function createMatcher()
-    {
-        return $this->_stringStartsWith;
-    }
-
     public function testEvaluatesToTrueIfArgumentContainsSpecifiedSubstring()
     {
         $this->assertTrue(
@@ -58,5 +53,10 @@ class StringStartsWithTest extends \Hamcrest\AbstractMatcherTest
     public function testHasAReadableDescription()
     {
         $this->assertDescription('a string starting with "EXCERPT"', $this->_stringStartsWith);
+    }
+
+    protected function createMatcher()
+    {
+        return $this->_stringStartsWith;
     }
 }

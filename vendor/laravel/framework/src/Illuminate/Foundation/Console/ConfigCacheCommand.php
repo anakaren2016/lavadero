@@ -31,7 +31,7 @@ class ConfigCacheCommand extends Command
     /**
      * Create a new config cache command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param  \Illuminate\Filesystem\Filesystem $files
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -53,7 +53,7 @@ class ConfigCacheCommand extends Command
         $config = $this->getFreshConfiguration();
 
         $this->files->put(
-            $this->laravel->getCachedConfigPath(), '<?php return '.var_export($config, true).';'.PHP_EOL
+            $this->laravel->getCachedConfigPath(), '<?php return ' . var_export($config, true) . ';' . PHP_EOL
         );
 
         $this->info('Configuration cached successfully!');
@@ -66,7 +66,7 @@ class ConfigCacheCommand extends Command
      */
     protected function getFreshConfiguration()
     {
-        $app = require $this->laravel->bootstrapPath().'/app.php';
+        $app = require $this->laravel->bootstrapPath() . '/app.php';
 
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 

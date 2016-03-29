@@ -6,11 +6,6 @@ use Hamcrest\AbstractMatcherTest;
 class IsArrayContainingTest extends AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return IsArrayContaining::hasItemInArray('irrelevant');
-    }
-
     public function testMatchesAnArrayThatContainsAnElementMatchingTheGivenMatcher()
     {
         $this->assertMatches(
@@ -46,5 +41,10 @@ class IsArrayContainingTest extends AbstractMatcherTest
     public function testHasAReadableDescription()
     {
         $this->assertDescription('an array containing "a"', hasItemInArray('a'));
+    }
+
+    protected function createMatcher()
+    {
+        return IsArrayContaining::hasItemInArray('irrelevant');
     }
 }

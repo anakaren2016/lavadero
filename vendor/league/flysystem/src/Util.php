@@ -8,47 +8,6 @@ use LogicException;
 class Util
 {
     /**
-     * Get normalized pathinfo.
-     *
-     * @param string $path
-     *
-     * @return array pathinfo
-     */
-    public static function pathinfo($path)
-    {
-        $pathinfo = pathinfo($path) + compact('path');
-        $pathinfo['dirname'] = array_key_exists('dirname', $pathinfo)
-            ? static::normalizeDirname($pathinfo['dirname'])
-            : '';
-
-        return $pathinfo;
-    }
-
-    /**
-     * Normalize a dirname return value.
-     *
-     * @param string $dirname
-     *
-     * @return string normalized dirname
-     */
-    public static function normalizeDirname($dirname)
-    {
-        return $dirname === '.' ? '' : $dirname;
-    }
-
-    /**
-     * Get a normalized dirname from a path.
-     *
-     * @param string $path
-     *
-     * @return string dirname
-     */
-    public static function dirname($path)
-    {
-        return static::normalizeDirname(dirname($path));
-    }
-
-    /**
      * Map result arrays.
      *
      * @param array $object
@@ -61,7 +20,7 @@ class Util
         $result = [];
 
         foreach ($map as $from => $to) {
-            if ( ! isset($object[$from])) {
+            if (!isset($object[$from])) {
                 continue;
             }
 
@@ -157,7 +116,7 @@ class Util
     {
         $mimeType = MimeType::detectByContent($content);
 
-        if ( ! (empty($mimeType) || in_array($mimeType, ['application/x-empty', 'text/plain', 'text/x-asm']))) {
+        if (!(empty($mimeType) || in_array($mimeType, ['application/x-empty', 'text/plain', 'text/x-asm']))) {
             return $mimeType;
         }
 
@@ -191,6 +150,82 @@ class Util
         }
 
         return $listing;
+    }
+
+    /**
+     * Emulate the directories of a single object.
+     *
+     * @param array $object
+     * @param array $directories
+     * @param array $listedDirectories
+     *
+     * @return array
+     */
+    protected static function emulateObjectDirectories(array $object, array $directories, array $listedDirectories)
+    {
+        if ($object['type'] === 'dir') {
+            $listedDirectories[] = $object['path'];
+        }
+
+        if (empty($object['dirname'])) {
+            return [$directories, $listedDirectories];
+        }
+
+        $parent = $object['dirname'];
+
+        while (!empty($parent) && !in_array($parent, $directories)) {
+            $directories[] = $parent;
+            $parent = static::dirname($parent);
+        }
+
+        if (isset($object['type']) && $object['type'] === 'dir') {
+            $listedDirectories[] = $object['path'];
+
+            return [$directories, $listedDirectories];
+        }
+
+        return [$directories, $listedDirectories];
+    }
+
+    /**
+     * Get a normalized dirname from a path.
+     *
+     * @param string $path
+     *
+     * @return string dirname
+     */
+    public static function dirname($path)
+    {
+        return static::normalizeDirname(dirname($path));
+    }
+
+    /**
+     * Normalize a dirname return value.
+     *
+     * @param string $dirname
+     *
+     * @return string normalized dirname
+     */
+    public static function normalizeDirname($dirname)
+    {
+        return $dirname === '.' ? '' : $dirname;
+    }
+
+    /**
+     * Get normalized pathinfo.
+     *
+     * @param string $path
+     *
+     * @return array pathinfo
+     */
+    public static function pathinfo($path)
+    {
+        $pathinfo = pathinfo($path) + compact('path');
+        $pathinfo['dirname'] = array_key_exists('dirname', $pathinfo)
+            ? static::normalizeDirname($pathinfo['dirname'])
+            : '';
+
+        return $pathinfo;
     }
 
     /**
@@ -250,40 +285,5 @@ class Util
         $stat = fstat($resource);
 
         return $stat['size'];
-    }
-
-    /**
-     * Emulate the directories of a single object.
-     *
-     * @param array $object
-     * @param array $directories
-     * @param array $listedDirectories
-     *
-     * @return array
-     */
-    protected static function emulateObjectDirectories(array $object, array $directories, array $listedDirectories)
-    {
-        if ($object['type'] === 'dir') {
-            $listedDirectories[] = $object['path'];
-        }
-
-        if (empty($object['dirname'])) {
-            return [$directories, $listedDirectories];
-        }
-
-        $parent = $object['dirname'];
-
-        while ( ! empty($parent) && ! in_array($parent, $directories)) {
-            $directories[] = $parent;
-            $parent = static::dirname($parent);
-        }
-
-        if (isset($object['type']) && $object['type'] === 'dir') {
-            $listedDirectories[] = $object['path'];
-
-            return [$directories, $listedDirectories];
-        }
-
-        return [$directories, $listedDirectories];
     }
 }

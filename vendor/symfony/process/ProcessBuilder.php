@@ -134,7 +134,7 @@ class ProcessBuilder
      * Setting a variable overrides its previous value. Use `null` to unset a
      * defined environment variable.
      *
-     * @param string      $name  The variable name
+     * @param string $name The variable name
      * @param null|string $value The variable value
      *
      * @return ProcessBuilder
@@ -199,7 +199,7 @@ class ProcessBuilder
             return $this;
         }
 
-        $timeout = (float) $timeout;
+        $timeout = (float)$timeout;
 
         if ($timeout < 0) {
             throw new InvalidArgumentException('The timeout value must be a valid positive integer or float number.');
@@ -213,7 +213,7 @@ class ProcessBuilder
     /**
      * Adds a proc_open option.
      *
-     * @param string $name  The option name
+     * @param string $name The option name
      * @param string $value The option value
      *
      * @return ProcessBuilder
@@ -265,7 +265,7 @@ class ProcessBuilder
         $options = $this->options;
 
         $arguments = array_merge($this->prefix, $this->arguments);
-        $script = implode(' ', array_map(array(__NAMESPACE__.'\\ProcessUtils', 'escapeArgument'), $arguments));
+        $script = implode(' ', array_map(array(__NAMESPACE__ . '\\ProcessUtils', 'escapeArgument'), $arguments));
 
         if ($this->inheritEnv) {
             $env = array_replace($_ENV, $_SERVER, $this->env);

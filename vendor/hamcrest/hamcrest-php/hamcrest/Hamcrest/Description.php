@@ -1,9 +1,9 @@
 <?php
 namespace Hamcrest;
 
-/*
- Copyright (c) 2009 hamcrest.org
- */
+    /*
+     Copyright (c) 2009 hamcrest.org
+     */
 
 /**
  * A description of a Matcher. A Matcher will describe itself to a description

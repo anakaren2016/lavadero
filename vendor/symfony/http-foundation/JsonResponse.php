@@ -34,8 +34,8 @@ class JsonResponse extends Response
     /**
      * Constructor.
      *
-     * @param mixed $data    The response data
-     * @param int   $status  The response status code
+     * @param mixed $data The response data
+     * @param int $status The response status code
      * @param array $headers An array of response headers
      */
     public function __construct($data = null, $status = 200, $headers = array())
@@ -47,41 +47,6 @@ class JsonResponse extends Response
         }
 
         $this->setData($data);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function create($data = null, $status = 200, $headers = array())
-    {
-        return new static($data, $status, $headers);
-    }
-
-    /**
-     * Sets the JSONP callback.
-     *
-     * @param string|null $callback The JSONP callback or null to use none
-     *
-     * @return JsonResponse
-     *
-     * @throws \InvalidArgumentException When the callback name is not valid
-     */
-    public function setCallback($callback = null)
-    {
-        if (null !== $callback) {
-            // taken from http://www.geekality.net/2011/08/03/valid-javascript-identifier/
-            $pattern = '/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u';
-            $parts = explode('.', $callback);
-            foreach ($parts as $part) {
-                if (!preg_match($pattern, $part)) {
-                    throw new \InvalidArgumentException('The callback name is not valid.');
-                }
-            }
-        }
-
-        $this->callback = $callback;
-
-        return $this->update();
     }
 
     /**
@@ -124,30 +89,6 @@ class JsonResponse extends Response
     }
 
     /**
-     * Returns options used while encoding data to JSON.
-     *
-     * @return int
-     */
-    public function getEncodingOptions()
-    {
-        return $this->encodingOptions;
-    }
-
-    /**
-     * Sets options used while encoding data to JSON.
-     *
-     * @param int $encodingOptions
-     *
-     * @return JsonResponse
-     */
-    public function setEncodingOptions($encodingOptions)
-    {
-        $this->encodingOptions = (int) $encodingOptions;
-
-        return $this->setData(json_decode($this->data));
-    }
-
-    /**
      * Updates the content and headers according to the JSON data and callback.
      *
      * @return JsonResponse
@@ -168,5 +109,64 @@ class JsonResponse extends Response
         }
 
         return $this->setContent($this->data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function create($data = null, $status = 200, $headers = array())
+    {
+        return new static($data, $status, $headers);
+    }
+
+    /**
+     * Sets the JSONP callback.
+     *
+     * @param string|null $callback The JSONP callback or null to use none
+     *
+     * @return JsonResponse
+     *
+     * @throws \InvalidArgumentException When the callback name is not valid
+     */
+    public function setCallback($callback = null)
+    {
+        if (null !== $callback) {
+            // taken from http://www.geekality.net/2011/08/03/valid-javascript-identifier/
+            $pattern = '/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u';
+            $parts = explode('.', $callback);
+            foreach ($parts as $part) {
+                if (!preg_match($pattern, $part)) {
+                    throw new \InvalidArgumentException('The callback name is not valid.');
+                }
+            }
+        }
+
+        $this->callback = $callback;
+
+        return $this->update();
+    }
+
+    /**
+     * Returns options used while encoding data to JSON.
+     *
+     * @return int
+     */
+    public function getEncodingOptions()
+    {
+        return $this->encodingOptions;
+    }
+
+    /**
+     * Sets options used while encoding data to JSON.
+     *
+     * @param int $encodingOptions
+     *
+     * @return JsonResponse
+     */
+    public function setEncodingOptions($encodingOptions)
+    {
+        $this->encodingOptions = (int)$encodingOptions;
+
+        return $this->setData(json_decode($this->data));
     }
 }

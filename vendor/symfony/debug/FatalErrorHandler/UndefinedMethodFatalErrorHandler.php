@@ -46,13 +46,13 @@ class UndefinedMethodFatalErrorHandler implements FatalErrorHandlerInterface
 
         if ($candidates) {
             sort($candidates);
-            $last = array_pop($candidates).'"?';
+            $last = array_pop($candidates) . '"?';
             if ($candidates) {
-                $candidates = 'e.g. "'.implode('", "', $candidates).'" or "'.$last;
+                $candidates = 'e.g. "' . implode('", "', $candidates) . '" or "' . $last;
             } else {
-                $candidates = '"'.$last;
+                $candidates = '"' . $last;
             }
-            $message .= "\nDid you mean to call ".$candidates;
+            $message .= "\nDid you mean to call " . $candidates;
         }
 
         return new UndefinedMethodException($message, $exception);

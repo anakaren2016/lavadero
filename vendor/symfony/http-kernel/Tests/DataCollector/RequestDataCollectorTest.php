@@ -11,14 +11,14 @@
 
 namespace Symfony\Component\HttpKernel\Tests\DataCollector;
 
-use Symfony\Component\HttpKernel\HttpKernel;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class RequestDataCollectorTest extends \PHPUnit_Framework_TestCase
 {
@@ -75,9 +75,11 @@ class RequestDataCollectorTest extends \PHPUnit_Framework_TestCase
 
             array(
                 'Closure',
-                function () { return 'foo'; },
+                function () {
+                    return 'foo';
+                },
                 array(
-                    'class' => __NAMESPACE__.'\{closure}',
+                    'class' => __NAMESPACE__ . '\{closure}',
                     'method' => null,
                     'file' => __FILE__,
                     'line' => __LINE__ - 5,

@@ -66,13 +66,6 @@ class MethodDefinitionPass implements Pass
         return '(' . implode(', ', $methodParams) . ')';
     }
 
-    protected function appendToClass($class, $code)
-    {
-        $lastBrace = strrpos($class, "}");
-        $class = substr($class, 0, $lastBrace) . $code . "\n    }\n";
-        return $class;
-    }
-
     private function renderMethodBody($method, $config)
     {
         $invoke = $method->isStatic() ? 'static::_mockery_handleStaticMethodCall' : '$this->_mockery_handleMethodCall';
@@ -125,5 +118,12 @@ return \$ret;
 }
 BODY;
         return $body;
+    }
+
+    protected function appendToClass($class, $code)
+    {
+        $lastBrace = strrpos($class, "}");
+        $class = substr($class, 0, $lastBrace) . $code . "\n    }\n";
+        return $class;
     }
 }

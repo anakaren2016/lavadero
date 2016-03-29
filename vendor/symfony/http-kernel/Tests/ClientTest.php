@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\HttpKernel\Tests;
 
-use Symfony\Component\HttpKernel\Client;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\Client;
 use Symfony\Component\HttpKernel\Tests\Fixtures\TestClient;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
@@ -36,7 +36,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('www.example.com', $client->getRequest()->getHost(), '->doRequest() uses the request handler to make the request');
 
         $client->request('GET', 'http://www.example.com/?parameter=http://google.com');
-        $this->assertEquals('http://www.example.com/?parameter='.urlencode('http://google.com'), $client->getRequest()->getUri(), '->doRequest() uses the request handler to make the request');
+        $this->assertEquals('http://www.example.com/?parameter=' . urlencode('http://google.com'), $client->getRequest()->getUri(), '->doRequest() uses the request handler to make the request');
     }
 
     public function testGetScript()
@@ -93,7 +93,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testUploadedFile()
     {
         $source = tempnam(sys_get_temp_dir(), 'source');
-        $target = sys_get_temp_dir().'/sf.moved.file';
+        $target = sys_get_temp_dir() . '/sf.moved.file';
         @unlink($target);
 
         $kernel = new TestHttpKernel();
@@ -152,13 +152,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             ->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
             ->setConstructorArgs(array($source, 'original', 'mime/original', 123, UPLOAD_ERR_OK, true))
             ->setMethods(array('getSize'))
-            ->getMock()
-        ;
+            ->getMock();
 
         $file->expects($this->once())
             ->method('getSize')
-            ->will($this->returnValue(INF))
-        ;
+            ->will($this->returnValue(INF));
 
         $client->request('POST', '/', array(), array($file));
 

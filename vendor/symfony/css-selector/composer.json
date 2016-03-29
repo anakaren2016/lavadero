@@ -1,37 +1,37 @@
 {
-    "name": "symfony/css-selector",
-    "type": "library",
-    "description": "Symfony CssSelector Component",
-    "keywords": [],
-    "homepage": "https://symfony.com",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Fabien Potencier",
-            "email": "fabien@symfony.com"
-        },
-        {
-            "name": "Jean-François Simon",
-            "email": "jeanfrancois.simon@sensiolabs.com"
-        },
-        {
-            "name": "Symfony Community",
-            "homepage": "https://symfony.com/contributors"
-        }
-    ],
-    "require": {
-        "php": ">=5.5.9"
+  "name": "symfony/css-selector",
+  "type": "library",
+  "description": "Symfony CssSelector Component",
+  "keywords": [],
+  "homepage": "https://symfony.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fabien Potencier",
+      "email": "fabien@symfony.com"
     },
-    "autoload": {
-        "psr-4": { "Symfony\\Component\\CssSelector\\": "" },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+    {
+      "name": "Jean-François Simon",
+      "email": "jeanfrancois.simon@sensiolabs.com"
     },
-    "minimum-stability": "dev",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0-dev"
-        }
+    {
+      "name": "Symfony Community",
+      "homepage": "https://symfony.com/contributors"
     }
+  ],
+  "require": {
+    "php": ">=5.5.9"
+  },
+  "autoload": {
+    "psr-4": {"Symfony\\Component\\CssSelector\\": ""},
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0-dev"
+    }
+  }
 }

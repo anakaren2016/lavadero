@@ -66,7 +66,7 @@ class FileProfilerStorage implements ProfilerStorageInterface
             list($csvToken, $csvIp, $csvMethod, $csvUrl, $csvTime, $csvParent) = $values;
             $csvStatusCode = isset($values[6]) ? $values[6] : null;
 
-            $csvTime = (int) $csvTime;
+            $csvTime = (int)$csvTime;
 
             if ($ip && false === strpos($csvIp, $ip) || $url && false === strpos($csvUrl, $url) || $method && false === strpos($csvMethod, $method)) {
                 continue;
@@ -97,114 +97,13 @@ class FileProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function purge()
-    {
-        $flags = \FilesystemIterator::SKIP_DOTS;
-        $iterator = new \RecursiveDirectoryIterator($this->folder, $flags);
-        $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
-
-        foreach ($iterator as $file) {
-            if (is_file($file)) {
-                unlink($file);
-            } else {
-                rmdir($file);
-            }
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function read($token)
-    {
-        if (!$token || !file_exists($file = $this->getFilename($token))) {
-            return;
-        }
-
-        return $this->createProfileFromData($token, unserialize(file_get_contents($file)));
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \RuntimeException
-     */
-    public function write(Profile $profile)
-    {
-        $file = $this->getFilename($profile->getToken());
-
-        $profileIndexed = is_file($file);
-        if (!$profileIndexed) {
-            // Create directory
-            $dir = dirname($file);
-            if (!is_dir($dir) && false === @mkdir($dir, 0777, true) && !is_dir($dir)) {
-                throw new \RuntimeException(sprintf('Unable to create the storage directory (%s).', $dir));
-            }
-        }
-
-        // Store profile
-        $data = array(
-            'token' => $profile->getToken(),
-            'parent' => $profile->getParentToken(),
-            'children' => array_map(function ($p) { return $p->getToken(); }, $profile->getChildren()),
-            'data' => $profile->getCollectors(),
-            'ip' => $profile->getIp(),
-            'method' => $profile->getMethod(),
-            'url' => $profile->getUrl(),
-            'time' => $profile->getTime(),
-        );
-
-        if (false === file_put_contents($file, serialize($data))) {
-            return false;
-        }
-
-        if (!$profileIndexed) {
-            // Add to index
-            if (false === $file = fopen($this->getIndexFilename(), 'a')) {
-                return false;
-            }
-
-            fputcsv($file, array(
-                $profile->getToken(),
-                $profile->getIp(),
-                $profile->getMethod(),
-                $profile->getUrl(),
-                $profile->getTime(),
-                $profile->getParentToken(),
-                $profile->getStatusCode(),
-            ));
-            fclose($file);
-        }
-
-        return true;
-    }
-
-    /**
-     * Gets filename to store data, associated to the token.
-     *
-     * @param string $token
-     *
-     * @return string The profile filename
-     */
-    protected function getFilename($token)
-    {
-        // Uses 4 last characters, because first are mostly the same.
-        $folderA = substr($token, -2, 2);
-        $folderB = substr($token, -4, 2);
-
-        return $this->folder.'/'.$folderA.'/'.$folderB.'/'.$token;
-    }
-
-    /**
      * Gets the index filename.
      *
      * @return string The index filename
      */
     protected function getIndexFilename()
     {
-        return $this->folder.'/index.csv';
+        return $this->folder . '/index.csv';
     }
 
     /**
@@ -238,12 +137,12 @@ class FileProfilerStorage implements ProfilerStorageInterface
             $buffer = fread($file, $chunkSize);
 
             if (false === ($upTo = strrpos($buffer, "\n"))) {
-                $line = $buffer.$line;
+                $line = $buffer . $line;
                 continue;
             }
 
             $position += $upTo;
-            $line = substr($buffer, $upTo + 1).$line;
+            $line = substr($buffer, $upTo + 1) . $line;
             fseek($file, max(0, $position), SEEK_SET);
 
             if ('' !== $line) {
@@ -252,6 +151,52 @@ class FileProfilerStorage implements ProfilerStorageInterface
         }
 
         return '' === $line ? null : $line;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function purge()
+    {
+        $flags = \FilesystemIterator::SKIP_DOTS;
+        $iterator = new \RecursiveDirectoryIterator($this->folder, $flags);
+        $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach ($iterator as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            } else {
+                rmdir($file);
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function read($token)
+    {
+        if (!$token || !file_exists($file = $this->getFilename($token))) {
+            return;
+        }
+
+        return $this->createProfileFromData($token, unserialize(file_get_contents($file)));
+    }
+
+    /**
+     * Gets filename to store data, associated to the token.
+     *
+     * @param string $token
+     *
+     * @return string The profile filename
+     */
+    protected function getFilename($token)
+    {
+        // Uses 4 last characters, because first are mostly the same.
+        $folderA = substr($token, -2, 2);
+        $folderB = substr($token, -4, 2);
+
+        return $this->folder . '/' . $folderA . '/' . $folderB . '/' . $token;
     }
 
     protected function createProfileFromData($token, $data, $parent = null)
@@ -280,5 +225,62 @@ class FileProfilerStorage implements ProfilerStorageInterface
         }
 
         return $profile;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \RuntimeException
+     */
+    public function write(Profile $profile)
+    {
+        $file = $this->getFilename($profile->getToken());
+
+        $profileIndexed = is_file($file);
+        if (!$profileIndexed) {
+            // Create directory
+            $dir = dirname($file);
+            if (!is_dir($dir) && false === @mkdir($dir, 0777, true) && !is_dir($dir)) {
+                throw new \RuntimeException(sprintf('Unable to create the storage directory (%s).', $dir));
+            }
+        }
+
+        // Store profile
+        $data = array(
+            'token' => $profile->getToken(),
+            'parent' => $profile->getParentToken(),
+            'children' => array_map(function ($p) {
+                return $p->getToken();
+            }, $profile->getChildren()),
+            'data' => $profile->getCollectors(),
+            'ip' => $profile->getIp(),
+            'method' => $profile->getMethod(),
+            'url' => $profile->getUrl(),
+            'time' => $profile->getTime(),
+        );
+
+        if (false === file_put_contents($file, serialize($data))) {
+            return false;
+        }
+
+        if (!$profileIndexed) {
+            // Add to index
+            if (false === $file = fopen($this->getIndexFilename(), 'a')) {
+                return false;
+            }
+
+            fputcsv($file, array(
+                $profile->getToken(),
+                $profile->getIp(),
+                $profile->getMethod(),
+                $profile->getUrl(),
+                $profile->getTime(),
+                $profile->getParentToken(),
+                $profile->getStatusCode(),
+            ));
+            fclose($file);
+        }
+
+        return true;
     }
 }

@@ -13,11 +13,11 @@ namespace Symfony\Component\Console\Descriptor;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
@@ -63,7 +63,7 @@ abstract class Descriptor implements DescriptorInterface
      * Writes content to output.
      *
      * @param string $content
-     * @param bool   $decorated
+     * @param bool $decorated
      */
     protected function write($content, $decorated = false)
     {
@@ -74,7 +74,7 @@ abstract class Descriptor implements DescriptorInterface
      * Describes an InputArgument instance.
      *
      * @param InputArgument $argument
-     * @param array         $options
+     * @param array $options
      *
      * @return string|mixed
      */
@@ -84,7 +84,7 @@ abstract class Descriptor implements DescriptorInterface
      * Describes an InputOption instance.
      *
      * @param InputOption $option
-     * @param array       $options
+     * @param array $options
      *
      * @return string|mixed
      */
@@ -94,7 +94,7 @@ abstract class Descriptor implements DescriptorInterface
      * Describes an InputDefinition instance.
      *
      * @param InputDefinition $definition
-     * @param array           $options
+     * @param array $options
      *
      * @return string|mixed
      */
@@ -104,7 +104,7 @@ abstract class Descriptor implements DescriptorInterface
      * Describes a Command instance.
      *
      * @param Command $command
-     * @param array   $options
+     * @param array $options
      *
      * @return string|mixed
      */
@@ -114,7 +114,7 @@ abstract class Descriptor implements DescriptorInterface
      * Describes an Application instance.
      *
      * @param Application $application
-     * @param array       $options
+     * @param array $options
      *
      * @return string|mixed
      */

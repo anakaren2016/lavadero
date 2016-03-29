@@ -21,7 +21,7 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
      * Runs a single job (PHP code) using a separate PHP process.
      *
      * @param string $job
-     * @param array  $settings
+     * @param array $settings
      *
      * @return array
      *
@@ -39,9 +39,9 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
         $process = proc_open(
             $runtime,
             array(
-            0 => array('pipe', 'r'),
-            1 => array('pipe', 'w'),
-            2 => array('pipe', 'w')
+                0 => array('pipe', 'r'),
+                1 => array('pipe', 'w'),
+                2 => array('pipe', 'w')
             ),
             $pipes
         );
@@ -69,7 +69,7 @@ class PHPUnit_Util_PHP_Default extends PHPUnit_Util_PHP
 
     /**
      * @param resource $pipe
-     * @param string   $job
+     * @param string $job
      *
      * @throws PHPUnit_Framework_Exception
      *

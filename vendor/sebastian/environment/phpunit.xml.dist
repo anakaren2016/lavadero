@@ -7,14 +7,14 @@
          beStrictAboutTodoAnnotatedTests="true"
          checkForUnintentionallyCoveredCode="true"
          verbose="true">
- <testsuites>
-  <testsuite name="Environment">
-   <directory>tests</directory>
-  </testsuite>
- </testsuites>
- <filter>
-  <whitelist addUncoveredFilesFromWhitelist="true">
-   <directory>src</directory>
-  </whitelist>
- </filter>
+    <testsuites>
+        <testsuite name="Environment">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory>src</directory>
+        </whitelist>
+    </filter>
 </phpunit>

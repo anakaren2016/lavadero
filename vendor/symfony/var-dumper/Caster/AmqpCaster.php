@@ -56,13 +56,13 @@ class AmqpCaster
         }
 
         $a += array(
-            $prefix.'isConnected' => $c->isConnected(),
-            $prefix.'login' => $c->getLogin(),
-            $prefix.'password' => $c->getPassword(),
-            $prefix.'host' => $c->getHost(),
-            $prefix.'port' => $c->getPort(),
-            $prefix.'vhost' => $c->getVhost(),
-            $prefix.'readTimeout' => $timeout,
+            $prefix . 'isConnected' => $c->isConnected(),
+            $prefix . 'login' => $c->getLogin(),
+            $prefix . 'password' => $c->getPassword(),
+            $prefix . 'host' => $c->getHost(),
+            $prefix . 'port' => $c->getPort(),
+            $prefix . 'vhost' => $c->getVhost(),
+            $prefix . 'readTimeout' => $timeout,
         );
 
         return $a;
@@ -73,11 +73,11 @@ class AmqpCaster
         $prefix = Caster::PREFIX_VIRTUAL;
 
         $a += array(
-            $prefix.'isConnected' => $c->isConnected(),
-            $prefix.'channelId' => $c->getChannelId(),
-            $prefix.'prefetchSize' => $c->getPrefetchSize(),
-            $prefix.'prefetchCount' => $c->getPrefetchCount(),
-            $prefix.'connection' => $c->getConnection(),
+            $prefix . 'isConnected' => $c->isConnected(),
+            $prefix . 'channelId' => $c->getChannelId(),
+            $prefix . 'prefetchSize' => $c->getPrefetchSize(),
+            $prefix . 'prefetchCount' => $c->getPrefetchCount(),
+            $prefix . 'connection' => $c->getConnection(),
         );
 
         return $a;
@@ -88,58 +88,11 @@ class AmqpCaster
         $prefix = Caster::PREFIX_VIRTUAL;
 
         $a += array(
-            $prefix.'name' => $c->getName(),
-            $prefix.'flags' => self::extractFlags($c->getFlags()),
-            $prefix.'arguments' => $c->getArguments(),
-            $prefix.'connection' => $c->getConnection(),
-            $prefix.'channel' => $c->getChannel(),
-        );
-
-        return $a;
-    }
-
-    public static function castExchange(\AMQPExchange $c, array $a, Stub $stub, $isNested)
-    {
-        $prefix = Caster::PREFIX_VIRTUAL;
-
-        $a += array(
-            $prefix.'name' => $c->getName(),
-            $prefix.'flags' => self::extractFlags($c->getFlags()),
-            $prefix.'type' => isset(self::$exchangeTypes[$c->getType()]) ? new ConstStub(self::$exchangeTypes[$c->getType()], $c->getType()) : $c->getType(),
-            $prefix.'arguments' => $c->getArguments(),
-            $prefix.'channel' => $c->getChannel(),
-            $prefix.'connection' => $c->getConnection(),
-        );
-
-        return $a;
-    }
-
-    public static function castEnvelope(\AMQPEnvelope $c, array $a, Stub $stub, $isNested, $filter = 0)
-    {
-        $prefix = Caster::PREFIX_VIRTUAL;
-
-        if (!($filter & Caster::EXCLUDE_VERBOSE)) {
-            $a += array($prefix.'body' => $c->getBody());
-        }
-
-        $a += array(
-            $prefix.'routingKey' => $c->getRoutingKey(),
-            $prefix.'deliveryTag' => $c->getDeliveryTag(),
-            $prefix.'deliveryMode' => new ConstStub($c->getDeliveryMode().(2 === $c->getDeliveryMode() ? ' (persistent)' : ' (non-persistent)'), $c->getDeliveryMode()),
-            $prefix.'exchangeName' => $c->getExchangeName(),
-            $prefix.'isRedelivery' => $c->isRedelivery(),
-            $prefix.'contentType' => $c->getContentType(),
-            $prefix.'contentEncoding' => $c->getContentEncoding(),
-            $prefix.'type' => $c->getType(),
-            $prefix.'timestamp' => $c->getTimestamp(),
-            $prefix.'priority' => $c->getPriority(),
-            $prefix.'expiration' => $c->getExpiration(),
-            $prefix.'userId' => $c->getUserId(),
-            $prefix.'appId' => $c->getAppId(),
-            $prefix.'messageId' => $c->getMessageId(),
-            $prefix.'replyTo' => $c->getReplyTo(),
-            $prefix.'correlationId' => $c->getCorrelationId(),
-            $prefix.'headers' => $c->getHeaders(),
+            $prefix . 'name' => $c->getName(),
+            $prefix . 'flags' => self::extractFlags($c->getFlags()),
+            $prefix . 'arguments' => $c->getArguments(),
+            $prefix . 'connection' => $c->getConnection(),
+            $prefix . 'channel' => $c->getChannel(),
         );
 
         return $a;
@@ -160,5 +113,52 @@ class AmqpCaster
         }
 
         return new ConstStub(implode('|', $flagsArray), $flags);
+    }
+
+    public static function castExchange(\AMQPExchange $c, array $a, Stub $stub, $isNested)
+    {
+        $prefix = Caster::PREFIX_VIRTUAL;
+
+        $a += array(
+            $prefix . 'name' => $c->getName(),
+            $prefix . 'flags' => self::extractFlags($c->getFlags()),
+            $prefix . 'type' => isset(self::$exchangeTypes[$c->getType()]) ? new ConstStub(self::$exchangeTypes[$c->getType()], $c->getType()) : $c->getType(),
+            $prefix . 'arguments' => $c->getArguments(),
+            $prefix . 'channel' => $c->getChannel(),
+            $prefix . 'connection' => $c->getConnection(),
+        );
+
+        return $a;
+    }
+
+    public static function castEnvelope(\AMQPEnvelope $c, array $a, Stub $stub, $isNested, $filter = 0)
+    {
+        $prefix = Caster::PREFIX_VIRTUAL;
+
+        if (!($filter & Caster::EXCLUDE_VERBOSE)) {
+            $a += array($prefix . 'body' => $c->getBody());
+        }
+
+        $a += array(
+            $prefix . 'routingKey' => $c->getRoutingKey(),
+            $prefix . 'deliveryTag' => $c->getDeliveryTag(),
+            $prefix . 'deliveryMode' => new ConstStub($c->getDeliveryMode() . (2 === $c->getDeliveryMode() ? ' (persistent)' : ' (non-persistent)'), $c->getDeliveryMode()),
+            $prefix . 'exchangeName' => $c->getExchangeName(),
+            $prefix . 'isRedelivery' => $c->isRedelivery(),
+            $prefix . 'contentType' => $c->getContentType(),
+            $prefix . 'contentEncoding' => $c->getContentEncoding(),
+            $prefix . 'type' => $c->getType(),
+            $prefix . 'timestamp' => $c->getTimestamp(),
+            $prefix . 'priority' => $c->getPriority(),
+            $prefix . 'expiration' => $c->getExpiration(),
+            $prefix . 'userId' => $c->getUserId(),
+            $prefix . 'appId' => $c->getAppId(),
+            $prefix . 'messageId' => $c->getMessageId(),
+            $prefix . 'replyTo' => $c->getReplyTo(),
+            $prefix . 'correlationId' => $c->getCorrelationId(),
+            $prefix . 'headers' => $c->getHeaders(),
+        );
+
+        return $a;
     }
 }

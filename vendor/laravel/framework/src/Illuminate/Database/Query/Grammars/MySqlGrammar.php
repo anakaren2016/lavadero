@@ -28,7 +28,7 @@ class MySqlGrammar extends Grammar
     /**
      * Compile a select query into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Database\Query\Builder $query
      * @return string
      */
     public function compileSelect(Builder $query)
@@ -36,7 +36,60 @@ class MySqlGrammar extends Grammar
         $sql = parent::compileSelect($query);
 
         if ($query->unions) {
-            $sql = '('.$sql.') '.$this->compileUnions($query);
+            $sql = '(' . $sql . ') ' . $this->compileUnions($query);
+        }
+
+        return $sql;
+    }
+
+    /**
+     * Compile an update statement into SQL.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  array $values
+     * @return string
+     */
+    public function compileUpdate(Builder $query, $values)
+    {
+        $sql = parent::compileUpdate($query, $values);
+
+        if (isset($query->orders)) {
+            $sql .= ' ' . $this->compileOrders($query, $query->orders);
+        }
+
+        if (isset($query->limit)) {
+            $sql .= ' ' . $this->compileLimit($query, $query->limit);
+        }
+
+        return rtrim($sql);
+    }
+
+    /**
+     * Compile a delete statement into SQL.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @return string
+     */
+    public function compileDelete(Builder $query)
+    {
+        $table = $this->wrapTable($query->from);
+
+        $where = is_array($query->wheres) ? $this->compileWheres($query) : '';
+
+        if (isset($query->joins)) {
+            $joins = ' ' . $this->compileJoins($query, $query->joins);
+
+            $sql = trim("delete $table from {$table}{$joins} $where");
+        } else {
+            $sql = trim("delete from $table $where");
+        }
+
+        if (isset($query->orders)) {
+            $sql .= ' ' . $this->compileOrders($query, $query->orders);
+        }
+
+        if (isset($query->limit)) {
+            $sql .= ' ' . $this->compileLimit($query, $query->limit);
         }
 
         return $sql;
@@ -45,21 +98,21 @@ class MySqlGrammar extends Grammar
     /**
      * Compile a single union statement.
      *
-     * @param  array  $union
+     * @param  array $union
      * @return string
      */
     protected function compileUnion(array $union)
     {
         $joiner = $union['all'] ? ' union all ' : ' union ';
 
-        return $joiner.'('.$union['query']->toSql().')';
+        return $joiner . '(' . $union['query']->toSql() . ')';
     }
 
     /**
      * Compile the lock into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  bool|string  $value
+     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  bool|string $value
      * @return string
      */
     protected function compileLock(Builder $query, $value)
@@ -72,62 +125,9 @@ class MySqlGrammar extends Grammar
     }
 
     /**
-     * Compile an update statement into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  array  $values
-     * @return string
-     */
-    public function compileUpdate(Builder $query, $values)
-    {
-        $sql = parent::compileUpdate($query, $values);
-
-        if (isset($query->orders)) {
-            $sql .= ' '.$this->compileOrders($query, $query->orders);
-        }
-
-        if (isset($query->limit)) {
-            $sql .= ' '.$this->compileLimit($query, $query->limit);
-        }
-
-        return rtrim($sql);
-    }
-
-    /**
-     * Compile a delete statement into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @return string
-     */
-    public function compileDelete(Builder $query)
-    {
-        $table = $this->wrapTable($query->from);
-
-        $where = is_array($query->wheres) ? $this->compileWheres($query) : '';
-
-        if (isset($query->joins)) {
-            $joins = ' '.$this->compileJoins($query, $query->joins);
-
-            $sql = trim("delete $table from {$table}{$joins} $where");
-        } else {
-            $sql = trim("delete from $table $where");
-        }
-
-        if (isset($query->orders)) {
-            $sql .= ' '.$this->compileOrders($query, $query->orders);
-        }
-
-        if (isset($query->limit)) {
-            $sql .= ' '.$this->compileLimit($query, $query->limit);
-        }
-
-        return $sql;
-    }
-
-    /**
      * Wrap a single string in keyword identifiers.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     protected function wrapValue($value)
@@ -140,19 +140,19 @@ class MySqlGrammar extends Grammar
             return $this->wrapJsonSelector($value);
         }
 
-        return '`'.str_replace('`', '``', $value).'`';
+        return '`' . str_replace('`', '``', $value) . '`';
     }
 
     /**
      * Wrap the given JSON selector.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     protected function wrapJsonSelector($value)
     {
         $path = explode('->', $value);
 
-        return array_shift($path).'->'.'"$.'.implode('.', $path).'"';
+        return array_shift($path) . '->' . '"$.' . implode('.', $path) . '"';
     }
 }

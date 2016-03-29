@@ -72,7 +72,7 @@ interface MockInterface
      * @return Mock
      */
     public function shouldDeferMissing();
-    
+
     /**
      * Set mock to defer unexpected methods to its parent if possible
      *
@@ -111,11 +111,11 @@ interface MockInterface
      * @param array $args
      * @return mixed
      */
-        /**
-         * Unfortunately we need to allow type hinting agnostic __call()
-         * definitions since any interface/class being mocked can go either
-         * way.
-         */
+    /**
+     * Unfortunately we need to allow type hinting agnostic __call()
+     * definitions since any interface/class being mocked can go either
+     * way.
+     */
     //public function __call($method, array $args);
 
     /**

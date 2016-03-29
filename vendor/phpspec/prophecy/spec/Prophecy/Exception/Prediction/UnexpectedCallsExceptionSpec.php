@@ -9,8 +9,8 @@ class UnexpectedCallsExceptionSpec extends ObjectBehavior
     /**
      * @param \Prophecy\Prophecy\ObjectProphecy $objectProphecy
      * @param \Prophecy\Prophecy\MethodProphecy $methodProphecy
-     * @param \Prophecy\Call\Call               $call1
-     * @param \Prophecy\Call\Call               $call2
+     * @param \Prophecy\Call\Call $call1
+     * @param \Prophecy\Call\Call $call2
      */
     function let($objectProphecy, $methodProphecy, $call1, $call2)
     {

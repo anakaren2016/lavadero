@@ -42,8 +42,8 @@ class FunctionNode extends AbstractNode
 
     /**
      * @param NodeInterface $selector
-     * @param string        $name
-     * @param Token[]       $arguments
+     * @param string $name
+     * @param Token[] $arguments
      */
     public function __construct(NodeInterface $selector, $name, array $arguments = array())
     {
@@ -90,9 +90,9 @@ class FunctionNode extends AbstractNode
     public function __toString()
     {
         $arguments = implode(', ', array_map(function (Token $token) {
-            return "'".$token->getValue()."'";
+            return "'" . $token->getValue() . "'";
         }, $this->arguments));
 
-        return sprintf('%s[%s:%s(%s)]', $this->getNodeName(), $this->selector, $this->name, $arguments ? '['.$arguments.']' : '');
+        return sprintf('%s[%s:%s(%s)]', $this->getNodeName(), $this->selector, $this->name, $arguments ? '[' . $arguments . ']' : '');
     }
 }

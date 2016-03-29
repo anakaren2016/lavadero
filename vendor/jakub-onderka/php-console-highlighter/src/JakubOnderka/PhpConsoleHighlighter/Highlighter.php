@@ -25,7 +25,7 @@ class Highlighter
         self::TOKEN_DEFAULT => 'default',
         self::TOKEN_HTML => 'cyan',
 
-        self::ACTUAL_LINE_MARK  => 'red',
+        self::ACTUAL_LINE_MARK => 'red',
         self::LINE_NUMBER => 'dark_gray',
     );
 
@@ -64,32 +64,6 @@ class Highlighter
         $lines = $this->colorLines($tokenLines);
 
         return $this->lineNumbers($lines, $lineNumber);
-    }
-
-    /**
-     * @param string $source
-     * @return string
-     * @throws \JakubOnderka\PhpConsoleColor\InvalidStyleException
-     * @throws \InvalidArgumentException
-     */
-    public function getWholeFile($source)
-    {
-        $tokenLines = $this->getHighlightedLines($source);
-        $lines = $this->colorLines($tokenLines);
-        return implode(PHP_EOL, $lines);
-    }
-
-    /**
-     * @param string $source
-     * @return string
-     * @throws \JakubOnderka\PhpConsoleColor\InvalidStyleException
-     * @throws \InvalidArgumentException
-     */
-    public function getWholeFileWithLineNumbers($source)
-    {
-        $tokenLines = $this->getHighlightedLines($source);
-        $lines = $this->colorLines($tokenLines);
-        return $this->lineNumbers($lines);
     }
 
     /**
@@ -141,7 +115,7 @@ class Highlighter
                     case T_STRING:
                     case T_VARIABLE:
 
-                    // Constants
+                        // Constants
                     case T_DIR:
                     case T_FILE:
                     case T_METHOD_C:
@@ -151,7 +125,7 @@ class Highlighter
                     case T_LINE:
                     case T_CLASS_C:
                     case T_FUNC_C:
-                    //case T_TRAIT_C:
+                        //case T_TRAIT_C:
                         $newType = self::TOKEN_DEFAULT;
                         break;
 
@@ -263,5 +237,31 @@ class Highlighter
         }
 
         return $snippet;
+    }
+
+    /**
+     * @param string $source
+     * @return string
+     * @throws \JakubOnderka\PhpConsoleColor\InvalidStyleException
+     * @throws \InvalidArgumentException
+     */
+    public function getWholeFile($source)
+    {
+        $tokenLines = $this->getHighlightedLines($source);
+        $lines = $this->colorLines($tokenLines);
+        return implode(PHP_EOL, $lines);
+    }
+
+    /**
+     * @param string $source
+     * @return string
+     * @throws \JakubOnderka\PhpConsoleColor\InvalidStyleException
+     * @throws \InvalidArgumentException
+     */
+    public function getWholeFileWithLineNumbers($source)
+    {
+        $tokenLines = $this->getHighlightedLines($source);
+        $lines = $this->colorLines($tokenLines);
+        return $this->lineNumbers($lines);
     }
 }

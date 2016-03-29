@@ -28,7 +28,7 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \phpDocumentor\Reflection\DocBlock
-     * 
+     *
      * @return void
      */
     public function testConstruct()
@@ -60,7 +60,7 @@ DOCBLOCK;
         $this->assertTrue($object->hasTag('see'));
         $this->assertTrue($object->hasTag('return'));
         $this->assertFalse($object->hasTag('category'));
-        
+
         $this->assertSame('MyNamespace', $object->getContext()->getNamespace());
         $this->assertSame(
             array('PHPDoc' => '\phpDocumentor'),
@@ -128,7 +128,7 @@ DOCBLOCK;
 
     /**
      * @covers \phpDocumentor\Reflection\DocBlock::cleanInput
-     * 
+     *
      * @return void
      */
     public function testConstructOneLiner()
@@ -145,7 +145,7 @@ DOCBLOCK;
 
     /**
      * @covers \phpDocumentor\Reflection\DocBlock::__construct
-     * 
+     *
      * @return void
      */
     public function testConstructFromReflector()
@@ -166,7 +166,7 @@ DOCBLOCK;
 
     /**
      * @expectedException \InvalidArgumentException
-     * 
+     *
      * @return void
      */
     public function testExceptionOnInvalidObject()
@@ -190,7 +190,7 @@ DOCBLOCK;
         );
         $this->assertEquals(
             "This is a long description.\nThis is a continuation of the long "
-            ."description.",
+            . "description.",
             $object->getLongDescription()->getContents()
         );
     }
@@ -198,7 +198,7 @@ DOCBLOCK;
     /**
      * @covers \phpDocumentor\Reflection\DocBlock::parseTags
      * @expectedException \LogicException
-     * 
+     *
      * @return void
      */
     public function testInvalidTagBlock()
@@ -207,18 +207,18 @@ DOCBLOCK;
             $this->markTestSkipped('"data" URIs for includes are required.');
         }
 
-        include 'data:text/plain;base64,'. base64_encode(
-            <<<DOCBLOCK_EXTENSION
-<?php
+        include 'data:text/plain;base64,' . base64_encode(
+                <<<DOCBLOCK_EXTENSION
+    <?php
 class MyReflectionDocBlock extends \phpDocumentor\Reflection\DocBlock {
     protected function splitDocBlock(\$comment) {
         return array('', '', 'Invalid tag block');
     }
 }
 DOCBLOCK_EXTENSION
-        );
+            );
         new \MyReflectionDocBlock('');
-        
+
     }
 
     public function testTagCaseSensitivity()
@@ -262,8 +262,8 @@ DOCBLOCK;
 
     /**
      * @depends testConstructFromReflector
-     * @covers \phpDocumentor\Reflection\DocBlock::getTagsByName
-     * 
+     * @covers  \phpDocumentor\Reflection\DocBlock::getTagsByName
+     *
      * @return void
      */
     public function testGetTagsByNameZeroAndOneMatch()
@@ -275,8 +275,8 @@ DOCBLOCK;
 
     /**
      * @depends testConstructWithTagsOnly
-     * @covers \phpDocumentor\Reflection\DocBlock::parseTags
-     * 
+     * @covers  \phpDocumentor\Reflection\DocBlock::parseTags
+     *
      * @return void
      */
     public function testParseMultilineTag()
@@ -293,8 +293,8 @@ DOCBLOCK;
 
     /**
      * @depends testConstructWithTagsOnly
-     * @covers \phpDocumentor\Reflection\DocBlock::parseTags
-     * 
+     * @covers  \phpDocumentor\Reflection\DocBlock::parseTags
+     *
      * @return void
      */
     public function testParseMultilineTagWithLineBreaks()
@@ -309,15 +309,15 @@ DOCBLOCK;
 DOCBLOCK;
         $object = new DocBlock($fixture);
         $this->assertCount(1, $tags = $object->getTags());
-	    /** @var ReturnTag $tag */
-	    $tag = reset($tags);
-	    $this->assertEquals("Content on\n    multiple lines.\n\n    One more, after the break.", $tag->getDescription());
+        /** @var ReturnTag $tag */
+        $tag = reset($tags);
+        $this->assertEquals("Content on\n    multiple lines.\n\n    One more, after the break.", $tag->getDescription());
     }
 
     /**
      * @depends testConstructWithTagsOnly
-     * @covers \phpDocumentor\Reflection\DocBlock::getTagsByName
-     * 
+     * @covers  \phpDocumentor\Reflection\DocBlock::getTagsByName
+     *
      * @return void
      */
     public function testGetTagsByNameMultipleMatch()

@@ -39,8 +39,8 @@ class ConstantEnumerator extends Enumerator
             return;
         }
 
-        $category  = $input->getOption('user') ? 'user' : $input->getOption('category');
-        $label     = $category ? ucfirst($category) . ' Constants' : 'Constants';
+        $category = $input->getOption('user') ? 'user' : $input->getOption('category');
+        $label = $category ? ucfirst($category) . ' Constants' : 'Constants';
         $constants = $this->prepareConstants($this->getConstants($category));
 
         if (empty($constants)) {
@@ -49,6 +49,34 @@ class ConstantEnumerator extends Enumerator
 
         $ret = array();
         $ret[$label] = $constants;
+
+        return $ret;
+    }
+
+    /**
+     * Prepare formatted constant array.
+     *
+     * @param array $constants
+     *
+     * @return array
+     */
+    protected function prepareConstants(array $constants)
+    {
+        // My kingdom for a generator.
+        $ret = array();
+
+        $names = array_keys($constants);
+        natcasesort($names);
+
+        foreach ($names as $name) {
+            if ($this->showItem($name)) {
+                $ret[$name] = array(
+                    'name' => $name,
+                    'style' => self::IS_CONSTANT,
+                    'value' => $this->presentRef($constants[$name]),
+                );
+            }
+        }
 
         return $ret;
     }
@@ -71,33 +99,5 @@ class ConstantEnumerator extends Enumerator
         $consts = get_defined_constants(true);
 
         return isset($consts[$category]) ? $consts[$category] : array();
-    }
-
-    /**
-     * Prepare formatted constant array.
-     *
-     * @param array $constants
-     *
-     * @return array
-     */
-    protected function prepareConstants(array $constants)
-    {
-        // My kingdom for a generator.
-        $ret = array();
-
-        $names = array_keys($constants);
-        natcasesort($names);
-
-        foreach ($names as $name) {
-            if ($this->showItem($name)) {
-                $ret[$name] = array(
-                    'name'  => $name,
-                    'style' => self::IS_CONSTANT,
-                    'value' => $this->presentRef($constants[$name]),
-                );
-            }
-        }
-
-        return $ret;
     }
 }

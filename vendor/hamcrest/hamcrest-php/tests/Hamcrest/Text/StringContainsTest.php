@@ -13,11 +13,6 @@ class StringContainsTest extends \Hamcrest\AbstractMatcherTest
         $this->_stringContains = \Hamcrest\Text\StringContains::containsString(self::EXCERPT);
     }
 
-    protected function createMatcher()
-    {
-        return $this->_stringContains;
-    }
-
     public function testEvaluatesToTrueIfArgumentContainsSubstring()
     {
         $this->assertTrue(
@@ -82,5 +77,10 @@ class StringContainsTest extends \Hamcrest\AbstractMatcherTest
             . self::EXCERPT . '"',
             $this->_stringContains
         );
+    }
+
+    protected function createMatcher()
+    {
+        return $this->_stringContains;
     }
 }

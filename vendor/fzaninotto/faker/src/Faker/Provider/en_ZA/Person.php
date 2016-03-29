@@ -18,7 +18,7 @@ class Person extends \Faker\Provider\Person
         '{{titleFemale}} {{$firstNameFemale}} {{lastName}}',
     );
 
-    protected static $firstNameMale =array(
+    protected static $firstNameMale = array(
         'Abraham', 'Adriaan', 'Adrian', 'Ahmed', 'Alan', 'Albert', 'Alex', 'Alexander', 'Alfred', 'Allan', 'Andile', 'Andre', 'Andrew',
         'André', 'Anthony', 'Anton', 'Arnold', 'Arthur', 'Ayanda', 'Barry', 'Ben', 'Benjamin', 'Bernard', 'Bongani', 'Bradley',
         'Brandon', 'Brent', 'Brett', 'Brian', 'Bruce', 'Bryan', 'Carel', 'Carl', 'Charl', 'Charles', 'Chris', 'Christiaan',

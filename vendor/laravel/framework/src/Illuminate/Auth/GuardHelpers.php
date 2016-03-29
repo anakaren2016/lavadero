@@ -24,23 +24,23 @@ trait GuardHelpers
     protected $provider;
 
     /**
-     * Determine if the current user is authenticated.
-     *
-     * @return bool
-     */
-    public function check()
-    {
-        return ! is_null($this->user());
-    }
-
-    /**
      * Determine if the current user is a guest.
      *
      * @return bool
      */
     public function guest()
     {
-        return ! $this->check();
+        return !$this->check();
+    }
+
+    /**
+     * Determine if the current user is authenticated.
+     *
+     * @return bool
+     */
+    public function check()
+    {
+        return !is_null($this->user());
     }
 
     /**
@@ -58,7 +58,7 @@ trait GuardHelpers
     /**
      * Set the current user.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
      * @return void
      */
     public function setUser(AuthenticatableContract $user)

@@ -21,9 +21,9 @@ namespace Mockery;
 
 use Closure;
 use Exception;
+use InvalidArgumentException;
 use ReflectionClass;
 use UnexpectedValueException;
-use InvalidArgumentException;
 
 /**
  * This is a trimmed down version of https://github.com/doctrine/instantiator,
@@ -38,7 +38,7 @@ final class Instantiator
      * the method {@see \Serializable::unserialize()} when dealing with classes implementing
      * the {@see \Serializable} interface.
      */
-    const SERIALIZATION_FORMAT_USE_UNSERIALIZER   = 'C';
+    const SERIALIZATION_FORMAT_USE_UNSERIALIZER = 'C';
     const SERIALIZATION_FORMAT_AVOID_UNSERIALIZER = 'O';
 
     /**
@@ -46,8 +46,8 @@ final class Instantiator
      */
     public function instantiate($className)
     {
-        $factory    = $this->buildFactory($className);
-        $instance   = $factory();
+        $factory = $this->buildFactory($className);
+        $instance = $factory();
         $reflection = new ReflectionClass($instance);
 
         return $instance;
@@ -99,7 +99,7 @@ final class Instantiator
      */
     private function getReflectionClass($className)
     {
-        if (! class_exists($className)) {
+        if (!class_exists($className)) {
             throw new InvalidArgumentException("Class:$className does not exist");
         }
 
@@ -114,7 +114,7 @@ final class Instantiator
 
     /**
      * @param ReflectionClass $reflectionClass
-     * @param string          $serializedString
+     * @param string $serializedString
      *
      * @throws UnexpectedValueException
      *
@@ -156,10 +156,10 @@ final class Instantiator
     private function isInstantiableViaReflection(ReflectionClass $reflectionClass)
     {
         if (\PHP_VERSION_ID >= 50600) {
-            return ! ($reflectionClass->isInternal() && $reflectionClass->isFinal());
+            return !($reflectionClass->isInternal() && $reflectionClass->isFinal());
         }
 
-        return \PHP_VERSION_ID >= 50400 && ! $this->hasInternalAncestors($reflectionClass);
+        return \PHP_VERSION_ID >= 50400 && !$this->hasInternalAncestors($reflectionClass);
     }
 
     /**

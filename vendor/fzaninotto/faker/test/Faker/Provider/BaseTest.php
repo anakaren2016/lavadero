@@ -53,7 +53,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
 
     public function testRandomNumberAcceptsStrictParamToEnforceNumberSize()
     {
-        $this->assertEquals(5, strlen((string) BaseProvider::randomNumber(5, true)));
+        $this->assertEquals(5, strlen((string)BaseProvider::randomNumber(5, true)));
     }
 
     public function testNumberBetween()
@@ -359,8 +359,8 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
         $values = array();
-        for ($i=0; $i < 10; $i++) {
-            $values[]= $faker->optional()->randomDigit;
+        for ($i = 0; $i < 10; $i++) {
+            $values[] = $faker->optional()->randomDigit;
         }
         $this->assertContains(null, $values);
     }
@@ -386,8 +386,8 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
         $values = array();
-        for ($i=0; $i < 10; $i++) {
-            $values[]= $faker->unique()->randomDigit;
+        for ($i = 0; $i < 10; $i++) {
+            $values[] = $faker->unique()->randomDigit;
         }
         sort($values);
         $this->assertEquals(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), $values);
@@ -400,7 +400,7 @@ class BaseTest extends \PHPUnit_Framework_TestCase
     {
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
-        for ($i=0; $i < 11; $i++) {
+        for ($i = 0; $i < 11; $i++) {
             $faker->unique()->randomDigit;
         }
     }
@@ -410,12 +410,12 @@ class BaseTest extends \PHPUnit_Framework_TestCase
         $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\Base($faker));
         $values = array();
-        for ($i=0; $i < 10; $i++) {
-            $values[]= $faker->unique()->randomDigit;
+        for ($i = 0; $i < 10; $i++) {
+            $values[] = $faker->unique()->randomDigit;
         }
-        $values[]= $faker->unique(true)->randomDigit;
-        for ($i=0; $i < 9; $i++) {
-            $values[]= $faker->unique()->randomDigit;
+        $values[] = $faker->unique(true)->randomDigit;
+        for ($i = 0; $i < 9; $i++) {
+            $values[] = $faker->unique()->randomDigit;
         }
         sort($values);
         $this->assertEquals(array(0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9), $values);

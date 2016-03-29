@@ -36,10 +36,10 @@ class PHPUnit_Util_ErrorHandler
     }
 
     /**
-     * @param int    $errno
+     * @param int $errno
      * @param string $errstr
      * @param string $errfile
-     * @param int    $errline
+     * @param int $errline
      *
      * @throws PHPUnit_Framework_Error
      */

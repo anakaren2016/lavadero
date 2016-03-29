@@ -41,11 +41,11 @@ class TokenizerEscaping
      *
      * @return string
      */
-    public function escapeUnicode($value)
+    public function escapeUnicodeAndNewLine($value)
     {
-        $value = $this->replaceUnicodeSequences($value);
+        $value = preg_replace($this->patterns->getNewLineEscapePattern(), '', $value);
 
-        return preg_replace($this->patterns->getSimpleEscapePattern(), '$1', $value);
+        return $this->escapeUnicode($value);
     }
 
     /**
@@ -53,11 +53,11 @@ class TokenizerEscaping
      *
      * @return string
      */
-    public function escapeUnicodeAndNewLine($value)
+    public function escapeUnicode($value)
     {
-        $value = preg_replace($this->patterns->getNewLineEscapePattern(), '', $value);
+        $value = $this->replaceUnicodeSequences($value);
 
-        return $this->escapeUnicode($value);
+        return preg_replace($this->patterns->getSimpleEscapePattern(), '$1', $value);
     }
 
     /**
@@ -74,10 +74,10 @@ class TokenizerEscaping
                 return chr($c);
             }
             if (0x800 > $c) {
-                return chr(0xC0 | $c >> 6).chr(0x80 | $c & 0x3F);
+                return chr(0xC0 | $c >> 6) . chr(0x80 | $c & 0x3F);
             }
             if (0x10000 > $c) {
-                return chr(0xE0 | $c >> 12).chr(0x80 | $c >> 6 & 0x3F).chr(0x80 | $c & 0x3F);
+                return chr(0xE0 | $c >> 12) . chr(0x80 | $c >> 6 & 0x3F) . chr(0x80 | $c & 0x3F);
             }
         }, $value);
     }

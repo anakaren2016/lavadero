@@ -110,7 +110,7 @@ class RouteCompiler implements RouteCompilerInterface
 
             $regexp = $route->getRequirement($varName);
             if (null === $regexp) {
-                $followingPattern = (string) substr($pattern, $pos);
+                $followingPattern = (string)substr($pattern, $pos);
                 // Find the next static character after the variable that functions as a separator. By default, this separator and '/'
                 // are disallowed for the variable. This default requirement makes sure that optional variables can be matched at all
                 // and that the generating-matching-combination of URLs unambiguous, i.e. the params used for generating the URL are
@@ -163,7 +163,7 @@ class RouteCompiler implements RouteCompilerInterface
 
         return array(
             'staticPrefix' => 'text' === $tokens[0][0] ? $tokens[0][1] : '',
-            'regex' => self::REGEX_DELIMITER.'^'.$regexp.'$'.self::REGEX_DELIMITER.'s'.($isHost ? 'i' : ''),
+            'regex' => self::REGEX_DELIMITER . '^' . $regexp . '$' . self::REGEX_DELIMITER . 's' . ($isHost ? 'i' : ''),
             'tokens' => array_reverse($tokens),
             'variables' => $variables,
         );
@@ -191,9 +191,9 @@ class RouteCompiler implements RouteCompilerInterface
     /**
      * Computes the regexp used to match a specific token. It can be static text or a subpattern.
      *
-     * @param array $tokens        The route tokens
-     * @param int   $index         The index of the current token
-     * @param int   $firstOptional The index of the first optional token
+     * @param array $tokens The route tokens
+     * @param int $index The index of the current token
+     * @param int $firstOptional The index of the first optional token
      *
      * @return string The regexp pattern for a single token
      */

@@ -27,7 +27,7 @@ class EmptyStringParserTest extends \PHPUnit_Framework_TestCase
 
         /** @var SelectorNode $selector */
         $selector = $selectors[0];
-        $this->assertEquals('Element[*]', (string) $selector->getTree());
+        $this->assertEquals('Element[*]', (string)$selector->getTree());
 
         $selectors = $parser->parse('this will produce an empty array');
         $this->assertCount(0, $selectors);

@@ -2,10 +2,10 @@
 
 namespace Illuminate\Session;
 
-use SessionHandlerInterface;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Database\ConnectionInterface;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Database\ConnectionInterface;
+use SessionHandlerInterface;
 
 class DatabaseSessionHandler implements SessionHandlerInterface, ExistenceAwareInterface
 {
@@ -40,9 +40,9 @@ class DatabaseSessionHandler implements SessionHandlerInterface, ExistenceAwareI
     /**
      * Create a new database session handler instance.
      *
-     * @param  \Illuminate\Database\ConnectionInterface  $connection
-     * @param  string  $table
-     * @param  \Illuminate\Contracts\Container\Container|null  $container
+     * @param  \Illuminate\Database\ConnectionInterface $connection
+     * @param  string $table
+     * @param  \Illuminate\Contracts\Container\Container|null $container
      * @return void
      */
     public function __construct(ConnectionInterface $connection, $table, Container $container = null)
@@ -73,7 +73,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface, ExistenceAwareI
      */
     public function read($sessionId)
     {
-        $session = (object) $this->getQuery()->find($sessionId);
+        $session = (object)$this->getQuery()->find($sessionId);
 
         if (isset($session->payload)) {
             $this->exists = true;
@@ -89,7 +89,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface, ExistenceAwareI
     {
         $payload = $this->getDefaultPayload($data);
 
-        if (! $this->exists) {
+        if (!$this->exists) {
             $this->read($sessionId);
         }
 
@@ -107,14 +107,14 @@ class DatabaseSessionHandler implements SessionHandlerInterface, ExistenceAwareI
     /**
      * Get the default paylaod for the session.
      *
-     * @param  string  $data
+     * @param  string $data
      * @return array
      */
     protected function getDefaultPayload($data)
     {
         $payload = ['payload' => base64_encode($data), 'last_activity' => time()];
 
-        if (! $container = $this->container) {
+        if (!$container = $this->container) {
             return $payload;
         }
 
@@ -126,7 +126,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface, ExistenceAwareI
             $payload['ip_address'] = $container->make('request')->ip();
 
             $payload['user_agent'] = substr(
-                (string) $container->make('request')->header('User-Agent'), 0, 500
+                (string)$container->make('request')->header('User-Agent'), 0, 500
             );
         }
 
@@ -162,7 +162,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface, ExistenceAwareI
     /**
      * Set the existence state for the session.
      *
-     * @param  bool  $value
+     * @param  bool $value
      * @return $this
      */
     public function setExists($value)

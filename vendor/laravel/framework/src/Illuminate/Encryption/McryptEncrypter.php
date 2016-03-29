@@ -3,10 +3,10 @@
 namespace Illuminate\Encryption;
 
 use Exception;
-use RuntimeException;
 use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Contracts\Encryption\EncryptException;
 use Illuminate\Contracts\Encryption\Encrypter as EncrypterContract;
+use Illuminate\Contracts\Encryption\EncryptException;
+use RuntimeException;
 
 /**
  * @deprecated since version 5.1. Use Illuminate\Encryption\Encrypter.
@@ -30,15 +30,15 @@ class McryptEncrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Create a new encrypter instance.
      *
-     * @param  string  $key
-     * @param  string  $cipher
+     * @param  string $key
+     * @param  string $cipher
      * @return void
      *
      * @throws \RuntimeException
      */
     public function __construct($key, $cipher = MCRYPT_RIJNDAEL_128)
     {
-        $key = (string) $key;
+        $key = (string)$key;
 
         if (static::supported($key, $cipher)) {
             $this->key = $key;
@@ -52,20 +52,20 @@ class McryptEncrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Determine if the given key and cipher combination is valid.
      *
-     * @param  string  $key
-     * @param  string  $cipher
+     * @param  string $key
+     * @param  string $cipher
      * @return bool
      */
     public static function supported($key, $cipher)
     {
         return defined('MCRYPT_RIJNDAEL_128') &&
-                ($cipher === MCRYPT_RIJNDAEL_128 || $cipher === MCRYPT_RIJNDAEL_256);
+        ($cipher === MCRYPT_RIJNDAEL_128 || $cipher === MCRYPT_RIJNDAEL_256);
     }
 
     /**
      * Encrypt the given value.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      *
      * @throws \Illuminate\Contracts\Encryption\EncryptException
@@ -83,7 +83,7 @@ class McryptEncrypter extends BaseEncrypter implements EncrypterContract
 
         $json = json_encode(compact('iv', 'value', 'mac'));
 
-        if (! is_string($json)) {
+        if (!is_string($json)) {
             throw new EncryptException('Could not encrypt the data.');
         }
 
@@ -93,8 +93,8 @@ class McryptEncrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Pad and use mcrypt on the given value and input vector.
      *
-     * @param  string  $value
-     * @param  string  $iv
+     * @param  string $value
+     * @param  string $iv
      * @return string
      */
     protected function padAndMcrypt($value, $iv)
@@ -107,7 +107,7 @@ class McryptEncrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Decrypt the given value.
      *
-     * @param  string  $payload
+     * @param  string $payload
      * @return string
      */
     public function decrypt($payload)
@@ -127,8 +127,8 @@ class McryptEncrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Run the mcrypt decryption routine for the value.
      *
-     * @param  string  $value
-     * @param  string  $iv
+     * @param  string $value
+     * @param  string $iv
      * @return string
      *
      * @throws \Illuminate\Contracts\Encryption\DecryptException
@@ -145,20 +145,20 @@ class McryptEncrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Add PKCS7 padding to a given value.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     protected function addPadding($value)
     {
         $pad = $this->block - (strlen($value) % $this->block);
 
-        return $value.str_repeat(chr($pad), $pad);
+        return $value . str_repeat(chr($pad), $pad);
     }
 
     /**
      * Remove the padding from the given value.
      *
-     * @param  string  $value
+     * @param  string $value
      * @return string
      */
     protected function stripPadding($value)
@@ -171,8 +171,8 @@ class McryptEncrypter extends BaseEncrypter implements EncrypterContract
     /**
      * Determine if the given padding for a value is valid.
      *
-     * @param  string  $pad
-     * @param  string  $value
+     * @param  string $pad
+     * @param  string $value
      * @return bool
      */
     protected function paddingIsValid($pad, $value)

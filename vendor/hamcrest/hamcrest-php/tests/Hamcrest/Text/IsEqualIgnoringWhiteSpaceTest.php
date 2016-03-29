@@ -13,11 +13,6 @@ class IsEqualIgnoringWhiteSpaceTest extends \Hamcrest\AbstractMatcherTest
         );
     }
 
-    protected function createMatcher()
-    {
-        return $this->_matcher;
-    }
-
     public function testPassesIfWordsAreSameButWhitespaceDiffers()
     {
         assertThat('Hello World how are we?', $this->_matcher);
@@ -47,5 +42,10 @@ class IsEqualIgnoringWhiteSpaceTest extends \Hamcrest\AbstractMatcherTest
             "equalToIgnoringWhiteSpace(\"Hello World   how\\n are we? \")",
             $this->_matcher
         );
+    }
+
+    protected function createMatcher()
+    {
+        return $this->_matcher;
     }
 }

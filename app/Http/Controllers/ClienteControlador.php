@@ -15,7 +15,7 @@ class ClienteControlador extends Controller
             $this->validate(
                 $request,
                 [
-                    'nombre' => 'required',
+                    'nombre' => 'require|Max:255',
                     'telefono' => 'required',
                     'ci' => 'required'
                 ]

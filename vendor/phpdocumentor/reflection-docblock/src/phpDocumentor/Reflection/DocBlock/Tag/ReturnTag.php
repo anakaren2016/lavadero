@@ -26,7 +26,7 @@ class ReturnTag extends Tag
 {
     /** @var string The raw type component. */
     protected $type = '';
-    
+
     /** @var Collection The parsed type component. */
     protected $types = null;
 
@@ -72,18 +72,8 @@ class ReturnTag extends Tag
     }
 
     /**
-     * Returns the type section of the variable.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return (string) $this->getTypesCollection();
-    }
-
-    /**
      * Returns the type collection.
-     * 
+     *
      * @return void
      */
     protected function getTypesCollection()
@@ -95,5 +85,15 @@ class ReturnTag extends Tag
             );
         }
         return $this->types;
+    }
+
+    /**
+     * Returns the type section of the variable.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return (string)$this->getTypesCollection();
     }
 }

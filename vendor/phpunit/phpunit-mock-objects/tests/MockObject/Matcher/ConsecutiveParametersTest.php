@@ -1,4 +1,5 @@
 <?php
+
 class Framework_MockObject_Matcher_ConsecutiveParametersTest extends PHPUnit_Framework_TestCase
 {
     public function testIntegration()

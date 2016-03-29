@@ -11,9 +11,9 @@
 
 namespace Monolog\Handler;
 
-use Monolog\TestCase;
-use Monolog\Logger;
 use InvalidArgumentException;
+use Monolog\Logger;
+use Monolog\TestCase;
 
 function mail($to, $subject, $message, $additional_headers = null, $additional_parameters = null)
 {

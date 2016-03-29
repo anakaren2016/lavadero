@@ -57,7 +57,7 @@ class SplFileInfoPatchSpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Doubler\Generator\Node\ClassNode  $node
+     * @param \Prophecy\Doubler\Generator\Node\ClassNode $node
      * @param \Prophecy\Doubler\Generator\Node\MethodNode $method
      */
     function it_updates_existing_method_if_found($node, $method)
@@ -72,7 +72,7 @@ class SplFileInfoPatchSpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Doubler\Generator\Node\ClassNode  $node
+     * @param \Prophecy\Doubler\Generator\Node\ClassNode $node
      * @param \Prophecy\Doubler\Generator\Node\MethodNode $method
      */
     function it_should_not_supply_a_file_for_a_directory_iterator($node, $method)
@@ -81,7 +81,7 @@ class SplFileInfoPatchSpec extends ObjectBehavior
         $node->getMethod('__construct')->willReturn($method);
         $node->getParentClass()->willReturn('DirectoryIterator');
 
-        $method->setCode(Argument::that(function($value) {
+        $method->setCode(Argument::that(function ($value) {
             return strpos($value, '.php') === false;
         }))->shouldBeCalled();
 

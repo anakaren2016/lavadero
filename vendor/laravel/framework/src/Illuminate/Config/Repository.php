@@ -3,8 +3,8 @@
 namespace Illuminate\Config;
 
 use ArrayAccess;
-use Illuminate\Support\Arr;
 use Illuminate\Contracts\Config\Repository as ConfigContract;
+use Illuminate\Support\Arr;
 
 class Repository implements ArrayAccess, ConfigContract
 {
@@ -18,7 +18,7 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Create a new configuration repository.
      *
-     * @param  array  $items
+     * @param  array $items
      * @return void
      */
     public function __construct(array $items = [])
@@ -29,7 +29,7 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Determine if the given configuration value exists.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return bool
      */
     public function has($key)
@@ -40,8 +40,8 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Get the specified configuration value.
      *
-     * @param  string  $key
-     * @param  mixed   $default
+     * @param  string $key
+     * @param  mixed $default
      * @return mixed
      */
     public function get($key, $default = null)
@@ -52,8 +52,8 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Set a given configuration value.
      *
-     * @param  array|string  $key
-     * @param  mixed   $value
+     * @param  array|string $key
+     * @param  mixed $value
      * @return void
      */
     public function set($key, $value = null)
@@ -70,8 +70,8 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Prepend a value onto an array configuration value.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  string $key
+     * @param  mixed $value
      * @return void
      */
     public function prepend($key, $value)
@@ -86,8 +86,8 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Push a value onto an array configuration value.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  string $key
+     * @param  mixed $value
      * @return void
      */
     public function push($key, $value)
@@ -112,7 +112,7 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Determine if the given configuration option exists.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return bool
      */
     public function offsetExists($key)
@@ -123,7 +123,7 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Get a configuration option.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return mixed
      */
     public function offsetGet($key)
@@ -134,8 +134,8 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Set a configuration option.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  string $key
+     * @param  mixed $value
      * @return void
      */
     public function offsetSet($key, $value)
@@ -146,7 +146,7 @@ class Repository implements ArrayAccess, ConfigContract
     /**
      * Unset a configuration option.
      *
-     * @param  string  $key
+     * @param  string $key
      * @return void
      */
     public function offsetUnset($key)

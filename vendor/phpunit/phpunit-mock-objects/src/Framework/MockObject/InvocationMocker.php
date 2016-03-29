@@ -52,7 +52,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     }
 
     /**
-     * @param  mixed     $id
+     * @param  mixed $id
      * @return bool|null
      */
     public function lookupId($id)
@@ -65,7 +65,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     }
 
     /**
-     * @param  mixed                                      $id
+     * @param  mixed $id
      * @param  PHPUnit_Framework_MockObject_Builder_Match $builder
      * @throws PHPUnit_Framework_Exception
      */
@@ -81,7 +81,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     }
 
     /**
-     * @param  PHPUnit_Framework_MockObject_Matcher_Invocation       $matcher
+     * @param  PHPUnit_Framework_MockObject_Matcher_Invocation $matcher
      * @return PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
     public function expects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher)
@@ -98,7 +98,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
      */
     public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
-        $exception      = null;
+        $exception = null;
         $hasReturnValue = false;
 
         if (strtolower($invocation->methodName) == '__tostring') {
@@ -113,7 +113,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
                     $value = $match->invoked($invocation);
 
                     if (!$hasReturnValue) {
-                        $returnValue    = $value;
+                        $returnValue = $value;
                         $hasReturnValue = true;
                     }
                 }

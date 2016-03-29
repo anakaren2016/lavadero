@@ -41,7 +41,7 @@ class MemcacheSessionHandler implements \SessionHandlerInterface
      *  * expiretime: The time to live in seconds
      *
      * @param \Memcache $memcache A \Memcache instance
-     * @param array     $options  An associative array of Memcache options
+     * @param array $options An associative array of Memcache options
      *
      * @throws \InvalidArgumentException When unsupported options are passed
      */
@@ -54,7 +54,7 @@ class MemcacheSessionHandler implements \SessionHandlerInterface
         }
 
         $this->memcache = $memcache;
-        $this->ttl = isset($options['expiretime']) ? (int) $options['expiretime'] : 86400;
+        $this->ttl = isset($options['expiretime']) ? (int)$options['expiretime'] : 86400;
         $this->prefix = isset($options['prefix']) ? $options['prefix'] : 'sf2s';
     }
 
@@ -79,7 +79,7 @@ class MemcacheSessionHandler implements \SessionHandlerInterface
      */
     public function read($sessionId)
     {
-        return $this->memcache->get($this->prefix.$sessionId) ?: '';
+        return $this->memcache->get($this->prefix . $sessionId) ?: '';
     }
 
     /**
@@ -87,7 +87,7 @@ class MemcacheSessionHandler implements \SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        return $this->memcache->set($this->prefix.$sessionId, $data, 0, time() + $this->ttl);
+        return $this->memcache->set($this->prefix . $sessionId, $data, 0, time() + $this->ttl);
     }
 
     /**
@@ -95,7 +95,7 @@ class MemcacheSessionHandler implements \SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        return $this->memcache->delete($this->prefix.$sessionId);
+        return $this->memcache->delete($this->prefix . $sessionId);
     }
 
     /**

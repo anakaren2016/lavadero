@@ -30,7 +30,7 @@ class ArrayInput extends Input
     /**
      * Constructor.
      *
-     * @param array           $parameters An array of parameters
+     * @param array $parameters An array of parameters
      * @param InputDefinition $definition A InputDefinition instance
      */
     public function __construct(array $parameters, InputDefinition $definition = null)
@@ -62,14 +62,14 @@ class ArrayInput extends Input
      * This method is to be used to introspect the input parameters
      * before they have been validated. It must be used carefully.
      *
-     * @param string|array $values     The values to look for in the raw parameters (can be an array)
-     * @param bool         $onlyParams Only check real parameters, skip those following an end of options (--) signal
+     * @param string|array $values The values to look for in the raw parameters (can be an array)
+     * @param bool $onlyParams Only check real parameters, skip those following an end of options (--) signal
      *
      * @return bool true if the value is contained in the raw parameters
      */
     public function hasParameterOption($values, $onlyParams = false)
     {
-        $values = (array) $values;
+        $values = (array)$values;
 
         foreach ($this->parameters as $k => $v) {
             if (!is_int($k)) {
@@ -94,15 +94,15 @@ class ArrayInput extends Input
      * This method is to be used to introspect the input parameters
      * before they have been validated. It must be used carefully.
      *
-     * @param string|array $values     The value(s) to look for in the raw parameters (can be an array)
-     * @param mixed        $default    The default value to return if no result is found
-     * @param bool         $onlyParams Only check real parameters, skip those following an end of options (--) signal
+     * @param string|array $values The value(s) to look for in the raw parameters (can be an array)
+     * @param mixed $default The default value to return if no result is found
+     * @param bool $onlyParams Only check real parameters, skip those following an end of options (--) signal
      *
      * @return mixed The option value
      */
     public function getParameterOption($values, $default = false, $onlyParams = false)
     {
-        $values = (array) $values;
+        $values = (array)$values;
 
         foreach ($this->parameters as $k => $v) {
             if ($onlyParams && ($k === '--' || (is_int($k) && $v === '--'))) {
@@ -131,7 +131,7 @@ class ArrayInput extends Input
         $params = array();
         foreach ($this->parameters as $param => $val) {
             if ($param && '-' === $param[0]) {
-                $params[] = $param.('' != $val ? '='.$this->escapeToken($val) : '');
+                $params[] = $param . ('' != $val ? '=' . $this->escapeToken($val) : '');
             } else {
                 $params[] = $this->escapeToken($val);
             }
@@ -160,27 +160,10 @@ class ArrayInput extends Input
     }
 
     /**
-     * Adds a short option value.
-     *
-     * @param string $shortcut The short option key
-     * @param mixed  $value    The value for the option
-     *
-     * @throws InvalidOptionException When option given doesn't exist
-     */
-    private function addShortOption($shortcut, $value)
-    {
-        if (!$this->definition->hasShortcut($shortcut)) {
-            throw new InvalidOptionException(sprintf('The "-%s" option does not exist.', $shortcut));
-        }
-
-        $this->addLongOption($this->definition->getOptionForShortcut($shortcut)->getName(), $value);
-    }
-
-    /**
      * Adds a long option value.
      *
-     * @param string $name  The long option key
-     * @param mixed  $value The value for the option
+     * @param string $name The long option key
+     * @param mixed $value The value for the option
      *
      * @throws InvalidOptionException When option given doesn't exist
      * @throws InvalidOptionException When a required value is missing
@@ -205,10 +188,27 @@ class ArrayInput extends Input
     }
 
     /**
+     * Adds a short option value.
+     *
+     * @param string $shortcut The short option key
+     * @param mixed $value The value for the option
+     *
+     * @throws InvalidOptionException When option given doesn't exist
+     */
+    private function addShortOption($shortcut, $value)
+    {
+        if (!$this->definition->hasShortcut($shortcut)) {
+            throw new InvalidOptionException(sprintf('The "-%s" option does not exist.', $shortcut));
+        }
+
+        $this->addLongOption($this->definition->getOptionForShortcut($shortcut)->getName(), $value);
+    }
+
+    /**
      * Adds an argument value.
      *
-     * @param string $name  The argument name
-     * @param mixed  $value The value for the argument
+     * @param string $name The argument name
+     * @param mixed $value The value for the argument
      *
      * @throws InvalidArgumentException When argument given doesn't exist
      */

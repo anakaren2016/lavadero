@@ -24,12 +24,12 @@ namespace Symfony\Component\Debug;
  */
 class DebugClassLoader
 {
-    private $classLoader;
-    private $isFinder;
     private static $caseCheck;
     private static $deprecated = array();
     private static $php7Reserved = array('int', 'float', 'bool', 'string', 'true', 'false', 'null');
     private static $darwinCache = array('/' => array('/', array()));
+    private $classLoader;
+    private $isFinder;
 
     /**
      * Constructor.
@@ -44,16 +44,6 @@ class DebugClassLoader
         if (!isset(self::$caseCheck)) {
             self::$caseCheck = false !== stripos(PHP_OS, 'win') ? (false !== stripos(PHP_OS, 'darwin') ? 2 : 1) : 0;
         }
-    }
-
-    /**
-     * Gets the wrapped class loader.
-     *
-     * @return callable The wrapped class loader
-     */
-    public function getClassLoader()
-    {
-        return $this->classLoader;
     }
 
     /**
@@ -102,6 +92,16 @@ class DebugClassLoader
 
             spl_autoload_register($function);
         }
+    }
+
+    /**
+     * Gets the wrapped class loader.
+     *
+     * @return callable The wrapped class loader
+     */
+    public function getClassLoader()
+    {
+        return $this->classLoader;
     }
 
     /**
@@ -204,7 +204,7 @@ class DebugClassLoader
                 throw new \RuntimeException(sprintf('The autoloader expected class "%s" to be defined in file "%s". The file was found but the class was not in it, the class name or namespace probably has a typo.', $class, $file));
             }
             if (self::$caseCheck) {
-                $real = explode('\\', $class.strrchr($file, '.'));
+                $real = explode('\\', $class . strrchr($file, '.'));
                 $tail = explode(DIRECTORY_SEPARATOR, str_replace('/', DIRECTORY_SEPARATOR, $file));
 
                 $i = count($tail) - 1;
@@ -218,7 +218,7 @@ class DebugClassLoader
                 array_splice($tail, 0, $i + 1);
             }
             if (self::$caseCheck && $tail) {
-                $tail = DIRECTORY_SEPARATOR.implode(DIRECTORY_SEPARATOR, $tail);
+                $tail = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $tail);
                 $tailLen = strlen($tail);
                 $real = $refl->getFileName();
 
@@ -239,7 +239,7 @@ class DebugClassLoader
                         } else {
                             $dir = getcwd();
                             chdir($real);
-                            $real = getcwd().'/';
+                            $real = getcwd() . '/';
                             chdir($dir);
 
                             $dir = $real;
@@ -283,7 +283,7 @@ class DebugClassLoader
                 }
 
                 if (0 === substr_compare($real, $tail, -$tailLen, $tailLen, true)
-                  && 0 !== substr_compare($real, $tail, -$tailLen, $tailLen, false)
+                    && 0 !== substr_compare($real, $tail, -$tailLen, $tailLen, false)
                 ) {
                     throw new \RuntimeException(sprintf('Case mismatch between class and real file names: %s vs %s in %s', substr($tail, -$tailLen + 1), substr($real, -$tailLen + 1), substr($real, 0, -$tailLen + 1)));
                 }

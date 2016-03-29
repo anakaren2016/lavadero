@@ -19,28 +19,28 @@ class PHPUnit_Util_Blacklist
      * @var array
      */
     public static $blacklistedClassNames = array(
-        'File_Iterator'                              => 1,
-        'PHP_CodeCoverage'                           => 1,
-        'PHP_Invoker'                                => 1,
-        'PHP_Timer'                                  => 1,
-        'PHP_Token'                                  => 1,
-        'PHPUnit_Framework_TestCase'                 => 2,
-        'PHPUnit_Extensions_Database_TestCase'       => 2,
-        'PHPUnit_Framework_MockObject_Generator'     => 2,
-        'PHPUnit_Extensions_SeleniumTestCase'        => 2,
-        'Text_Template'                              => 1,
-        'Symfony\Component\Yaml\Yaml'                => 1,
-        'SebastianBergmann\Diff\Diff'                => 1,
-        'SebastianBergmann\Environment\Runtime'      => 1,
-        'SebastianBergmann\Comparator\Comparator'    => 1,
-        'SebastianBergmann\Exporter\Exporter'        => 1,
-        'SebastianBergmann\GlobalState\Snapshot'     => 1,
+        'File_Iterator' => 1,
+        'PHP_CodeCoverage' => 1,
+        'PHP_Invoker' => 1,
+        'PHP_Timer' => 1,
+        'PHP_Token' => 1,
+        'PHPUnit_Framework_TestCase' => 2,
+        'PHPUnit_Extensions_Database_TestCase' => 2,
+        'PHPUnit_Framework_MockObject_Generator' => 2,
+        'PHPUnit_Extensions_SeleniumTestCase' => 2,
+        'Text_Template' => 1,
+        'Symfony\Component\Yaml\Yaml' => 1,
+        'SebastianBergmann\Diff\Diff' => 1,
+        'SebastianBergmann\Environment\Runtime' => 1,
+        'SebastianBergmann\Comparator\Comparator' => 1,
+        'SebastianBergmann\Exporter\Exporter' => 1,
+        'SebastianBergmann\GlobalState\Snapshot' => 1,
         'SebastianBergmann\RecursionContext\Context' => 1,
-        'SebastianBergmann\Version'                  => 1,
-        'Composer\Autoload\ClassLoader'              => 1,
-        'Doctrine\Instantiator\Instantiator'         => 1,
-        'phpDocumentor\Reflection\DocBlock'          => 1,
-        'Prophecy\Prophet'                           => 1
+        'SebastianBergmann\Version' => 1,
+        'Composer\Autoload\ClassLoader' => 1,
+        'Doctrine\Instantiator\Instantiator' => 1,
+        'phpDocumentor\Reflection\DocBlock' => 1,
+        'Prophecy\Prophet' => 1
     );
 
     /**
@@ -58,28 +58,6 @@ class PHPUnit_Util_Blacklist
         $this->initialize();
 
         return self::$directories;
-    }
-
-    /**
-     * @param string $file
-     *
-     * @return bool
-     */
-    public function isBlacklisted($file)
-    {
-        if (defined('PHPUNIT_TESTSUITE')) {
-            return false;
-        }
-
-        $this->initialize();
-
-        foreach (self::$directories as $directory) {
-            if (strpos($file, $directory) === 0) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private function initialize()
@@ -111,5 +89,27 @@ class PHPUnit_Util_Blacklist
                 self::$directories[] = sys_get_temp_dir() . '\\PHP';
             }
         }
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return bool
+     */
+    public function isBlacklisted($file)
+    {
+        if (defined('PHPUNIT_TESTSUITE')) {
+            return false;
+        }
+
+        $this->initialize();
+
+        foreach (self::$directories as $directory) {
+            if (strpos($file, $directory) === 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

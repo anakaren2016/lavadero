@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Sample class that implements ArrayAccess copied from
  * http://www.php.net/manual/en/class.arrayaccess.php
@@ -13,6 +14,7 @@ class SampleArrayAccess implements ArrayAccess
     {
         $this->container = array();
     }
+
     public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
@@ -21,14 +23,17 @@ class SampleArrayAccess implements ArrayAccess
             $this->container[$offset] = $value;
         }
     }
+
     public function offsetExists($offset)
     {
         return isset($this->container[$offset]);
     }
+
     public function offsetUnset($offset)
     {
         unset($this->container[$offset]);
     }
+
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;

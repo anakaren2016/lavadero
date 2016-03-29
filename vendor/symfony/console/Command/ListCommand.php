@@ -13,10 +13,10 @@ namespace Symfony\Component\Console\Command;
 
 use Symfony\Component\Console\Helper\DescriptorHelper;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * ListCommand displays the list of all available commands for the application.
@@ -51,8 +51,7 @@ It's also possible to get raw list of commands (useful for embedding command run
 
   <info>php %command.full_name% --raw</info>
 EOF
-            )
-        ;
+            );
     }
 
     /**

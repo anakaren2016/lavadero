@@ -45,7 +45,7 @@ class SnapshotTest extends PHPUnit_Framework_TestCase
 
     public function testFunctions()
     {
-        require_once __DIR__.'/_fixture/SnapshotFunctions.php';
+        require_once __DIR__ . '/_fixture/SnapshotFunctions.php';
 
         $snapshot = new Snapshot($this->getBlacklist(), false, false, false, true, false, false, false, false, false);
         $functions = $snapshot->functions();
@@ -53,7 +53,7 @@ class SnapshotTest extends PHPUnit_Framework_TestCase
         $this->assertThat(
             $functions,
             $this->logicalOr(
-                // Zend
+            // Zend
                 $this->contains('sebastianbergmann\globalstate\testfixture\snapshotfunction'),
                 // HHVM
                 $this->contains('SebastianBergmann\GlobalState\TestFixture\snapshotFunction')
@@ -113,7 +113,7 @@ class SnapshotTest extends PHPUnit_Framework_TestCase
     private function getBlacklist()
     {
         return $this->getMockBuilder('SebastianBergmann\GlobalState\Blacklist')
-                    ->disableOriginalConstructor()
-                    ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }

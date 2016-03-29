@@ -182,6 +182,7 @@ class MockeryTestSubject
     {
         return 1;
     }
+
     public function bar($i)
     {
         return $i * 2;
@@ -191,14 +192,17 @@ class MockeryTestSubject
 class MockeryTestSubjectUser
 {
     public $subject = null;
+
     public function __construct($subject)
     {
         $this->subject = $subject;
     }
+
     public function doFoo()
     {
         return $this->subject->foo();
     }
+
     public function doBar()
     {
         return $this->subject->bar(2);

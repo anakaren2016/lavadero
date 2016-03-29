@@ -54,9 +54,9 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
     /**
      * @param mixed $value
      * @param float $delta
-     * @param int   $maxDepth
-     * @param bool  $canonicalize
-     * @param bool  $ignoreCase
+     * @param int $maxDepth
+     * @param bool $canonicalize
+     * @param bool $ignoreCase
      *
      * @throws PHPUnit_Framework_Exception
      */
@@ -80,11 +80,11 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
             throw PHPUnit_Util_InvalidArgumentHelper::factory(5, 'boolean');
         }
 
-        $this->value        = $value;
-        $this->delta        = $delta;
-        $this->maxDepth     = $maxDepth;
+        $this->value = $value;
+        $this->delta = $delta;
+        $this->maxDepth = $maxDepth;
         $this->canonicalize = $canonicalize;
-        $this->ignoreCase   = $ignoreCase;
+        $this->ignoreCase = $ignoreCase;
     }
 
     /**
@@ -97,9 +97,9 @@ class PHPUnit_Framework_Constraint_IsEqual extends PHPUnit_Framework_Constraint
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param mixed  $other        Value or object to evaluate.
-     * @param string $description  Additional information about the test
-     * @param bool   $returnResult Whether to return a result or throw an exception
+     * @param mixed $other Value or object to evaluate.
+     * @param string $description Additional information about the test
+     * @param bool $returnResult Whether to return a result or throw an exception
      *
      * @return mixed
      *

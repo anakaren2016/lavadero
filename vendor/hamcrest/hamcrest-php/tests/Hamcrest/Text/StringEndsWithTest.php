@@ -13,11 +13,6 @@ class StringEndsWithTest extends \Hamcrest\AbstractMatcherTest
         $this->_stringEndsWith = \Hamcrest\Text\StringEndsWith::endsWith(self::EXCERPT);
     }
 
-    protected function createMatcher()
-    {
-        return $this->_stringEndsWith;
-    }
-
     public function testEvaluatesToTrueIfArgumentContainsSpecifiedSubstring()
     {
         $this->assertFalse(
@@ -58,5 +53,10 @@ class StringEndsWithTest extends \Hamcrest\AbstractMatcherTest
     public function testHasAReadableDescription()
     {
         $this->assertDescription('a string ending with "EXCERPT"', $this->_stringEndsWith);
+    }
+
+    protected function createMatcher()
+    {
+        return $this->_stringEndsWith;
     }
 }

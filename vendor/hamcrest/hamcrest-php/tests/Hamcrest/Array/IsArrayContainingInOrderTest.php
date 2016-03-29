@@ -6,11 +6,6 @@ use Hamcrest\AbstractMatcherTest;
 class IsArrayContainingInOrderTest extends AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return IsArrayContainingInOrder::arrayContaining(array(1, 2));
-    }
-
     public function testHasAReadableDescription()
     {
         $this->assertDescription('[<1>, <2>]', arrayContaining(array(1, 2)));
@@ -40,5 +35,10 @@ class IsArrayContainingInOrderTest extends AbstractMatcherTest
         $this->assertMismatchDescription('No item matched: <2>', $matcher, array(1));
         $this->assertMismatchDescription('item with key 0: was <4>', $matcher, array(4, 3, 2, 1));
         $this->assertMismatchDescription('item with key 2: was <4>', $matcher, array(1, 2, 4));
+    }
+
+    protected function createMatcher()
+    {
+        return IsArrayContainingInOrder::arrayContaining(array(1, 2));
     }
 }

@@ -32,7 +32,7 @@ class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
      * ?>
      * </code>
      *
-     * @param string             $name    of Header
+     * @param string $name of Header
      * @param Swift_Mime_Grammar $grammar
      */
     public function __construct($name, Swift_Mime_Grammar $grammar)
@@ -96,7 +96,7 @@ class Swift_Mime_Headers_DateHeader extends Swift_Mime_Headers_AbstractHeader
     public function setTimestamp($timestamp)
     {
         if (!is_null($timestamp)) {
-            $timestamp = (int) $timestamp;
+            $timestamp = (int)$timestamp;
         }
         $this->clearCachedValueIf($this->_timestamp != $timestamp);
         $this->_timestamp = $timestamp;

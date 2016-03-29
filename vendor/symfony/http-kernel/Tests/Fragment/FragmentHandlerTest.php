@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Fragment;
 
-use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 /**
  * @group time-sensitive
@@ -26,13 +26,11 @@ class FragmentHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $this->requestStack = $this->getMockBuilder('Symfony\\Component\\HttpFoundation\\RequestStack')
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
         $this->requestStack
             ->expects($this->any())
             ->method('getCurrentRequest')
-            ->will($this->returnValue(Request::create('/')))
-        ;
+            ->will($this->returnValue(Request::create('/')));
     }
 
     /**
@@ -78,13 +76,11 @@ class FragmentHandlerTest extends \PHPUnit_Framework_TestCase
         $renderer
             ->expects($this->any())
             ->method('getName')
-            ->will($this->returnValue('foo'))
-        ;
+            ->will($this->returnValue('foo'));
         $e = $renderer
             ->expects($this->any())
             ->method('render')
-            ->will($returnValue)
-        ;
+            ->will($returnValue);
 
         if ($arguments) {
             call_user_func_array(array($e, 'with'), $arguments);

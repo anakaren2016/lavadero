@@ -4,11 +4,6 @@ namespace Hamcrest\Core;
 class AllOfTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Core\AllOf::allOf('irrelevant');
-    }
-
     public function testEvaluatesToTheLogicalConjunctionOfTwoOtherMatchers()
     {
         assertThat('good', allOf('good', 'good'));
@@ -52,5 +47,10 @@ class AllOfTest extends \Hamcrest\AbstractMatcherTest
             allOf('bad', 'good'),
             'bad'
         );
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Core\AllOf::allOf('irrelevant');
     }
 }

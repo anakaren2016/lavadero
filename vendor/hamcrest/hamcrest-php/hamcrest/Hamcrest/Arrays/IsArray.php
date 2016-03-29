@@ -1,9 +1,9 @@
 <?php
 namespace Hamcrest\Arrays;
 
-/*
- Copyright (c) 2009 hamcrest.org
- */
+    /*
+     Copyright (c) 2009 hamcrest.org
+     */
 
 // NOTE: This class is not exactly a direct port of Java's since Java handles
 //       arrays quite differently than PHP
@@ -55,13 +55,12 @@ class IsArray extends TypeSafeMatcher
             return;
         } elseif (array_keys($actual) != array_keys($this->_elementMatchers)) {
             $mismatchDescription->appendText('array keys were ')
-                                                    ->appendValueList(
-                                                        $this->descriptionStart(),
-                                                        $this->descriptionSeparator(),
-                                                        $this->descriptionEnd(),
-                                                        array_keys($actual)
-                                                    )
-                                                    ;
+                ->appendValueList(
+                    $this->descriptionStart(),
+                    $this->descriptionSeparator(),
+                    $this->descriptionEnd(),
+                    array_keys($actual)
+                );
 
             return;
         }

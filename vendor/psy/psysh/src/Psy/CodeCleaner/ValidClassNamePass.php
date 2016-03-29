@@ -30,9 +30,9 @@ use Psy\Exception\FatalErrorException;
  */
 class ValidClassNamePass extends NamespaceAwarePass
 {
-    const CLASS_TYPE     = 'class';
+    const CLASS_TYPE = 'class';
     const INTERFACE_TYPE = 'interface';
-    const TRAIT_TYPE     = 'trait';
+    const TRAIT_TYPE = 'trait';
 
     protected $checkTraits;
 
@@ -142,7 +142,8 @@ class ValidClassNamePass extends NamespaceAwarePass
     {
         // there is no need to check exists for ::class const for php 5.5 or newer
         if (strtolower($stmt->name) === 'class'
-            && version_compare(PHP_VERSION, '5.5', '>=')) {
+            && version_compare(PHP_VERSION, '5.5', '>=')
+        ) {
             return;
         }
 
@@ -201,7 +202,7 @@ class ValidClassNamePass extends NamespaceAwarePass
      * @throws FatalErrorException
      *
      * @param string $name
-     * @param Stmt   $stmt
+     * @param Stmt $stmt
      */
     protected function ensureClassExists($name, $stmt)
     {
@@ -216,7 +217,7 @@ class ValidClassNamePass extends NamespaceAwarePass
      * @throws FatalErrorException
      *
      * @param string $name
-     * @param Stmt   $stmt
+     * @param Stmt $stmt
      */
     protected function ensureClassOrInterfaceExists($name, $stmt)
     {
@@ -232,7 +233,7 @@ class ValidClassNamePass extends NamespaceAwarePass
      *
      * @param string $class
      * @param string $name
-     * @param Stmt   $stmt
+     * @param Stmt $stmt
      */
     protected function ensureMethodExists($class, $name, $stmt)
     {
@@ -354,7 +355,7 @@ class ValidClassNamePass extends NamespaceAwarePass
      * Error creation factory.
      *
      * @param string $msg
-     * @param Stmt   $stmt
+     * @param Stmt $stmt
      *
      * @return FatalErrorException
      */

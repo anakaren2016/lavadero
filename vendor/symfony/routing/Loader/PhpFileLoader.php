@@ -27,7 +27,7 @@ class PhpFileLoader extends FileLoader
     /**
      * Loads a PHP file.
      *
-     * @param string      $file A PHP file path
+     * @param string $file A PHP file path
      * @param string|null $type The resource type
      *
      * @return RouteCollection A RouteCollection instance
@@ -54,7 +54,7 @@ class PhpFileLoader extends FileLoader
     /**
      * Safe include. Used for scope isolation.
      *
-     * @param string        $file   File to include
+     * @param string $file File to include
      * @param PhpFileLoader $loader the loader variable is exposed to the included file below
      *
      * @return RouteCollection

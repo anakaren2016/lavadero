@@ -4,11 +4,6 @@ namespace Hamcrest\Text;
 class MatchesPatternTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return matchesPattern('/o+b/');
-    }
-
     public function testEvaluatesToTrueIfArgumentmatchesPattern()
     {
         assertThat('foobar', matchesPattern('/o+b/'));
@@ -26,5 +21,10 @@ class MatchesPatternTest extends \Hamcrest\AbstractMatcherTest
     public function testHasAReadableDescription()
     {
         $this->assertDescription('a string matching "pattern"', matchesPattern('pattern'));
+    }
+
+    protected function createMatcher()
+    {
+        return matchesPattern('/o+b/');
     }
 }

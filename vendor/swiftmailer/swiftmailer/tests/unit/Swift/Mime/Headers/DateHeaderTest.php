@@ -12,6 +12,11 @@ class Swift_Mime_Headers_DateHeaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Swift_Mime_Header::TYPE_DATE, $header->getFieldType());
     }
 
+    private function _getHeader($name)
+    {
+        return new Swift_Mime_Headers_DateHeader($name, new Swift_Mime_Grammar());
+    }
+
     public function testGetTimestamp()
     {
         $timestamp = time();
@@ -57,13 +62,8 @@ class Swift_Mime_Headers_DateHeaderTest extends \PHPUnit_Framework_TestCase
         $timestamp = time();
         $header = $this->_getHeader('Date');
         $header->setTimestamp($timestamp);
-        $this->assertEquals('Date: '.date('r', $timestamp)."\r\n",
+        $this->assertEquals('Date: ' . date('r', $timestamp) . "\r\n",
             $header->toString()
-            );
-    }
-
-    private function _getHeader($name)
-    {
-        return new Swift_Mime_Headers_DateHeader($name, new Swift_Mime_Grammar());
+        );
     }
 }

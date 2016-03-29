@@ -25,10 +25,10 @@ class Serializer implements SerializerInterface
      * @var array
      */
     private static $dataToKeep = [
-        'code'     => true,
-        'context'  => true,
-        'binding'  => true,
-        'scope'    => true,
+        'code' => true,
+        'context' => true,
+        'binding' => true,
+        'scope' => true,
         'isStatic' => true,
     ];
 
@@ -49,13 +49,14 @@ class Serializer implements SerializerInterface
     /**
      * Create a new serializer instance.
      *
-     * @param ClosureAnalyzer|null $analyzer   Closure analyzer instance.
-     * @param string|null          $signingKey HMAC key to sign closure data.
+     * @param ClosureAnalyzer|null $analyzer Closure analyzer instance.
+     * @param string|null $signingKey HMAC key to sign closure data.
      */
     public function __construct(
         ClosureAnalyzer $analyzer = null,
         $signingKey = null
-    ) {
+    )
+    {
         $this->analyzer = $analyzer ?: new DefaultAnalyzer;
         $this->signingKey = $signingKey;
     }
@@ -92,7 +93,8 @@ class Serializer implements SerializerInterface
             $this->verifySignature($signature, $serialized);
         }
 
-        set_error_handler(function () {});
+        set_error_handler(function () {
+        });
         $unserialized = unserialize($serialized);
         restore_error_handler();
         if ($unserialized === false) {
@@ -197,7 +199,7 @@ class Serializer implements SerializerInterface
      * Verifies the signature for a closure's serialized data.
      *
      * @param string $signature The provided signature of the data.
-     * @param string $data      The data for which to verify the signature.
+     * @param string $data The data for which to verify the signature.
      *
      * @throws ClosureUnserializationException if the signature is invalid.
      */

@@ -39,7 +39,7 @@ interface FilesystemInterface
      * List contents of a directory.
      *
      * @param string $directory The directory to list.
-     * @param bool   $recursive Whether to list recursively.
+     * @param bool $recursive Whether to list recursively.
      *
      * @return array A list of file metadata.
      */
@@ -101,9 +101,9 @@ interface FilesystemInterface
     /**
      * Write a new file.
      *
-     * @param string $path     The path of the new file.
+     * @param string $path The path of the new file.
      * @param string $contents The file contents.
-     * @param array  $config   An optional configuration array.
+     * @param array $config An optional configuration array.
      *
      * @throws FileExistsException
      *
@@ -114,9 +114,9 @@ interface FilesystemInterface
     /**
      * Write a new file using a stream.
      *
-     * @param string   $path     The path of the new file.
+     * @param string $path The path of the new file.
      * @param resource $resource The file handle.
-     * @param array    $config   An optional configuration array.
+     * @param array $config An optional configuration array.
      *
      * @throws InvalidArgumentException If $resource is not a file handle.
      * @throws FileExistsException
@@ -128,9 +128,9 @@ interface FilesystemInterface
     /**
      * Update an existing file.
      *
-     * @param string $path     The path of the existing file.
+     * @param string $path The path of the existing file.
      * @param string $contents The file contents.
-     * @param array  $config   An optional configuration array.
+     * @param array $config An optional configuration array.
      *
      * @throws FileNotFoundException
      *
@@ -141,9 +141,9 @@ interface FilesystemInterface
     /**
      * Update an existing file using a stream.
      *
-     * @param string   $path     The path of the existing file.
+     * @param string $path The path of the existing file.
      * @param resource $resource The file handle.
-     * @param array    $config   An optional configuration array.
+     * @param array $config An optional configuration array.
      *
      * @throws InvalidArgumentException If $resource is not a file handle.
      * @throws FileNotFoundException
@@ -155,7 +155,7 @@ interface FilesystemInterface
     /**
      * Rename a file.
      *
-     * @param string $path    Path to the existing file.
+     * @param string $path Path to the existing file.
      * @param string $newpath The new path of the file.
      *
      * @throws FileExistsException   Thrown if $newpath exists.
@@ -168,7 +168,7 @@ interface FilesystemInterface
     /**
      * Copy a file.
      *
-     * @param string $path    Path to the existing file.
+     * @param string $path Path to the existing file.
      * @param string $newpath The new path of the file.
      *
      * @throws FileExistsException   Thrown if $newpath exists.
@@ -204,7 +204,7 @@ interface FilesystemInterface
      * Create a directory.
      *
      * @param string $dirname The name of the new directory.
-     * @param array  $config  An optional configuration array.
+     * @param array $config An optional configuration array.
      *
      * @return bool True on success, false on failure.
      */
@@ -213,7 +213,7 @@ interface FilesystemInterface
     /**
      * Set the visibility for a file.
      *
-     * @param string $path       The path to the file.
+     * @param string $path The path to the file.
      * @param string $visibility One of 'public' or 'private'.
      *
      * @return bool True on success, false on failure.
@@ -223,9 +223,9 @@ interface FilesystemInterface
     /**
      * Create a file or update if exists.
      *
-     * @param string $path     The path to the file.
+     * @param string $path The path to the file.
      * @param string $contents The file contents.
-     * @param array  $config   An optional configuration array.
+     * @param array $config An optional configuration array.
      *
      * @return bool True on success, false on failure.
      */
@@ -234,9 +234,9 @@ interface FilesystemInterface
     /**
      * Create a file or update if exists.
      *
-     * @param string   $path     The path to the file.
+     * @param string $path The path to the file.
      * @param resource $resource The file handle.
-     * @param array    $config   An optional configuration array.
+     * @param array $config An optional configuration array.
      *
      * @throws InvalidArgumentException Thrown if $resource is not a resource.
      *
@@ -258,7 +258,7 @@ interface FilesystemInterface
     /**
      * Get a file/directory handler.
      *
-     * @param string  $path    The path to the file.
+     * @param string $path The path to the file.
      * @param Handler $handler An optional existing handler to populate.
      *
      * @return Handler Either a file or directory handler.

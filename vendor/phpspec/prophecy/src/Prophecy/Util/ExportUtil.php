@@ -33,8 +33,8 @@ class ExportUtil
      *  - Carriage returns and newlines are normalized to \n
      *  - Recursion and repeated rendering is treated properly
      *
-     * @param  mixed  $value
-     * @param  int    $indentation The indentation level of the 2nd+ line
+     * @param  mixed $value
+     * @param  int $indentation The indentation level of the 2nd+ line
      * @return string
      */
     public static function export($value, $indentation = 0)
@@ -43,70 +43,11 @@ class ExportUtil
     }
 
     /**
-     * Converts an object to an array containing all of its private, protected
-     * and public properties.
-     *
-     * @param  mixed $value
-     * @return array
-     */
-    public static function toArray($value)
-    {
-        if (!is_object($value)) {
-            return (array) $value;
-        }
-
-        $array = array();
-
-        foreach ((array) $value as $key => $val) {
-            // properties are transformed to keys in the following way:
-            // private   $property => "\0Classname\0property"
-            // protected $property => "\0*\0property"
-            // public    $property => "property"
-            if (preg_match('/^\0.+\0(.+)$/', $key, $matches)) {
-                $key = $matches[1];
-            }
-
-            // See https://github.com/php/php-src/commit/5721132
-            if ($key === "\0gcdata") {
-                continue;
-            }
-
-            $array[$key] = $val;
-        }
-
-        // Some internal classes like SplObjectStorage don't work with the
-        // above (fast) mechanism nor with reflection in Zend.
-        // Format the output similarly to print_r() in this case
-        if ($value instanceof \SplObjectStorage) {
-            // However, the fast method does work in HHVM, and exposes the
-            // internal implementation. Hide it again.
-            if (property_exists('\SplObjectStorage', '__storage')) {
-                unset($array['__storage']);
-            } elseif (property_exists('\SplObjectStorage', 'storage')) {
-                unset($array['storage']);
-            }
-
-            if (property_exists('\SplObjectStorage', '__key')) {
-                unset($array['__key']);
-            }
-
-            foreach ($value as $key => $val) {
-                $array[spl_object_hash($val)] = array(
-                    'obj' => $val,
-                    'inf' => $value->getInfo(),
-                );
-            }
-        }
-
-        return $array;
-    }
-
-    /**
      * Recursive implementation of export
      *
-     * @param  mixed                                       $value       The value to export
-     * @param  int                                         $indentation The indentation level of the 2nd+ line
-     * @param  \SebastianBergmann\RecursionContext\Context $processed   Previously processed objects
+     * @param  mixed $value The value to export
+     * @param  int $indentation The indentation level of the 2nd+ line
+     * @param  \SebastianBergmann\RecursionContext\Context $processed Previously processed objects
      * @return string
      * @see    SebastianBergmann\Exporter\Exporter::export
      */
@@ -158,7 +99,7 @@ class ExportUtil
                 return 'Array &' . $key;
             }
 
-            $key    = $processed->add($value);
+            $key = $processed->add($value);
             $values = '';
 
             if (count($value) > 0) {
@@ -186,9 +127,9 @@ class ExportUtil
                 return sprintf('%s:%s Object', $class, $hash);
             }
 
-            $hash   = $processed->add($value);
+            $hash = $processed->add($value);
             $values = '';
-            $array  = self::toArray($value);
+            $array = self::toArray($value);
 
             if (count($array) > 0) {
                 foreach ($array as $k => $v) {
@@ -207,5 +148,64 @@ class ExportUtil
         }
 
         return var_export($value, true);
+    }
+
+    /**
+     * Converts an object to an array containing all of its private, protected
+     * and public properties.
+     *
+     * @param  mixed $value
+     * @return array
+     */
+    public static function toArray($value)
+    {
+        if (!is_object($value)) {
+            return (array)$value;
+        }
+
+        $array = array();
+
+        foreach ((array)$value as $key => $val) {
+            // properties are transformed to keys in the following way:
+            // private   $property => "\0Classname\0property"
+            // protected $property => "\0*\0property"
+            // public    $property => "property"
+            if (preg_match('/^\0.+\0(.+)$/', $key, $matches)) {
+                $key = $matches[1];
+            }
+
+            // See https://github.com/php/php-src/commit/5721132
+            if ($key === "\0gcdata") {
+                continue;
+            }
+
+            $array[$key] = $val;
+        }
+
+        // Some internal classes like SplObjectStorage don't work with the
+        // above (fast) mechanism nor with reflection in Zend.
+        // Format the output similarly to print_r() in this case
+        if ($value instanceof \SplObjectStorage) {
+            // However, the fast method does work in HHVM, and exposes the
+            // internal implementation. Hide it again.
+            if (property_exists('\SplObjectStorage', '__storage')) {
+                unset($array['__storage']);
+            } elseif (property_exists('\SplObjectStorage', 'storage')) {
+                unset($array['storage']);
+            }
+
+            if (property_exists('\SplObjectStorage', '__key')) {
+                unset($array['__key']);
+            }
+
+            foreach ($value as $key => $val) {
+                $array[spl_object_hash($val)] = array(
+                    'obj' => $val,
+                    'inf' => $value->getInfo(),
+                );
+            }
+        }
+
+        return $array;
     }
 }

@@ -46,6 +46,11 @@ class FileBagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($file, $bag->get('file'));
     }
 
+    protected function createTempFile()
+    {
+        return tempnam(sys_get_temp_dir() . '/form_test', 'FormTest');
+    }
+
     public function testShouldSetEmptyUploadedFilesToNull()
     {
         $bag = new FileBag(array('file' => array(
@@ -127,22 +132,17 @@ class FileBagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($file, $files['image']['file']);
     }
 
-    protected function createTempFile()
-    {
-        return tempnam(sys_get_temp_dir().'/form_test', 'FormTest');
-    }
-
     protected function setUp()
     {
-        mkdir(sys_get_temp_dir().'/form_test', 0777, true);
+        mkdir(sys_get_temp_dir() . '/form_test', 0777, true);
     }
 
     protected function tearDown()
     {
-        foreach (glob(sys_get_temp_dir().'/form_test/*') as $file) {
+        foreach (glob(sys_get_temp_dir() . '/form_test/*') as $file) {
             unlink($file);
         }
 
-        rmdir(sys_get_temp_dir().'/form_test');
+        rmdir(sys_get_temp_dir() . '/form_test');
     }
 }

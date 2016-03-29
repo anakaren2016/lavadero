@@ -2,30 +2,30 @@
 
 namespace PhpParser\Node\Stmt;
 
-use PhpParser\Node;
 use PhpParser\Error;
+use PhpParser\Node;
 
 class Interface_ extends ClassLike
 {
-    /** @var Node\Name[] Extended interfaces */
-    public $extends;
-
     protected static $specialNames = array(
-        'self'   => true,
+        'self' => true,
         'parent' => true,
         'static' => true,
     );
+    /** @var Node\Name[] Extended interfaces */
+    public $extends;
 
     /**
      * Constructs a class node.
      *
-     * @param string $name       Name
-     * @param array  $subNodes   Array of the following optional subnodes:
+     * @param string $name Name
+     * @param array $subNodes Array of the following optional subnodes:
      *                           'extends' => array(): Name of extended interfaces
      *                           'stmts'   => array(): Statements
-     * @param array  $attributes Additional attributes
+     * @param array $attributes Additional attributes
      */
-    public function __construct($name, array $subNodes = array(), array $attributes = array()) {
+    public function __construct($name, array $subNodes = array(), array $attributes = array())
+    {
         parent::__construct($attributes);
         $this->name = $name;
         $this->extends = isset($subNodes['extends']) ? $subNodes['extends'] : array();
@@ -45,7 +45,8 @@ class Interface_ extends ClassLike
         }
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('name', 'extends', 'stmts');
     }
 }

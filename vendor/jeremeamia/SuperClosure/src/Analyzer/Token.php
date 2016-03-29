@@ -33,7 +33,7 @@ class Token
     /**
      * Constructs a token object.
      *
-     * @param string   $code
+     * @param string $code
      * @param int|null $value
      * @param int|null $line
      *

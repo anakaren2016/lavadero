@@ -1,9 +1,9 @@
 <?php
 namespace Hamcrest;
 
-/*
- Copyright (c) 2012 hamcrest.org
- */
+    /*
+     Copyright (c) 2012 hamcrest.org
+     */
 
 /**
  * Contains utility methods for handling Hamcrest matchers.
@@ -23,8 +23,7 @@ class Util
     {
         return ($item instanceof Matcher)
             ? $item
-            : Core\IsEqual::equalTo($item)
-            ;
+            : Core\IsEqual::equalTo($item);
     }
 
     /**

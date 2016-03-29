@@ -72,12 +72,12 @@ class PHPUnit_Framework_MockObject_MockBuilder
 
     /**
      * @param PHPUnit_Framework_TestCase $testCase
-     * @param array|string               $type
+     * @param array|string $type
      */
     public function __construct(PHPUnit_Framework_TestCase $testCase, $type)
     {
         $this->testCase = $testCase;
-        $this->type     = $type;
+        $this->type = $type;
     }
 
     /**
@@ -142,7 +142,7 @@ class PHPUnit_Framework_MockObject_MockBuilder
     /**
      * Specifies the subset of methods to mock. Default is to mock all of them.
      *
-     * @param  array|null                               $methods
+     * @param  array|null $methods
      * @return PHPUnit_Framework_MockObject_MockBuilder
      */
     public function setMethods($methods)
@@ -155,7 +155,7 @@ class PHPUnit_Framework_MockObject_MockBuilder
     /**
      * Specifies the arguments for the constructor.
      *
-     * @param  array                                    $args
+     * @param  array $args
      * @return PHPUnit_Framework_MockObject_MockBuilder
      */
     public function setConstructorArgs(array $args)
@@ -168,7 +168,7 @@ class PHPUnit_Framework_MockObject_MockBuilder
     /**
      * Specifies the name for the mock class.
      *
-     * @param  string                                   $name
+     * @param  string $name
      * @return PHPUnit_Framework_MockObject_MockBuilder
      */
     public function setMockClassName($name)
@@ -301,7 +301,7 @@ class PHPUnit_Framework_MockObject_MockBuilder
     public function disableProxyingToOriginalMethods()
     {
         $this->callOriginalMethods = false;
-        $this->proxyTarget         = null;
+        $this->proxyTarget = null;
 
         return $this;
     }
@@ -309,7 +309,7 @@ class PHPUnit_Framework_MockObject_MockBuilder
     /**
      * Sets the proxy target.
      *
-     * @param  object                                   $object
+     * @param  object $object
      * @return PHPUnit_Framework_MockObject_MockBuilder
      * @since  Method available since Release 2.0.0
      */

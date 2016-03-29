@@ -25,6 +25,39 @@ class OutputFormatter implements OutputFormatterInterface
     private $styleStack;
 
     /**
+     * Initializes console output formatter.
+     *
+     * @param bool $decorated Whether this formatter should actually decorate strings
+     * @param OutputFormatterStyleInterface[] $styles Array of "name => FormatterStyle" instances
+     */
+    public function __construct($decorated = false, array $styles = array())
+    {
+        $this->decorated = (bool)$decorated;
+
+        $this->setStyle('error', new OutputFormatterStyle('white', 'red'));
+        $this->setStyle('info', new OutputFormatterStyle('green'));
+        $this->setStyle('comment', new OutputFormatterStyle('yellow'));
+        $this->setStyle('question', new OutputFormatterStyle('black', 'cyan'));
+
+        foreach ($styles as $name => $style) {
+            $this->setStyle($name, $style);
+        }
+
+        $this->styleStack = new OutputFormatterStyleStack();
+    }
+
+    /**
+     * Sets a new style.
+     *
+     * @param string $name The style name
+     * @param OutputFormatterStyleInterface $style The style instance
+     */
+    public function setStyle($name, OutputFormatterStyleInterface $style)
+    {
+        $this->styles[strtolower($name)] = $style;
+    }
+
+    /**
      * Escapes "<" special char in given text.
      *
      * @param string $text Text to escape
@@ -42,71 +75,6 @@ class OutputFormatter implements OutputFormatterInterface
         }
 
         return $text;
-    }
-
-    /**
-     * Initializes console output formatter.
-     *
-     * @param bool                            $decorated Whether this formatter should actually decorate strings
-     * @param OutputFormatterStyleInterface[] $styles    Array of "name => FormatterStyle" instances
-     */
-    public function __construct($decorated = false, array $styles = array())
-    {
-        $this->decorated = (bool) $decorated;
-
-        $this->setStyle('error', new OutputFormatterStyle('white', 'red'));
-        $this->setStyle('info', new OutputFormatterStyle('green'));
-        $this->setStyle('comment', new OutputFormatterStyle('yellow'));
-        $this->setStyle('question', new OutputFormatterStyle('black', 'cyan'));
-
-        foreach ($styles as $name => $style) {
-            $this->setStyle($name, $style);
-        }
-
-        $this->styleStack = new OutputFormatterStyleStack();
-    }
-
-    /**
-     * Sets the decorated flag.
-     *
-     * @param bool $decorated Whether to decorate the messages or not
-     */
-    public function setDecorated($decorated)
-    {
-        $this->decorated = (bool) $decorated;
-    }
-
-    /**
-     * Gets the decorated flag.
-     *
-     * @return bool true if the output will decorate messages, false otherwise
-     */
-    public function isDecorated()
-    {
-        return $this->decorated;
-    }
-
-    /**
-     * Sets a new style.
-     *
-     * @param string                        $name  The style name
-     * @param OutputFormatterStyleInterface $style The style instance
-     */
-    public function setStyle($name, OutputFormatterStyleInterface $style)
-    {
-        $this->styles[strtolower($name)] = $style;
-    }
-
-    /**
-     * Checks if output formatter has style with specified name.
-     *
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function hasStyle($name)
-    {
-        return isset($this->styles[strtolower($name)]);
     }
 
     /**
@@ -128,6 +96,18 @@ class OutputFormatter implements OutputFormatterInterface
     }
 
     /**
+     * Checks if output formatter has style with specified name.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasStyle($name)
+    {
+        return isset($this->styles[strtolower($name)]);
+    }
+
+    /**
      * Formats a message according to the given styles.
      *
      * @param string $message The message to style
@@ -136,7 +116,7 @@ class OutputFormatter implements OutputFormatterInterface
      */
     public function format($message)
     {
-        $message = (string) $message;
+        $message = (string)$message;
         $offset = 0;
         $output = '';
         $tagRegex = '[a-z][a-z0-9_=;-]*+';
@@ -182,11 +162,35 @@ class OutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @return OutputFormatterStyleStack
+     * Applies current style from stack to text, if must be applied.
+     *
+     * @param string $text Input text
+     *
+     * @return string Styled text
      */
-    public function getStyleStack()
+    private function applyCurrentStyle($text)
     {
-        return $this->styleStack;
+        return $this->isDecorated() && strlen($text) > 0 ? $this->styleStack->getCurrent()->apply($text) : $text;
+    }
+
+    /**
+     * Gets the decorated flag.
+     *
+     * @return bool true if the output will decorate messages, false otherwise
+     */
+    public function isDecorated()
+    {
+        return $this->decorated;
+    }
+
+    /**
+     * Sets the decorated flag.
+     *
+     * @param bool $decorated Whether to decorate the messages or not
+     */
+    public function setDecorated($decorated)
+    {
+        $this->decorated = (bool)$decorated;
     }
 
     /**
@@ -227,14 +231,10 @@ class OutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * Applies current style from stack to text, if must be applied.
-     *
-     * @param string $text Input text
-     *
-     * @return string Styled text
+     * @return OutputFormatterStyleStack
      */
-    private function applyCurrentStyle($text)
+    public function getStyleStack()
     {
-        return $this->isDecorated() && strlen($text) > 0 ? $this->styleStack->getCurrent()->apply($text) : $text;
+        return $this->styleStack;
     }
 }

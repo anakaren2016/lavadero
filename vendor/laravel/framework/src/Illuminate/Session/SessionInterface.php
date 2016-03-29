@@ -24,7 +24,7 @@ interface SessionInterface extends BaseSessionInterface
     /**
      * Set the request on the handler instance.
      *
-     * @param  \Symfony\Component\HttpFoundation\Request  $request
+     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return void
      */
     public function setRequestOnHandler(Request $request);

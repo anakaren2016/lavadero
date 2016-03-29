@@ -18,8 +18,8 @@ use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\VarDumper\Cloner\Data;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
@@ -103,10 +103,10 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
                             $fileExcerpt = array();
 
                             for ($i = max($line - 3, 1), $max = min($line + 3, count($src)); $i <= $max; ++$i) {
-                                $fileExcerpt[] = '<li'.($i === $line ? ' class="selected"' : '').'><code>'.$this->htmlEncode($src[$i - 1]).'</code></li>';
+                                $fileExcerpt[] = '<li' . ($i === $line ? ' class="selected"' : '') . '><code>' . $this->htmlEncode($src[$i - 1]) . '</code></li>';
                             }
 
-                            $fileExcerpt = '<ol start="'.max($line - 3, 1).'">'.implode("\n", $fileExcerpt).'</ol>';
+                            $fileExcerpt = '<ol start="' . max($line - 3, 1) . '">' . implode("\n", $fileExcerpt) . '</ol>';
                         }
                         break;
                     }
@@ -225,7 +225,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
             $h = headers_list();
             $i = count($h);
-            array_unshift($h, 'Content-Type: '.ini_get('default_mimetype'));
+            array_unshift($h, 'Content-Type: ' . ini_get('default_mimetype'));
             while (0 !== stripos($h[$i], 'Content-Type:')) {
                 --$i;
             }
@@ -256,17 +256,17 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
                         $name = strip_tags($this->style('', $name));
                         $file = strip_tags($this->style('', $file));
                         if ($fileLinkFormat) {
-                            $link = strtr(strip_tags($this->style('', $fileLinkFormat)), array('%f' => $file, '%l' => (int) $line));
-                            $name = sprintf('<a href="%s" title="%s">'.$s.'</a>', $link, $file, $name);
+                            $link = strtr(strip_tags($this->style('', $fileLinkFormat)), array('%f' => $file, '%l' => (int)$line));
+                            $name = sprintf('<a href="%s" title="%s">' . $s . '</a>', $link, $file, $name);
                         } else {
-                            $name = sprintf('<abbr title="%s">'.$s.'</abbr>', $file, $name);
+                            $name = sprintf('<abbr title="%s">' . $s . '</abbr>', $file, $name);
                         }
                     } else {
                         $name = $this->style('meta', $name);
                     }
-                    $this->line = $name.' on line '.$this->style('meta', $line).':';
+                    $this->line = $name . ' on line ' . $this->style('meta', $line) . ':';
                 } else {
-                    $this->line = $this->style('meta', $name).' on line '.$this->style('meta', $line).':';
+                    $this->line = $this->style('meta', $name) . ' on line ' . $this->style('meta', $line) . ':';
                 }
                 $this->dumpLine(0);
             };
@@ -274,7 +274,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
             $contextDumper($name, $file, $line, $this->fileLinkFormat);
         } else {
             $cloner = new VarCloner();
-            $this->dumper->dump($cloner->cloneVar($name.' on line '.$line.':'));
+            $this->dumper->dump($cloner->cloneVar($name . ' on line ' . $line . ':'));
         }
         $this->dumper->dump($data);
     }
@@ -283,7 +283,9 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
     {
         $html = '';
 
-        $dumper = new HtmlDumper(function ($line) use (&$html) {$html .= $line;}, $this->charset);
+        $dumper = new HtmlDumper(function ($line) use (&$html) {
+            $html .= $line;
+        }, $this->charset);
         $dumper->setDumpHeader('');
         $dumper->setDumpBoundaries('', '');
 

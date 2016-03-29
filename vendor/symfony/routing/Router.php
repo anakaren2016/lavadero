@@ -11,19 +11,19 @@
 
 namespace Symfony\Component\Routing;
 
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Config\ConfigCacheInterface;
-use Symfony\Component\Config\ConfigCacheFactoryInterface;
-use Symfony\Component\Config\ConfigCacheFactory;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Config\ConfigCacheFactory;
+use Symfony\Component\Config\ConfigCacheFactoryInterface;
+use Symfony\Component\Config\ConfigCacheInterface;
+use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\ConfigurableRequirementsInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Generator\Dumper\GeneratorDumperInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Matcher\Dumper\MatcherDumperInterface;
 use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
-use Symfony\Component\Routing\Matcher\Dumper\MatcherDumperInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 
 /**
  * The Router class is an example of the integration of all pieces of the
@@ -86,11 +86,11 @@ class Router implements RouterInterface, RequestMatcherInterface
     /**
      * Constructor.
      *
-     * @param LoaderInterface $loader   A LoaderInterface instance
-     * @param mixed           $resource The main resource to load
-     * @param array           $options  An array of options
-     * @param RequestContext  $context  The context
-     * @param LoggerInterface $logger   A logger instance
+     * @param LoaderInterface $loader A LoaderInterface instance
+     * @param mixed $resource The main resource to load
+     * @param array $options An array of options
+     * @param RequestContext $context The context
+     * @param LoggerInterface $logger A logger instance
      */
     public function __construct(LoaderInterface $loader, $resource, array $options = array(), RequestContext $context = null, LoggerInterface $logger = null)
     {
@@ -149,8 +149,8 @@ class Router implements RouterInterface, RequestMatcherInterface
     /**
      * Sets an option.
      *
-     * @param string $key   The key
-     * @param mixed  $value The value
+     * @param string $key The key
+     * @param mixed $value The value
      *
      * @throws \InvalidArgumentException
      */
@@ -278,7 +278,7 @@ class Router implements RouterInterface, RequestMatcherInterface
             return $this->matcher;
         }
 
-        $cache = $this->getConfigCacheFactory()->cache($this->options['cache_dir'].'/'.$this->options['matcher_cache_class'].'.php',
+        $cache = $this->getConfigCacheFactory()->cache($this->options['cache_dir'] . '/' . $this->options['matcher_cache_class'] . '.php',
             function (ConfigCacheInterface $cache) {
                 $dumper = $this->getMatcherDumperInstance();
                 if (method_exists($dumper, 'addExpressionLanguageProvider')) {
@@ -315,7 +315,7 @@ class Router implements RouterInterface, RequestMatcherInterface
         if (null === $this->options['cache_dir'] || null === $this->options['generator_cache_class']) {
             $this->generator = new $this->options['generator_class']($this->getRouteCollection(), $this->context, $this->logger);
         } else {
-            $cache = $this->getConfigCacheFactory()->cache($this->options['cache_dir'].'/'.$this->options['generator_cache_class'].'.php',
+            $cache = $this->getConfigCacheFactory()->cache($this->options['cache_dir'] . '/' . $this->options['generator_cache_class'] . '.php',
                 function (ConfigCacheInterface $cache) {
                     $dumper = $this->getGeneratorDumperInstance();
 

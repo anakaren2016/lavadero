@@ -24,7 +24,7 @@ final class ClosureComparator extends Comparator
     public function accepts($expected, $actual)
     {
         return is_object($expected) && $expected instanceof \Closure
-            && is_object($actual) && $actual instanceof \Closure;
+        && is_object($actual) && $actual instanceof \Closure;
     }
 
     public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)

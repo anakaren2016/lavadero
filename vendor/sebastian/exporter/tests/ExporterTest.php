@@ -20,17 +20,12 @@ class ExporterTest extends \PHPUnit_Framework_TestCase
      */
     private $exporter;
 
-    protected function setUp()
-    {
-        $this->exporter = new Exporter;
-    }
-
     public function exportProvider()
     {
         $obj2 = new \stdClass;
         $obj2->foo = 'bar';
 
-        $obj3 = (object)array(1,2,"Test\r\n",4,5,6,7,8);
+        $obj3 = (object)array(1, 2, "Test\r\n", 4, 5, 6, 7, 8);
 
         $obj = new \stdClass;
         //@codingStandardsIgnoreStart
@@ -59,9 +54,9 @@ class ExporterTest extends \PHPUnit_Framework_TestCase
             array(1.2, '1.2'),
             array(fopen('php://memory', 'r'), 'resource(%d) of type (stream)'),
             array('1', "'1'"),
-            array(array(array(1,2,3), array(3,4,5)),
-        <<<EOF
-Array &0 (
+            array(array(array(1, 2, 3), array(3, 4, 5)),
+                <<<EOF
+        Array &0 (
     0 => Array &1 (
         0 => 1
         1 => 2
@@ -77,8 +72,8 @@ EOF
             ),
             // \n\r and \r is converted to \n
             array("this\nis\na\nvery\nvery\nvery\nvery\nvery\nvery\rlong\n\rtext",
-            <<<EOF
-'this
+                <<<EOF
+    'this
 is
 a
 very
@@ -93,8 +88,8 @@ EOF
             ),
             array(new \stdClass, 'stdClass Object &%x ()'),
             array($obj,
-            <<<EOF
-stdClass Object &%x (
+                <<<EOF
+    stdClass Object &%x (
     'null' => null
     'boolean' => true
     'integer' => 1
@@ -124,8 +119,8 @@ EOF
             ),
             array(array(), 'Array &%d ()'),
             array($storage,
-            <<<EOF
-SplObjectStorage Object &%x (
+                <<<EOF
+    SplObjectStorage Object &%x (
     'foo' => stdClass Object &%x (
         'foo' => 'bar'
     )
@@ -137,8 +132,8 @@ SplObjectStorage Object &%x (
 EOF
             ),
             array($obj3,
-            <<<EOF
-stdClass Object &%x (
+                <<<EOF
+    stdClass Object &%x (
     0 => 1
     1 => 2
     2 => 'Test\n'
@@ -178,6 +173,11 @@ EOF
             $expected,
             $this->trimNewline($this->exporter->export($value))
         );
+    }
+
+    private function trimNewline($string)
+    {
+        return preg_replace('/[ ]*\n/', "\n", $string);
     }
 
     public function testExport2()
@@ -316,7 +316,8 @@ EOF;
     public function testNonBinaryStringExport($value, $expectedLength)
     {
         $this->assertRegExp(
-            "~'.{{$expectedLength}}'\$~s",
+            "~'.{{
+        $expectedLength}}'\$~s",
             $this->exporter->export($value)
         );
     }
@@ -326,8 +327,8 @@ EOF;
         $this->assertEquals(array(true), $this->exporter->toArray(true));
     }
 
-    private function trimNewline($string)
+    protected function setUp()
     {
-        return preg_replace('/[ ]*\n/', "\n", $string);
+        $this->exporter = new Exporter;
     }
 }

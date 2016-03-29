@@ -26,7 +26,7 @@ class Version
     public function __construct($release, $path)
     {
         $this->release = $release;
-        $this->path    = $path;
+        $this->path = $path;
     }
 
     /**
@@ -58,7 +58,7 @@ class Version
     }
 
     /**
-     * @param  string      $path
+     * @param  string $path
      * @return bool|string
      */
     private function getGitInformation($path)
@@ -70,7 +70,7 @@ class Version
         $dir = getcwd();
         chdir($path);
         $returnCode = 1;
-        $result     = @exec('git describe --tags 2>&1', $output, $returnCode);
+        $result = @exec('git describe --tags 2>&1', $output, $returnCode);
         chdir($dir);
 
         if ($returnCode !== 0) {

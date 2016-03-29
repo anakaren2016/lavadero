@@ -23,7 +23,7 @@ class ArrayCountTokenSpec extends ObjectBehavior
 
     function it_scores_6_if_argument_array_has_proper_count()
     {
-        $this->scoreArgument(array(1,2))->shouldReturn(6);
+        $this->scoreArgument(array(1, 2))->shouldReturn(6);
     }
 
     /**

@@ -26,8 +26,8 @@ class ExcludeDirectoryFilterIterator extends FilterIterator implements \Recursiv
     /**
      * Constructor.
      *
-     * @param \Iterator $iterator    The Iterator to filter
-     * @param array     $directories An array of directories to exclude
+     * @param \Iterator $iterator The Iterator to filter
+     * @param array $directories An array of directories to exclude
      */
     public function __construct(\Iterator $iterator, array $directories)
     {
@@ -42,7 +42,7 @@ class ExcludeDirectoryFilterIterator extends FilterIterator implements \Recursiv
             }
         }
         if ($patterns) {
-            $this->excludedPattern = '#(?:^|/)(?:'.implode('|', $patterns).')(?:/|$)#';
+            $this->excludedPattern = '#(?:^|/)(?:' . implode('|', $patterns) . ')(?:/|$)#';
         }
 
         parent::__construct($iterator);

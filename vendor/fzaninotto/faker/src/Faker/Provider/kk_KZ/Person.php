@@ -146,9 +146,9 @@ class Person extends \Faker\Provider\Person
             $birthDate = \Faker\Provider\DateTime::dateTimeBetween();
         }
 
-        $dateAsString       = $birthDate->format('ymd');
-        $genderAndCenturyId = (string) static::numberBetween(1, 6);
-        $randomDigits       = (string) static::numerify('#####');
+        $dateAsString = $birthDate->format('ymd');
+        $genderAndCenturyId = (string)static::numberBetween(1, 6);
+        $randomDigits = (string)static::numerify('#####');
 
         return $dateAsString . $genderAndCenturyId . $randomDigits;
     }

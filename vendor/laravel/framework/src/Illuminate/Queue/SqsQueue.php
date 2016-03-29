@@ -3,8 +3,8 @@
 namespace Illuminate\Queue;
 
 use Aws\Sqs\SqsClient;
-use Illuminate\Queue\Jobs\SqsJob;
 use Illuminate\Contracts\Queue\Queue as QueueContract;
+use Illuminate\Queue\Jobs\SqsJob;
 
 class SqsQueue extends Queue implements QueueContract
 {
@@ -39,9 +39,9 @@ class SqsQueue extends Queue implements QueueContract
     /**
      * Create a new Amazon SQS queue instance.
      *
-     * @param  \Aws\Sqs\SqsClient  $sqs
-     * @param  string  $default
-     * @param  string  $prefix
+     * @param  \Aws\Sqs\SqsClient $sqs
+     * @param  string $default
+     * @param  string $prefix
      * @return void
      */
     public function __construct(SqsClient $sqs, $default, $prefix = '')
@@ -54,9 +54,9 @@ class SqsQueue extends Queue implements QueueContract
     /**
      * Push a new job onto the queue.
      *
-     * @param  string  $job
-     * @param  mixed   $data
-     * @param  string  $queue
+     * @param  string $job
+     * @param  mixed $data
+     * @param  string $queue
      * @return mixed
      */
     public function push($job, $data = '', $queue = null)
@@ -67,9 +67,9 @@ class SqsQueue extends Queue implements QueueContract
     /**
      * Push a raw payload onto the queue.
      *
-     * @param  string  $payload
-     * @param  string  $queue
-     * @param  array   $options
+     * @param  string $payload
+     * @param  string $queue
+     * @param  array $options
      * @return mixed
      */
     public function pushRaw($payload, $queue = null, array $options = [])
@@ -82,10 +82,10 @@ class SqsQueue extends Queue implements QueueContract
     /**
      * Push a new job onto the queue after a delay.
      *
-     * @param  \DateTime|int  $delay
-     * @param  string  $job
-     * @param  mixed   $data
-     * @param  string  $queue
+     * @param  \DateTime|int $delay
+     * @param  string $job
+     * @param  mixed $data
+     * @param  string $queue
      * @return mixed
      */
     public function later($delay, $job, $data = '', $queue = null)
@@ -104,7 +104,7 @@ class SqsQueue extends Queue implements QueueContract
     /**
      * Pop the next job off of the queue.
      *
-     * @param  string  $queue
+     * @param  string $queue
      * @return \Illuminate\Contracts\Queue\Job|null
      */
     public function pop($queue = null)
@@ -127,7 +127,7 @@ class SqsQueue extends Queue implements QueueContract
     /**
      * Define the job creator callback for the connection.
      *
-     * @param  callable  $callback
+     * @param  callable $callback
      * @return $this
      */
     public function createJobsUsing(callable $callback)
@@ -140,7 +140,7 @@ class SqsQueue extends Queue implements QueueContract
     /**
      * Get the queue or return the default.
      *
-     * @param  string|null  $queue
+     * @param  string|null $queue
      * @return string
      */
     public function getQueue($queue)
@@ -151,7 +151,7 @@ class SqsQueue extends Queue implements QueueContract
             return $queue;
         }
 
-        return rtrim($this->prefix, '/').'/'.($queue);
+        return rtrim($this->prefix, '/') . '/' . ($queue);
     }
 
     /**

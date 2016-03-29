@@ -20,7 +20,7 @@ class PHPUnit_Framework_Constraint_Attribute extends PHPUnit_Framework_Constrain
 
     /**
      * @param PHPUnit_Framework_Constraint $constraint
-     * @param string                       $attributeName
+     * @param string $attributeName
      */
     public function __construct(PHPUnit_Framework_Constraint $constraint, $attributeName)
     {
@@ -39,9 +39,9 @@ class PHPUnit_Framework_Constraint_Attribute extends PHPUnit_Framework_Constrain
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param mixed  $other        Value or object to evaluate.
-     * @param string $description  Additional information about the test
-     * @param bool   $returnResult Whether to return a result or throw an exception
+     * @param mixed $other Value or object to evaluate.
+     * @param string $description Additional information about the test
+     * @param bool $returnResult Whether to return a result or throw an exception
      *
      * @return mixed
      *
@@ -60,17 +60,6 @@ class PHPUnit_Framework_Constraint_Attribute extends PHPUnit_Framework_Constrain
     }
 
     /**
-     * Returns a string representation of the constraint.
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return 'attribute "' . $this->attributeName . '" ' .
-               $this->innerConstraint->toString();
-    }
-
-    /**
      * Returns the description of the failure
      *
      * The beginning of failure messages is "Failed asserting that" in most
@@ -83,5 +72,16 @@ class PHPUnit_Framework_Constraint_Attribute extends PHPUnit_Framework_Constrain
     protected function failureDescription($other)
     {
         return $this->toString();
+    }
+
+    /**
+     * Returns a string representation of the constraint.
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        return 'attribute "' . $this->attributeName . '" ' .
+        $this->innerConstraint->toString();
     }
 }

@@ -42,7 +42,7 @@ class ProphecySubjectPatchSpec extends ObjectBehavior
     }
 
     /**
-     * @param \Prophecy\Doubler\Generator\Node\ClassNode  $node
+     * @param \Prophecy\Doubler\Generator\Node\ClassNode $node
      * @param \Prophecy\Doubler\Generator\Node\MethodNode $constructor
      * @param \Prophecy\Doubler\Generator\Node\MethodNode $method1
      * @param \Prophecy\Doubler\Generator\Node\MethodNode $method2

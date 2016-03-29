@@ -2,9 +2,9 @@
 
 namespace Illuminate\Foundation\Support\Providers;
 
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Routing\UrlGenerator;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param  \Illuminate\Routing\Router $router
      * @return void
      */
     public function boot(Router $router)
@@ -75,7 +75,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Load the standard routes file for the application.
      *
-     * @param  string  $path
+     * @param  string $path
      * @return mixed
      */
     protected function loadRoutesFrom($path)
@@ -104,8 +104,8 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Pass dynamic methods onto the router instance.
      *
-     * @param  string  $method
-     * @param  array  $parameters
+     * @param  string $method
+     * @param  array $parameters
      * @return mixed
      */
     public function __call($method, $parameters)

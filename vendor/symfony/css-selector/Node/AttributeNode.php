@@ -50,10 +50,10 @@ class AttributeNode extends AbstractNode
 
     /**
      * @param NodeInterface $selector
-     * @param string        $namespace
-     * @param string        $attribute
-     * @param string        $operator
-     * @param string        $value
+     * @param string $namespace
+     * @param string $attribute
+     * @param string $operator
+     * @param string $value
      */
     public function __construct(NodeInterface $selector, $namespace, $attribute, $operator, $value)
     {
@@ -117,7 +117,7 @@ class AttributeNode extends AbstractNode
      */
     public function __toString()
     {
-        $attribute = $this->namespace ? $this->namespace.'|'.$this->attribute : $this->attribute;
+        $attribute = $this->namespace ? $this->namespace . '|' . $this->attribute : $this->attribute;
 
         return 'exists' === $this->operator
             ? sprintf('%s[%s[%s]]', $this->getNodeName(), $this->selector, $attribute)

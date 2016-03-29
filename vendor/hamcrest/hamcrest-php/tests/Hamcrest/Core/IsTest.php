@@ -4,11 +4,6 @@ namespace Hamcrest\Core;
 class IsTest extends \Hamcrest\AbstractMatcherTest
 {
 
-    protected function createMatcher()
-    {
-        return \Hamcrest\Core\Is::is('something');
-    }
-
     public function testJustMatchesTheSameWayTheUnderylingMatcherDoes()
     {
         $this->assertMatches(is(equalTo(true)), true, 'should match');
@@ -29,5 +24,10 @@ class IsTest extends \Hamcrest\AbstractMatcherTest
         $this->assertDoesNotMatch(is('A'), 'B', 'should not match');
         $this->assertDoesNotMatch(is('B'), 'A', 'should not match');
         $this->assertDescription('is "A"', is('A'));
+    }
+
+    protected function createMatcher()
+    {
+        return \Hamcrest\Core\Is::is('something');
     }
 }

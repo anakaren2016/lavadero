@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Since Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Vasil Rangelov <boen.robot@gmail.com>
@@ -32,7 +32,7 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exDescription
      * @param string $exVersion
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SinceTag
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tag\SinceTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -43,7 +43,8 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
         $exContent,
         $exDescription,
         $exVersion
-    ) {
+    )
+    {
         $tag = new SinceTag($type, $content);
 
         $this->assertEquals($type, $tag->getName());

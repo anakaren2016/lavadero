@@ -10,7 +10,6 @@
 
 namespace SebastianBergmann\GlobalState\TestFixture;
 
-use DomDocument;
 use ArrayObject;
 
 /**
@@ -28,7 +27,8 @@ class SnapshotClass
     public static function init()
     {
         self::$dom = new DomDocument();
-        self::$closure = function () {};
+        self::$closure = function () {
+        };
         self::$arrayObject = new ArrayObject(array(1, 2, 3));
         self::$snapshotDomDocument = new SnapshotDomDocument();
         self::$resource = fopen('php://memory', 'r');

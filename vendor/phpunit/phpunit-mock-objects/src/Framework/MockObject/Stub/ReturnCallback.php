@@ -30,10 +30,10 @@ class PHPUnit_Framework_MockObject_Stub_ReturnCallback implements PHPUnit_Framew
         if (is_array($this->callback)) {
             if (is_object($this->callback[0])) {
                 $class = get_class($this->callback[0]);
-                $type  = '->';
+                $type = '->';
             } else {
                 $class = $this->callback[0];
-                $type  = '::';
+                $type = '::';
             }
 
             return sprintf(
@@ -45,7 +45,7 @@ class PHPUnit_Framework_MockObject_Stub_ReturnCallback implements PHPUnit_Framew
             );
         } else {
             return 'return result of user defined callback ' . $this->callback .
-                   ' with the passed arguments';
+            ' with the passed arguments';
         }
     }
 }

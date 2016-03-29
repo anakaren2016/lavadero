@@ -68,9 +68,9 @@ class Address extends \Faker\Provider\Address
         'Tanjay', 'Cabanatuan', 'Gapan', 'Muñoz', 'Palayan', 'San Jose',
         'Calapan', 'Puerto Princesa', 'Angeles', 'Mabalacat',
         'San Fernando', 'Alaminos', 'Dagupan', 'San Carlos',
-        'Urdaneta', 'Lucena', 'Tayabas', 'Antipolo','Calbayog', 'Catbalogan',
+        'Urdaneta', 'Lucena', 'Tayabas', 'Antipolo', 'Calbayog', 'Catbalogan',
         'Sorsogon City', 'General Santos', 'Koronadal', 'Maasin', 'Tacurong',
-        'Surigao City', 'Bislig', 'Tandag', 'Tarlac City','Olongapo',
+        'Surigao City', 'Bislig', 'Tandag', 'Tarlac City', 'Olongapo',
         'Dapitan', 'Dipolog', 'Pagadian', 'Zamboanga City'
     );
 

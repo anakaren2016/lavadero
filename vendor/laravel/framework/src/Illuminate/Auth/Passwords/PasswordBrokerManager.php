@@ -2,8 +2,8 @@
 
 namespace Illuminate\Auth\Passwords;
 
-use InvalidArgumentException;
 use Illuminate\Contracts\Auth\PasswordBrokerFactory as FactoryContract;
+use InvalidArgumentException;
 
 class PasswordBrokerManager implements FactoryContract
 {
@@ -24,7 +24,7 @@ class PasswordBrokerManager implements FactoryContract
     /**
      * Create a new PasswordBroker manager instance.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application $app
      * @return void
      */
     public function __construct($app)
@@ -33,9 +33,32 @@ class PasswordBrokerManager implements FactoryContract
     }
 
     /**
+     * Set the default password broker name.
+     *
+     * @param  string $name
+     * @return void
+     */
+    public function setDefaultDriver($name)
+    {
+        $this->app['config']['auth.defaults.passwords'] = $name;
+    }
+
+    /**
+     * Dynamically call the default driver instance.
+     *
+     * @param  string $method
+     * @param  array $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        return call_user_func_array([$this->broker(), $method], $parameters);
+    }
+
+    /**
      * Attempt to get the broker from the local cache.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
     public function broker($name = null)
@@ -43,14 +66,24 @@ class PasswordBrokerManager implements FactoryContract
         $name = $name ?: $this->getDefaultDriver();
 
         return isset($this->brokers[$name])
-                    ? $this->brokers[$name]
-                    : $this->brokers[$name] = $this->resolve($name);
+            ? $this->brokers[$name]
+            : $this->brokers[$name] = $this->resolve($name);
+    }
+
+    /**
+     * Get the default password broker name.
+     *
+     * @return string
+     */
+    public function getDefaultDriver()
+    {
+        return $this->app['config']['auth.defaults.passwords'];
     }
 
     /**
      * Resolve the given broker.
      *
-     * @param  string  $name
+     * @param  string $name
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      *
      * @throws \InvalidArgumentException
@@ -75,9 +108,20 @@ class PasswordBrokerManager implements FactoryContract
     }
 
     /**
+     * Get the password broker configuration.
+     *
+     * @param  string $name
+     * @return array
+     */
+    protected function getConfig($name)
+    {
+        return $this->app['config']["auth.passwords.{$name}"];
+    }
+
+    /**
      * Create a token repository instance based on the given configuration.
      *
-     * @param  array  $config
+     * @param  array $config
      * @return \Illuminate\Auth\Passwords\TokenRepositoryInterface
      */
     protected function createTokenRepository(array $config)
@@ -88,49 +132,5 @@ class PasswordBrokerManager implements FactoryContract
             $this->app['config']['app.key'],
             $config['expire']
         );
-    }
-
-    /**
-     * Get the password broker configuration.
-     *
-     * @param  string  $name
-     * @return array
-     */
-    protected function getConfig($name)
-    {
-        return $this->app['config']["auth.passwords.{$name}"];
-    }
-
-    /**
-     * Get the default password broker name.
-     *
-     * @return string
-     */
-    public function getDefaultDriver()
-    {
-        return $this->app['config']['auth.defaults.passwords'];
-    }
-
-    /**
-     * Set the default password broker name.
-     *
-     * @param  string  $name
-     * @return void
-     */
-    public function setDefaultDriver($name)
-    {
-        $this->app['config']['auth.defaults.passwords'] = $name;
-    }
-
-    /**
-     * Dynamically call the default driver instance.
-     *
-     * @param  string  $method
-     * @param  array   $parameters
-     * @return mixed
-     */
-    public function __call($method, $parameters)
-    {
-        return call_user_func_array([$this->broker(), $method], $parameters);
     }
 }

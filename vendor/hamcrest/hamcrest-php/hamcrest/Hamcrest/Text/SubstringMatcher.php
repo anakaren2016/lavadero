@@ -20,26 +20,25 @@ abstract class SubstringMatcher extends TypeSafeMatcher
         $this->_substring = $substring;
     }
 
+    public function describeTo(Description $description)
+    {
+        $description->appendText('a string ')
+            ->appendText($this->relationship())
+            ->appendText(' ')
+            ->appendValue($this->_substring);
+    }
+
+    abstract protected function relationship();
+
     protected function matchesSafely($item)
     {
         return $this->evalSubstringOf($item);
     }
 
+    abstract protected function evalSubstringOf($string);
+
     protected function describeMismatchSafely($item, Description $mismatchDescription)
     {
         $mismatchDescription->appendText('was "')->appendText($item)->appendText('"');
     }
-
-    public function describeTo(Description $description)
-    {
-        $description->appendText('a string ')
-                                ->appendText($this->relationship())
-                                ->appendText(' ')
-                                ->appendValue($this->_substring)
-                                ;
-    }
-
-    abstract protected function evalSubstringOf($string);
-
-    abstract protected function relationship();
 }

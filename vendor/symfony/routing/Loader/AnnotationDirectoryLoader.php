@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Routing\Loader;
 
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Config\Resource\DirectoryResource;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * AnnotationDirectoryLoader loads routing information from annotations set
@@ -25,7 +25,7 @@ class AnnotationDirectoryLoader extends AnnotationFileLoader
     /**
      * Loads from annotations from a directory.
      *
-     * @param string      $path A directory path
+     * @param string $path A directory path
      * @param string|null $type The resource type
      *
      * @return RouteCollection A RouteCollection instance
@@ -40,7 +40,7 @@ class AnnotationDirectoryLoader extends AnnotationFileLoader
         $collection->addResource(new DirectoryResource($dir, '/\.php$/'));
         $files = iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), \RecursiveIteratorIterator::LEAVES_ONLY));
         usort($files, function (\SplFileInfo $a, \SplFileInfo $b) {
-            return (string) $a > (string) $b ? 1 : -1;
+            return (string)$a > (string)$b ? 1 : -1;
         });
 
         foreach ($files as $file) {
@@ -69,7 +69,7 @@ class AnnotationDirectoryLoader extends AnnotationFileLoader
         if (!is_string($resource)) {
             return false;
         }
-        
+
         try {
             $path = $this->locator->locate($resource);
         } catch (\Exception $e) {

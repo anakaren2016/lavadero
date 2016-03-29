@@ -24,7 +24,7 @@ class Framework_BaseTestListenerTest extends PHPUnit_Framework_TestCase
     public function testEndEventsAreCounted()
     {
         $this->result = new PHPUnit_Framework_TestResult;
-        $listener     = new BaseTestListenerSample();
+        $listener = new BaseTestListenerSample();
         $this->result->addListener($listener);
         $test = new Success;
         $test->run($this->result);

@@ -35,8 +35,8 @@ class DumperRoute
     /**
      * Constructor.
      *
-     * @param string $name  The route name
-     * @param Route  $route The route
+     * @param string $name The route name
+     * @param Route $route The route
      */
     public function __construct($name, Route $route)
     {

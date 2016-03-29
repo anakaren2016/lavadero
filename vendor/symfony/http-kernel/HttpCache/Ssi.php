@@ -75,7 +75,7 @@ class Ssi implements SurrogateInterface
         $current = $request->headers->get('Surrogate-Capability');
         $new = 'symfony2="SSI/1.0"';
 
-        $request->headers->set('Surrogate-Capability', $current ? $current.', '.$new : $new);
+        $request->headers->set('Surrogate-Capability', $current ? $current . ', ' . $new : $new);
     }
 
     /**
@@ -97,7 +97,7 @@ class Ssi implements SurrogateInterface
             return false;
         }
 
-        return (bool) preg_match('#content="[^"]*SSI/1.0[^"]*"#', $control);
+        return (bool)preg_match('#content="[^"]*SSI/1.0[^"]*"#', $control);
     }
 
     /**
@@ -141,7 +141,7 @@ class Ssi implements SurrogateInterface
                 throw new \RuntimeException('Unable to process an SSI tag without a "virtual" attribute.');
             }
 
-            $chunks[$i] = sprintf('<?php echo $this->surrogate->handle($this, %s, \'\', false) ?>'."\n",
+            $chunks[$i] = sprintf('<?php echo $this->surrogate->handle($this, %s, \'\', false) ?>' . "\n",
                 var_export($options['virtual'], true)
             );
             ++$i;

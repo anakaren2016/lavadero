@@ -2,8 +2,8 @@
 
 namespace Illuminate\Session;
 
-use SessionHandlerInterface;
 use Illuminate\Database\ConnectionInterface;
+use SessionHandlerInterface;
 
 /**
  * @deprecated since version 5.2. Use Illuminate\Session\DatabaseSessionHandler.
@@ -34,8 +34,8 @@ class LegacyDatabaseSessionHandler implements SessionHandlerInterface, Existence
     /**
      * Create a new database session handler instance.
      *
-     * @param  \Illuminate\Database\ConnectionInterface  $connection
-     * @param  string  $table
+     * @param  \Illuminate\Database\ConnectionInterface $connection
+     * @param  string $table
      * @return void
      */
     public function __construct(ConnectionInterface $connection, $table)
@@ -65,13 +65,23 @@ class LegacyDatabaseSessionHandler implements SessionHandlerInterface, Existence
      */
     public function read($sessionId)
     {
-        $session = (object) $this->getQuery()->find($sessionId);
+        $session = (object)$this->getQuery()->find($sessionId);
 
         if (isset($session->payload)) {
             $this->exists = true;
 
             return base64_decode($session->payload);
         }
+    }
+
+    /**
+     * Get a fresh query builder instance for the table.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    protected function getQuery()
+    {
+        return $this->connection->table($this->table);
     }
 
     /**
@@ -109,19 +119,9 @@ class LegacyDatabaseSessionHandler implements SessionHandlerInterface, Existence
     }
 
     /**
-     * Get a fresh query builder instance for the table.
-     *
-     * @return \Illuminate\Database\Query\Builder
-     */
-    protected function getQuery()
-    {
-        return $this->connection->table($this->table);
-    }
-
-    /**
      * Set the existence state for the session.
      *
-     * @param  bool  $value
+     * @param  bool $value
      * @return $this
      */
     public function setExists($value)

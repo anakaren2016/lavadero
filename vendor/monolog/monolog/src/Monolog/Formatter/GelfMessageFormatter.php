@@ -11,8 +11,8 @@
 
 namespace Monolog\Formatter;
 
-use Monolog\Logger;
 use Gelf\Message;
+use Monolog\Logger;
 
 /**
  * Serializes a log message to GELF
@@ -41,13 +41,13 @@ class GelfMessageFormatter extends NormalizerFormatter
      * Translates Monolog log levels to Graylog2 log priorities.
      */
     private $logLevels = array(
-        Logger::DEBUG     => 7,
-        Logger::INFO      => 6,
-        Logger::NOTICE    => 5,
-        Logger::WARNING   => 4,
-        Logger::ERROR     => 3,
-        Logger::CRITICAL  => 2,
-        Logger::ALERT     => 1,
+        Logger::DEBUG => 7,
+        Logger::INFO => 6,
+        Logger::NOTICE => 5,
+        Logger::WARNING => 4,
+        Logger::ERROR => 3,
+        Logger::CRITICAL => 2,
+        Logger::ALERT => 1,
         Logger::EMERGENCY => 0,
     );
 
@@ -69,13 +69,13 @@ class GelfMessageFormatter extends NormalizerFormatter
         $record = parent::format($record);
 
         if (!isset($record['datetime'], $record['message'], $record['level'])) {
-            throw new \InvalidArgumentException('The record should at least contain datetime, message and level keys, '.var_export($record, true).' given');
+            throw new \InvalidArgumentException('The record should at least contain datetime, message and level keys, ' . var_export($record, true) . ' given');
         }
 
         $message = new Message();
         $message
             ->setTimestamp($record['datetime'])
-            ->setShortMessage((string) $record['message'])
+            ->setShortMessage((string)$record['message'])
             ->setHost($this->systemName)
             ->setLevel($this->logLevels[$record['level']]);
 

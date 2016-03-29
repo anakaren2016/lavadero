@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\DomCrawler\Tests;
 
+use Symfony\Component\DomCrawler\Field;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\FormFieldRegistry;
-use Symfony\Component\DomCrawler\Field;
 
 class FormTest extends \PHPUnit_Framework_TestCase
 {
@@ -186,17 +186,17 @@ class FormTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor($message, $form, $values)
     {
-        $form = $this->createForm('<form>'.$form.'</form>');
+        $form = $this->createForm('<form>' . $form . '</form>');
         $this->assertEquals(
             $values,
             array_map(function ($field) {
-                    $class = get_class($field);
+                $class = get_class($field);
 
-                    return array(substr($class, strrpos($class, '\\') + 1), $field->getValue());
-                },
+                return array(substr($class, strrpos($class, '\\') + 1), $field->getValue());
+            },
                 $form->all()
             ),
-            '->getDefaultValues() '.$message
+            '->getDefaultValues() ' . $message
         );
     }
 
@@ -235,7 +235,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
                 'appends the submitted button value but not other submit buttons',
                 '<input type="submit" name="bar" value="bar" />
                  <input type="submit" name="foobar" value="foobar" />',
-                 array('foobar' => array('InputFormField', 'foobar')),
+                array('foobar' => array('InputFormField', 'foobar')),
             ),
             array(
                 'turns an image input into x and y fields',
@@ -246,38 +246,38 @@ class FormTest extends \PHPUnit_Framework_TestCase
                 'returns textareas',
                 '<textarea name="foo">foo</textarea>
                  <input type="submit" />',
-                 array('foo' => array('TextareaFormField', 'foo')),
+                array('foo' => array('TextareaFormField', 'foo')),
             ),
             array(
                 'returns inputs',
                 '<input type="text" name="foo" value="foo" />
                  <input type="submit" />',
-                 array('foo' => array('InputFormField', 'foo')),
+                array('foo' => array('InputFormField', 'foo')),
             ),
             array(
                 'returns checkboxes',
                 '<input type="checkbox" name="foo" value="foo" checked="checked" />
                  <input type="submit" />',
-                 array('foo' => array('ChoiceFormField', 'foo')),
+                array('foo' => array('ChoiceFormField', 'foo')),
             ),
             array(
                 'returns not-checked checkboxes',
                 '<input type="checkbox" name="foo" value="foo" />
                  <input type="submit" />',
-                 array('foo' => array('ChoiceFormField', false)),
+                array('foo' => array('ChoiceFormField', false)),
             ),
             array(
                 'returns radio buttons',
                 '<input type="radio" name="foo" value="foo" />
                  <input type="radio" name="foo" value="bar" checked="bar" />
                  <input type="submit" />',
-                 array('foo' => array('ChoiceFormField', 'bar')),
+                array('foo' => array('ChoiceFormField', 'bar')),
             ),
             array(
                 'returns file inputs',
                 '<input type="file" name="foo" />
                  <input type="submit" />',
-                 array('foo' => array('FileFormField', array('name' => '', 'type' => '', 'tmp_name' => '', 'error' => 4, 'size' => 0))),
+                array('foo' => array('FileFormField', array('name' => '', 'type' => '', 'tmp_name' => '', 'error' => 4, 'size' => 0))),
             ),
         );
     }
@@ -477,7 +477,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $form = $this->createForm($form, $method);
         $form->setValues($values);
 
-        $this->assertEquals('http://example.com'.$uri, $form->getUri(), '->getUri() '.$message);
+        $this->assertEquals('http://example.com' . $uri, $form->getUri(), '->getUri() ' . $message);
     }
 
     public function testGetBaseUri()
@@ -779,20 +779,17 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $f2
             ->expects($this->exactly(2))
             ->method('setValue')
-            ->with(2)
-        ;
+            ->with(2);
 
         $f3
             ->expects($this->exactly(2))
             ->method('setValue')
-            ->with(3)
-        ;
+            ->with(3);
 
         $fbb
             ->expects($this->exactly(2))
             ->method('setValue')
-            ->with('fbb')
-        ;
+            ->with('fbb');
 
         $registry->set('foo[2]', 2);
         $registry->set('foo[3]', 3);
@@ -803,7 +800,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             3 => 3,
             'bar' => array(
                 'baz' => 'fbb',
-             ),
+            ),
         ));
     }
 
@@ -859,20 +856,17 @@ class FormTest extends \PHPUnit_Framework_TestCase
             ->getMockBuilder('Symfony\\Component\\DomCrawler\\Field\\FormField')
             ->setMethods(array('getName', 'getValue', 'setValue', 'initialize'))
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
 
         $field
             ->expects($this->any())
             ->method('getName')
-            ->will($this->returnValue($name))
-        ;
+            ->will($this->returnValue($name));
 
         $field
             ->expects($this->any())
             ->method('getValue')
-            ->will($this->returnValue($value))
-        ;
+            ->will($this->returnValue($value));
 
         return $field;
     }
@@ -880,7 +874,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
     protected function createForm($form, $method = null, $currentUri = null)
     {
         $dom = new \DOMDocument();
-        $dom->loadHTML('<html>'.$form.'</html>');
+        $dom->loadHTML('<html>' . $form . '</html>');
 
         $xPath = new \DOMXPath($dom);
         $nodes = $xPath->query('//input | //button');

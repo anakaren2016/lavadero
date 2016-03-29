@@ -10,7 +10,7 @@
 
 if (!defined('TEST_FILES_PATH')) {
     define(
-        'TEST_FILES_PATH',
+    'TEST_FILES_PATH',
         dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR .
         '_files' . DIRECTORY_SEPARATOR
     );

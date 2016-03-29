@@ -32,7 +32,7 @@ class RouteCacheCommand extends Command
     /**
      * Create a new route command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param  \Illuminate\Filesystem\Filesystem $files
      * @return void
      */
     public function __construct(Filesystem $files)
@@ -75,7 +75,7 @@ class RouteCacheCommand extends Command
      */
     protected function getFreshApplicationRoutes()
     {
-        $app = require $this->laravel->bootstrapPath().'/app.php';
+        $app = require $this->laravel->bootstrapPath() . '/app.php';
 
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
@@ -85,12 +85,12 @@ class RouteCacheCommand extends Command
     /**
      * Build the route cache file.
      *
-     * @param  \Illuminate\Routing\RouteCollection  $routes
+     * @param  \Illuminate\Routing\RouteCollection $routes
      * @return string
      */
     protected function buildRouteCacheFile(RouteCollection $routes)
     {
-        $stub = $this->files->get(__DIR__.'/stubs/routes.stub');
+        $stub = $this->files->get(__DIR__ . '/stubs/routes.stub');
 
         return str_replace('{{routes}}', base64_encode(serialize($routes)), $stub);
     }

@@ -19,25 +19,6 @@ class PHPUnit_Runner_Version
     private static $version;
 
     /**
-     * Returns the current version of PHPUnit.
-     *
-     * @return string
-     */
-    public static function id()
-    {
-        if (self::$pharVersion !== null) {
-            return self::$pharVersion;
-        }
-
-        if (self::$version === null) {
-            $version       = new SebastianBergmann\Version('4.8.24', dirname(dirname(__DIR__)));
-            self::$version = $version->getVersion();
-        }
-
-        return self::$version;
-    }
-
-    /**
      * @return string
      *
      * @since Method available since Release 4.8.13
@@ -51,6 +32,25 @@ class PHPUnit_Runner_Version
         }
 
         return implode('.', array_slice(explode('.', self::id()), 0, 2));
+    }
+
+    /**
+     * Returns the current version of PHPUnit.
+     *
+     * @return string
+     */
+    public static function id()
+    {
+        if (self::$pharVersion !== null) {
+            return self::$pharVersion;
+        }
+
+        if (self::$version === null) {
+            $version = new SebastianBergmann\Version('4.8.24', dirname(dirname(__DIR__)));
+            self::$version = $version->getVersion();
+        }
+
+        return self::$version;
     }
 
     /**

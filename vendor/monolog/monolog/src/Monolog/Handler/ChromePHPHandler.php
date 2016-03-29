@@ -53,7 +53,7 @@ class ChromePHPHandler extends AbstractProcessingHandler
     protected static $sendHeaders = true;
 
     /**
-     * @param int     $level  The minimum logging level at which this handler will be triggered
+     * @param int $level The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($level = Logger::DEBUG, $bubble = true)
@@ -83,28 +83,6 @@ class ChromePHPHandler extends AbstractProcessingHandler
             self::$json['rows'] = array_merge(self::$json['rows'], $messages);
             $this->send();
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getDefaultFormatter()
-    {
-        return new ChromePHPFormatter();
-    }
-
-    /**
-     * Creates & sends header for a record
-     *
-     * @see sendHeader()
-     * @see send()
-     * @param array $record
-     */
-    protected function write(array $record)
-    {
-        self::$json['rows'][] = $record['formatted'];
-
-        $this->send();
     }
 
     /**
@@ -154,19 +132,6 @@ class ChromePHPHandler extends AbstractProcessingHandler
     }
 
     /**
-     * Send header string to the client
-     *
-     * @param string $header
-     * @param string $content
-     */
-    protected function sendHeader($header, $content)
-    {
-        if (!headers_sent() && self::$sendHeaders) {
-            header(sprintf('%s: %s', $header, $content));
-        }
-    }
-
-    /**
      * Verifies if the headers are accepted by the current user agent
      *
      * @return Boolean
@@ -182,12 +147,25 @@ class ChromePHPHandler extends AbstractProcessingHandler
     }
 
     /**
+     * Send header string to the client
+     *
+     * @param string $header
+     * @param string $content
+     */
+    protected function sendHeader($header, $content)
+    {
+        if (!headers_sent() && self::$sendHeaders) {
+            header(sprintf('%s: %s', $header, $content));
+        }
+    }
+
+    /**
      * BC getter for the sendHeaders property that has been made static
      */
     public function __get($property)
     {
         if ('sendHeaders' !== $property) {
-            throw new \InvalidArgumentException('Undefined property '.$property);
+            throw new \InvalidArgumentException('Undefined property ' . $property);
         }
 
         return static::$sendHeaders;
@@ -199,9 +177,31 @@ class ChromePHPHandler extends AbstractProcessingHandler
     public function __set($property, $value)
     {
         if ('sendHeaders' !== $property) {
-            throw new \InvalidArgumentException('Undefined property '.$property);
+            throw new \InvalidArgumentException('Undefined property ' . $property);
         }
 
         static::$sendHeaders = $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getDefaultFormatter()
+    {
+        return new ChromePHPFormatter();
+    }
+
+    /**
+     * Creates & sends header for a record
+     *
+     * @see sendHeader()
+     * @see send()
+     * @param array $record
+     */
+    protected function write(array $record)
+    {
+        self::$json['rows'][] = $record['formatted'];
+
+        $this->send();
     }
 }
